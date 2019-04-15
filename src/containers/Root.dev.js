@@ -9,7 +9,7 @@ import App from './App'
 const Root = ({ store }) => (
     <Provider store={store}>
         <div>
-        <Route path="/" component={ () => <div><h1>Hello World</h1></div>} />
+        <Route path="/" component={App} />
         <DevTools />
         </div>
     </Provider>
