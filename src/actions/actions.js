@@ -7,13 +7,21 @@ export const actionTypes = {
     FETCHING_PROBLEMS_FAILURE: 'FETCHING_PROBLEMS_FAILURE',
     ADDING_PROBLEM: 'ADDING_PROBLEM',
     ADDING_PROBLEM_SUCCESS: 'ADDING_PROBLEM_SUCCESS',
-    ADDING_PROBLEM_FAILURE : 'ADDING_PROBLEM_FAILURE'
+    ADDING_PROBLEM_FAILURE : 'ADDING_PROBLEM_FAILURE',
+    AUTH_USER :  "AUTH_USER",
+    UNAUTH_USER :  "UNAUTH_USER",
+    AUTH_ERROR :  "AUTH_ERROR",
+    FETCHING_USER :  "FETCHING _USER",
+    FETCHING_USER_FAILURE :  "FETCHING_USER_FAILURE",
+    FETCHING_USER_SUCCESS :  "FETCHING_USER_SUCCESS"
 }
 
 
 const actions = {
     fetchingProblems: buildActionCreator(actionTypes.FETCHING_PROBLEMS),
     addingProblem: buildActionCreator(actionTypes.ADDING_PROBLEM),
+    fetchingUser: buildActionCreator(actionTypes.FETCHING_USER),
+    unauthUser: buildActionCreator(actionTypes.UNAUTH_USER),
     addingProblemSuccess: (payload) => {
         return {
             type: actionTypes.ADDING_PROBLEM_SUCCESS,
@@ -37,7 +45,23 @@ const actions = {
             type: actionTypes.FETCHING_PROBLEMS_FAILURE,
             payload: error
         }
-    }
+    },
+    fetchingUserSuccess: (user) => ({
+        type: actionTypes.FETCHING_USER_SUCCESS,
+        user
+    }),
+    fetchingUserFailure: (error) => ({
+        type: actionTypes.FETCHING_USER_FAILURE,
+        error
+    }),
+    authenticateUser: (user) => ({
+        type: actionTypes.AUTH_USER,
+        user
+    }),
+    authenticationError: (error) => ({
+        type: actionTypes.AUTH_ERROR,
+        error
+    })
 }
 
 export default actions;
