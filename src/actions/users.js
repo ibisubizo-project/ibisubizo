@@ -28,10 +28,11 @@ export const login =  (form) => {
 export function register(credentials) {
 	return dispatch => userApi.Register(credentials)
 		.then((response) => {
-			dispatch(actions.authenticateUser(response.data.user))
-			localStorage.setItem("token", response.data.token)
-			UserProfile.setUserData(response.data.user)
-			dispatch(actions.fetchingUserSuccess(response.data.user))
+			console.dir(response)
+			dispatch(actions.authenticateUser(response.user))
+			localStorage.setItem("token", response.token)
+			UserProfile.setUserData(response.user)
+			dispatch(actions.fetchingUserSuccess(response.user))
 			// return history.push('/')
 		})
 		.catch((err) => {

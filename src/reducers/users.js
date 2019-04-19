@@ -1,3 +1,4 @@
+import { actionTypes } from '../actions/actions'
 import actions from '../actions/actions'
 import UserProfile from '../utils/userProfile'
 import userApi from '../services/users'
@@ -14,22 +15,22 @@ const initialState = {
 //Reducers 
 export default function usersReducer ( state = initialState, action) {
 	switch( action.type) {
-		case actions.AUTH_USER: 
-			return {...state, isAuthenticated: true, authedUser: action.user}
-		case actions.UNAUTH_USER:
+        case actionTypes.AUTH_USER:
+			return {...state, isAuthenticated: true, authedUser: action.payload}
+        case actionTypes.UNAUTH_USER:
 			return {...state, isAuthenticated: false, authedUser: {}}
-		case actions.AUTH_ERROR: 
-			return {...state, error: action.error}
-		case actions.FETCHING_USER:
+        case actionTypes.AUTH_ERROR:
+			return {...state, error: action.payload}
+        case actionTypes.FETCHING_USER:
 			return {...state, isFetching: true}
-		case actions.FETCHING_USER_FAILURE:
-			return {...state, isFetching: false,isAuthenticated: false, error: action.error }
-		case actions.FETCHING_USER_SUCCESS:
-			return action.user == null 
-				? { ...state, isFetching: false ,error: ''}
-				: {...state, isFetching: false, error: '', authedUser: action.user }
-		default:
-				return state
+        case actionTypes.FETCHING_USER_FAILURE:
+			return {...state, isFetching: false, isAuthenticated: false, error: action.payload }
+        case actionTypes.FETCHING_USER_SUCCESS:
+			return action.payload == null
+				? { ...state, isFetching: false, isAuthenticated: true , error: ''}
+				: {...state, isFetching: false, isAuthenticated: true, error: '', authedUser: action.payload }
+        default:
+			return state
 	}
 }
 
@@ -58,6 +59,7 @@ export function login (form) {
 export function register(credentials) {
 	return dispatch => userApi.Register(credentials)
 		.then((response) => {
+            console.dir(response)
 			dispatch(actions.authenticateUser(response.data.user))
 			localStorage.setItem("token", response.data.token)
 			UserProfile.setUserData(response.data.user)

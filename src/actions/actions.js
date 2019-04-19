@@ -48,19 +48,19 @@ const actions = {
     },
     fetchingUserSuccess: (user) => ({
         type: actionTypes.FETCHING_USER_SUCCESS,
-        user
+        payload: user
     }),
     fetchingUserFailure: (error) => ({
         type: actionTypes.FETCHING_USER_FAILURE,
-        error
+        payload: error
     }),
     authenticateUser: (user) => ({
         type: actionTypes.AUTH_USER,
-        user
+        payload: user
     }),
     authenticationError: (error) => ({
         type: actionTypes.AUTH_ERROR,
-        error
+        payload: error
     })
 }
 
