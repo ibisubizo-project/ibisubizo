@@ -1,6 +1,7 @@
 import actions from './actions'
 import UserProfile from '../utils/userProfile';
 import userApi from '../services/users';
+import history from '../history'
 
 
 export const logoutUser = () =>{
@@ -13,11 +14,11 @@ export const logoutUser = () =>{
 export const login =  (form) => {
 	return dispatch => userApi.Login(form)
 		.then((response) => {
-			dispatch(actions.authenticateUser(response.data.user))
-			localStorage.setItem('token', response.data.token)
-			UserProfile.setUserData(response.data.user)
-			dispatch(actions.fetchingUserSuccess(response.data.user))
-			//return history.push('/') //GOTO: Homepage
+			dispatch(actions.authenticateUser(response.user))
+			localStorage.setItem('token', response.token)
+			UserProfile.setUserData(response.user)
+			dispatch(actions.fetchingUserSuccess(response.user))
+			return history.push('/') //GOTO: Homepage
 		})
 		.catch((err) => {
 			let error = err
@@ -33,7 +34,7 @@ export function register(credentials) {
 			localStorage.setItem("token", response.token)
 			UserProfile.setUserData(response.user)
 			dispatch(actions.fetchingUserSuccess(response.user))
-			// return history.push('/')
+			return history.push('/')
 		})
 		.catch((err) => {
 			let error = err
