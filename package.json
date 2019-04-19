@@ -3,22 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "autoprefixer": "^9.5.1",
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "normalizr": "^3.3.0",
+    "postcss-cli": "^6.1.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
+    "react-timeago": "^4.4.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-form": "^8.2.0",
+    "redux-thunk": "^2.3.0",
+    "tailwindcss": "^0.7.4",
+    "timeago.js": "^4.0.0-beta.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build:css": "postcss src/styles/index.css -o src/index.css",
+    "watch:css": "postcss src/styles/index.css -o src/index.css -w",
+    "start": "yarn run watch:css & react-scripts start",
+    "build": "yarn run build:css && react-scripts build",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

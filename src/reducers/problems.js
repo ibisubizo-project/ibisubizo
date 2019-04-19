@@ -16,6 +16,12 @@ const problems = (state = initialState, action ) => {
             return { ...state, loading: false, problems: action.payload}
         case actionTypes.FETCHING_PROBLEMS_FAILURE:
             return { ...state, loading: false, error: action.payload}
+        case actionTypes.ADDING_PROBLEM:
+            return {...state, loading: true}
+        case actionTypes.ADDING_PROBLEM_SUCCESS:
+            return {...state, loading: false}
+        case actionTypes.ADDING_PROBLEM_FAILURE:
+            return {...state, loading: false, error: action.payload}
         default:
             return state
     }

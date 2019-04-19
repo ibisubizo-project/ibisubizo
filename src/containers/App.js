@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { loadProblems } from '../actions/problems';
+import NavBar from '../components/Nav';
+import ProblemBox from './ProblemBox';
+import ListingContainer from './ListingContainer';
 
 
 class App extends Component {
@@ -10,22 +13,33 @@ class App extends Component {
         this.props.onFetchProblems();
     }
     render() {
-        console.dir(this.props);
+        // console.dir(this.props);
 
-        if (this.props.loading) {
-            return <div>Loading</div>
-        }
+        // if (this.props.loading) {
+        //     return <div>Loading</div>
+        // }
 
-        let listItems = undefined;
+        // let listItems = undefined;
 
-        if (this.props.problems) {
-             listItems = this.props.problems.map((problem) => <div key={problem._id}>{problem.title}</div>) 
-        }
+        // if (this.props.problems) {
+        //      listItems = this.props.problems.map((problem) => <div key={problem._id}>{problem.title}</div>) 
+        // }
+
+        // return (
+        //     <div>
+        //         <h1>App Loading...</h1>
+        //         {listItems}
+        //     </div>
+        // )
 
         return (
             <div>
-                <h1>App Loading...</h1>
-                {listItems}
+              <NavBar />
+
+              <div className="container mx-auto">
+                <ProblemBox />
+                <ListingContainer />
+              </div>
             </div>
         )
     }

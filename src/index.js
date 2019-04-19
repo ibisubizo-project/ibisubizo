@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 import Root from './containers/Root';
-import configureStore from './store/configureStore'
+import configureStore from './store/configureStore';
+import './index.css';
 
 const store = configureStore()
 

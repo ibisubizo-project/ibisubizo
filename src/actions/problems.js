@@ -13,3 +13,14 @@ export const loadProblems = () => dispatch => {
     })
 }
 
+
+export const addProblem = (problem) => dispatch => {
+    dispatch(actions.addingProblem());
+    problemsApi.addProblem(problem).then((response) => {
+        dispatch(actions.addingProblemSuccess(response));
+    }).catch((error) => {
+        console.log(error);
+        dispatch(actions.addingProblemFailure(error));
+    });
+}
+
