@@ -13,5 +13,7 @@ const getPageValues = ({ begin, end, items }) => items.slice(begin, end);
 problemsApi.getAllApprovedProblems = () => client.get('/problems/approved');
 problemsApi.getAllProblems = () => client.get('/problems');
 
+problemsApi.getAllUsersProblems = (user_id) => client.get(`/problems/user/${user_id}`)
+
 problemsApi.addProblem = (problem) => client.post('/problems/', problem);
 export default problemsApi;

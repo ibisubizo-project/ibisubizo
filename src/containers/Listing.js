@@ -11,7 +11,6 @@ class Listing extends Component {
 
     render() {
         const { problems } = this.props;
-        console.log(problems)
         return (
             <div>
                 {problems.map(problem => (

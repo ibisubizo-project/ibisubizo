@@ -14,6 +14,19 @@ export const loadProblems = () => dispatch => {
 }
 
 
+
+export const loadUsersProblem = (user_id) => dispatch => {
+    dispatch(actions.fetchingUserProblems())
+    problemsApi.getAllUsersProblems(user_id).then((response) => {
+        console.dir(response)
+        dispatch(actions.fetchingUserProblemsSuccess(response))
+    }).catch((error) => {
+        console.log(error)
+        dispatch(actions.fetchingUserProblemsFailure(error))
+    })
+}
+
+
 export const addProblem = (problem) => dispatch => {
     dispatch(actions.addingProblem());
     problemsApi.addProblem(problem).then((response) => {

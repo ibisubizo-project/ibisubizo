@@ -2,6 +2,9 @@ import { buildActionCreator } from '../utils/index'
 
 export const actionTypes = {
     FETCHING_PROBLEMS: 'FETCHING_PROBLEMS',
+    FETCHING_USER_PROBLEMS: 'FETCHING_USER_PROBLEMS',
+    FETCHING_USER_PROBLEMS_SUCCESS: 'FETCHING_USER_PROBLEMS_SUCCESS',
+    FETCHING_USER_PROBLEMS_FAILURE: 'FETCHING_USER_PROBLEMS_FAILURE',
     FETCHING_PROBLEMS_SUCCESS: 'FETCHING_PROBLEMS_SUCCESS',
     FETCHING_PROBLEMS_FAILURE: 'FETCHING_PROBLEMS_FAILURE',
     ADDING_PROBLEM: 'ADDING_PROBLEM',
@@ -25,6 +28,7 @@ export const actionTypes = {
 const actions = {
     //PROBLEMS
     fetchingProblems: buildActionCreator(actionTypes.FETCHING_PROBLEMS),
+    fetchingUserProblems: buildActionCreator(actionTypes.FETCHING_USER_PROBLEMS),
     addingProblem: buildActionCreator(actionTypes.ADDING_PROBLEM),
     addingProblemSuccess: (payload) => {
         return {
@@ -50,6 +54,14 @@ const actions = {
             payload: error
         }
     },
+    fetchingUserProblemsSuccess: (problems) => ({
+        type: actionTypes.FETCHING_USER_PROBLEMS_SUCCESS,
+        payload: problems
+    }),
+    fetchingUserProblemsFailure: (error) => ({
+        type: actionTypes.FETCHING_USER_PROBLEMS_FAILURE,
+        payload: error
+    }),
     //USERS
     fetchingUser: buildActionCreator(actionTypes.FETCHING_USER),
     unauthUser: buildActionCreator(actionTypes.UNAUTH_USER),

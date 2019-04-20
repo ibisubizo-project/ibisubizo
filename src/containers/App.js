@@ -13,13 +13,15 @@ class App extends Component {
         this.props.onFetchProblems();
     }
     render() {
+        console.log("<App />")
+        console.dir(this.props.user.authedUser)
         return (
             <div>
               <NavBar />
 
               <div className="container mx-auto">
                 <ProblemBox />
-                <ListingContainer />
+                <ListingContainer data={this.props.user} />
               </div>
             </div>
         )
@@ -29,7 +31,8 @@ class App extends Component {
 const mapStateToProps = (state) => {
     console.dir(state);
     return {
-        problems: state.problems.problems
+        problems: state.problems.problems,
+        user: state.usersReducer
     }
 }
 

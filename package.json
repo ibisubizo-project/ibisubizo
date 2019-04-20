@@ -5,6 +5,7 @@
   "dependencies": {
     "autoprefixer": "^9.5.1",
     "axios": "^0.18.0",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
     "normalizr": "^3.3.0",
     "postcss-cli": "^6.1.2",
