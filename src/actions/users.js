@@ -12,7 +12,8 @@ export const logoutUser = () =>{
 }
 
 export const login =  (form) => {
-	return dispatch => userApi.Login(form)
+	return dispatch =>  {
+		userApi.Login(form)
 		.then((response) => {
 			dispatch(actions.authenticateUser(response.user))
 			localStorage.setItem('token', response.token)
@@ -24,6 +25,7 @@ export const login =  (form) => {
 			let error = err
 			return dispatch(actions.authenticationError(error));
 		})
+	}
 }
 
 export function register(credentials) {

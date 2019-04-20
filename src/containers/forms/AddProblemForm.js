@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { addProblem } from '../../actions/problems'
 import actions from '../../actions/actions';
+import UserProfile from '../../utils/userProfile'
 
 const AddProblemForm = ({addingProblemSuccess, addingProblemFailure}) => {
     const [title, setTitle] = useState("")
@@ -12,11 +13,19 @@ const AddProblemForm = ({addingProblemSuccess, addingProblemFailure}) => {
     const handleSubmit = event => {
         event.preventDefault();
 
+        let userData = UserProfile.getUserData()
         let payload = {};
+        if(!userData.hasOwnProperty("_id")) {
+            //We dont have the id of the currently logged in user
+            console.error("WE can't find user id in local storage")
+            //TODO: Show dialog telling the user to login 
+            return
+        }
+
         payload.title = title;
         payload.text = description;
         payload.status = status;
-        payload.created_by = '5ca4c37063f44c0c2f50eea5';
+        payload.created_by = userData._id;
 
         console.log("Before API request")
         axios.post('http://localhost:8000/api/problems', payload).then(response => {
@@ -26,8 +35,6 @@ const AddProblemForm = ({addingProblemSuccess, addingProblemFailure}) => {
             console.error(error);
             addingProblemFailure(error)
         })
-
-        // addProblem(payload);
         console.log(payload);
 
     }

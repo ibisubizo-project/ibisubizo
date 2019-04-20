@@ -1,6 +1,5 @@
 import { buildActionCreator } from '../utils/index'
 
-
 export const actionTypes = {
     FETCHING_PROBLEMS: 'FETCHING_PROBLEMS',
     FETCHING_PROBLEMS_SUCCESS: 'FETCHING_PROBLEMS_SUCCESS',
@@ -8,20 +7,25 @@ export const actionTypes = {
     ADDING_PROBLEM: 'ADDING_PROBLEM',
     ADDING_PROBLEM_SUCCESS: 'ADDING_PROBLEM_SUCCESS',
     ADDING_PROBLEM_FAILURE : 'ADDING_PROBLEM_FAILURE',
-    AUTH_USER :  "AUTH_USER",
-    UNAUTH_USER :  "UNAUTH_USER",
-    AUTH_ERROR :  "AUTH_ERROR",
-    FETCHING_USER :  "FETCHING _USER",
-    FETCHING_USER_FAILURE :  "FETCHING_USER_FAILURE",
-    FETCHING_USER_SUCCESS :  "FETCHING_USER_SUCCESS"
+    AUTH_USER :  'AUTH_USER',
+    UNAUTH_USER :  'UNAUTH_USER',
+    AUTH_ERROR :  'AUTH_ERROR',
+    FETCHING_USER :  'FETCHING _USER',
+    FETCHING_USER_FAILURE :  'FETCHING_USER_FAILURE',
+    FETCHING_USER_SUCCESS :  'FETCHING_USER_SUCCESS',
+    ADDING_COMMENT: 'ADDING_COMMENT',
+    ADDING_COMMENT_SUCCESS: 'ADDING_COMMENT_SUCCESS',
+    ADDING_COMMENT_FAILURE: 'ADDING_COMMENT_FAILURE',
+    FETCHING_COMMENTS : 'FETCHING_COMMENTS',
+    FETCHING_COMMENTS_SUCCESS: 'FETCHING_COMMENTS_SUCCESS',
+    FETCHING_COMMENTS_FAILURE: 'FETCHING_COMMENTS_FAILURE'
 }
 
 
 const actions = {
+    //PROBLEMS
     fetchingProblems: buildActionCreator(actionTypes.FETCHING_PROBLEMS),
     addingProblem: buildActionCreator(actionTypes.ADDING_PROBLEM),
-    fetchingUser: buildActionCreator(actionTypes.FETCHING_USER),
-    unauthUser: buildActionCreator(actionTypes.UNAUTH_USER),
     addingProblemSuccess: (payload) => {
         return {
             type: actionTypes.ADDING_PROBLEM_SUCCESS,
@@ -46,6 +50,9 @@ const actions = {
             payload: error
         }
     },
+    //USERS
+    fetchingUser: buildActionCreator(actionTypes.FETCHING_USER),
+    unauthUser: buildActionCreator(actionTypes.UNAUTH_USER),
     fetchingUserSuccess: (user) => ({
         type: actionTypes.FETCHING_USER_SUCCESS,
         payload: user
@@ -60,6 +67,25 @@ const actions = {
     }),
     authenticationError: (error) => ({
         type: actionTypes.AUTH_ERROR,
+        payload: error
+    }),
+    //COMMENTS
+    addingComment: buildActionCreator(actionTypes.ADDING_COMMENT),
+    addingCommentSuccess: (comment) => ({
+        type: actionTypes.ADDING_COMMENT_SUCCESS,
+        payload: comment
+    }),
+    addingCommentFailure: (error) => ({
+        type: actionTypes.ADDING_COMMENT_FAILURE,
+        payload: error
+    }),
+    fetchingComments: buildActionCreator(actionTypes.FETCHING_COMMENTS),
+    fetchingCommentsSuccess: (comment) => ({
+        type: actionTypes.FETCHING_COMMENTS_SUCCESS,
+        payload: comment
+    }),
+    fetchingCommentsFailure: (error) => ({
+        type: actionTypes.FETCHING_COMMENTS_FAILURE,
         payload: error
     })
 }
