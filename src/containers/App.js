@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { loadProblems } from '../actions/problems';
-import NavBar from '../components/Nav';
-import ProblemBox from './ProblemBox';
-import ListingContainer from './ListingContainer';
+import { loadProblems } from '../actions/problems'
+import ProblemBox from './ProblemBox'
+import ListingContainer from './ListingContainer'
 
 
 class App extends Component {
@@ -17,8 +16,6 @@ class App extends Component {
         console.dir(this.props.user.authedUser)
         return (
             <div>
-              <NavBar />
-
               <div className="container mx-auto">
                 <ProblemBox />
                 <ListingContainer data={this.props.user} />

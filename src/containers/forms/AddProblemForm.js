@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { addProblem } from '../../actions/problems'
 import actions from '../../actions/actions';
-import UserProfile from '../../utils/userProfile'
 
 const AddProblemForm = ({addingProblemSuccess, addingProblemFailure}) => {
     const [title, setTitle] = useState("")
@@ -13,7 +12,10 @@ const AddProblemForm = ({addingProblemSuccess, addingProblemFailure}) => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        let userData = UserProfile.getUserData()
+        alert("Submitting form")
+
+        let userData = JSON.parse(localStorage.getItem("userData"))
+        console.log(userData)
         let payload = {};
         if(!userData.hasOwnProperty("_id")) {
             //We dont have the id of the currently logged in user
