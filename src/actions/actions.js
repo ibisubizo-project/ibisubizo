@@ -6,6 +6,8 @@ export const actionTypes = {
     FETCHING_USER_PROBLEMS_SUCCESS: 'FETCHING_USER_PROBLEMS_SUCCESS',
     FETCHING_USER_PROBLEMS_FAILURE: 'FETCHING_USER_PROBLEMS_FAILURE',
     FETCHING_PROBLEMS_SUCCESS: 'FETCHING_PROBLEMS_SUCCESS',
+    SELECTED_PROBLEM: 'SELECTED_PROBLEM',
+    SELECTED_PROBLEMS_COMMENTS: 'SELECTED_PROBLEMS_COMMENTS',
     FETCHING_PROBLEMS_FAILURE: 'FETCHING_PROBLEMS_FAILURE',
     ADDING_PROBLEM: 'ADDING_PROBLEM',
     ADDING_PROBLEM_SUCCESS: 'ADDING_PROBLEM_SUCCESS',
@@ -46,6 +48,18 @@ const actions = {
         return {
             type: actionTypes.FETCHING_PROBLEMS_SUCCESS,
             payload: payload
+        }
+    },
+    currentSelectedProblem: (payload) => {
+        return {
+            type: actionTypes.SELECTED_PROBLEM,
+            payload
+        }
+    },
+    currentSelectedProblemsComments: (comments) => {
+        return {
+            type: actionTypes.SELECTED_PROBLEMS_COMMENTS,
+            payload: comments
         }
     },
     fetchingProblemsFailure: (error) => {

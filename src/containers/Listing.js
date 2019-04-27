@@ -14,7 +14,7 @@ class Listing extends Component {
         return (
             <div>
                 {problems.map(problem => (
-                    <ListItem key={problem._id} {...problem} />
+                    <ListItem key={problem._id} {...problem} problem={problem} />
                 ))}
             </div>
         )

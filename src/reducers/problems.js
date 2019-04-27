@@ -5,6 +5,8 @@ const initialState = {
     loading : false,
     problems: [],
     userProblems: [],
+    selectedProblem: {},
+    selectedProblemsComments: [],
     error: ''
 };
 
@@ -29,6 +31,10 @@ const problems = (state = initialState, action ) => {
             return {...state, loading: false}
         case actionTypes.ADDING_PROBLEM_FAILURE:
             return {...state, loading: false, error: action.payload}
+        case actionTypes.SELECTED_PROBLEM:
+            return {...state, selectedProblem: action.payload}
+        case actionTypes.SELECTED_PROBLEMS_COMMENTS:
+            return {...state, selectedProblemsComments: action.payload}
         default:
             return state
     }

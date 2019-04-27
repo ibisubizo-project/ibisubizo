@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
 import TimeAgo from 'react-timeago';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import ListItemToolBar from './ListItemToolBar';
 import AddCommentToolBar from './AddCommentToolBar';
 import history from '../history';
+import actions from '../actions/actions'
 
 class ListItem extends Component {
     state = {
@@ -17,8 +19,8 @@ class ListItem extends Component {
     }
 
     viewProblemDetails() {
-        alert("Clicking problem")
-        return <Redirect to={`/problems/${this.props._id}`} />
+        this.props.setSelectedProblem(this.props.problem)
+        history.push(`/problem/${this.props._id}`)
     }
 
     render() {
@@ -26,7 +28,7 @@ class ListItem extends Component {
         const localStorageUserData = localStorage.getItem("userData")
 
         return (
-            <div onClick={() => history.push(`/problem/${this.props._id}`)} className="rounded overflow-hidden shadow-lg mb-6">
+            <div onClick={this.viewProblemDetails.bind(this)} className="rounded overflow-hidden shadow-lg mb-6">
                 <div className="px-6 py-6">
                     <div className="font-bold mb-2 flex justify-between">
                         {title}
@@ -43,4 +45,16 @@ class ListItem extends Component {
         )
     }
 }
-export default ListItem;
+
+const mapStateToProps = (state) => {
+    console.dir(state);
+    return {
+        selectedProblem: state.problems.selectedProblem
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    setSelectedProblem: (problem) => dispatch(actions.currentSelectedProblem(problem))
+})
+
+export default connect(null, mapDispatchToProps)(ListItem);
