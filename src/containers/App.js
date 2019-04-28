@@ -15,8 +15,8 @@ class App extends Component {
         console.log("<App />")
         console.dir(this.props.user.authedUser)
         return (
-            <div>
-              <div className="container mx-auto">
+            <div className="container m-auto p-8 text-grey-darkest">
+              <div className="w-3/5">
                 <ProblemBox />
                 <ListingContainer data={this.props.user} />
               </div>

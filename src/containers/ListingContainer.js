@@ -38,8 +38,8 @@ class ListingContainer extends React.Component{
 
     render() {
         return (
-            <div className="listings">
-                <div className="listing-filter text-white h-12 bg-grey align-baseline py-4 px-3">
+            <div className="listings mt-6">
+                <div className="listing-filter text-white h-12 bg-black align-baseline py-4 px-3 font-bold">
                     <div className="flex justify-between">
                         Trending Problems
 

@@ -1,19 +1,63 @@
-import React, {useState} from 'react'
+import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios';
+import axios from 'axios'
+import firebase from 'firebase'
+import FileUploader from 'react-firebase-file-uploader'
 import { addProblem } from '../../actions/problems'
 import actions from '../../actions/actions';
+import config from '../../firebase'
+import Loader from '../../components/Loader';
+import { css } from '@emotion/core';
+// First way to import
+import { ClipLoader } from 'react-spinners';
 
-const AddProblemForm = ({addingProblemSuccess, addingProblemFailure}) => {
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [status, setStatus] = useState(1);
+firebase.initializeApp(config)
 
-    const handleSubmit = event => {
-        event.preventDefault();
 
-        alert("Submitting form")
+const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+`;
 
+
+class AddProblemForm extends Component {
+    state = {
+        title: "",
+        description: "Enter problem description",
+        status: 1,
+        isUploading: false,
+        progress: 0,
+        avatarURL: []
+    }
+   
+    handleUploadStart() { 
+        this.setState({isUploading: true, progress: 0})
+     }
+    handleProgress(progress) { 
+        this.setState({progress})
+    }
+    handleUploadError(error) {
+        this.setState({isUploading: false})
+        console.error(error);
+    };
+    handleUploadSuccess(filename) {
+        this.setState({progress: 100, isUploading: false})
+        firebase
+          .storage()
+          .ref("images")
+          .child(filename)
+          .getDownloadURL()
+          .then(url => this.setState(state => {
+              const newURL = state.avatarURL.concat(url)
+              return { avatarURL: newURL}
+          }));
+          console.dir(this.state.avatarURL)
+    };
+
+    onSubmit = (evt) => {
+        evt.preventDefault();
+        console.dir(this.state.avatarURL)
         let userData = JSON.parse(localStorage.getItem("userData"))
         console.log(userData)
         let payload = {};
@@ -24,82 +68,145 @@ const AddProblemForm = ({addingProblemSuccess, addingProblemFailure}) => {
             return
         }
 
-        payload.title = title;
-        payload.text = description;
-        payload.status = status;
+        payload.title = this.state.title
+        payload.text = this.state.description;
+        payload.status = this.state.status;
         payload.created_by = userData._id;
+        payload.pictures = this.state.avatarURL
+
+        console.dir(payload)
 
         console.log("Before API request")
         axios.post('http://localhost:8000/api/problems', payload).then(response => {
             console.log(response);
-            addingProblemSuccess(response)
+            this.props.addingProblemSuccess(response)
         }).catch(error => {
             console.error(error);
-            addingProblemFailure(error)
+            this.props.addingProblemFailure(error)
         })
         console.log(payload);
 
     }
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <div className="title">
-                <input 
-                    type="text" 
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                    placeholder="Problem Title" 
-                    required
-                />
-            </div>
-
-            <div className="problem__description">
-                <textarea 
-                    required
-                    cols='100'
-                    onChange={e => setDescription(e.target.value)}
-                    defaultValue={description}
-                    rows='6'>
-                </textarea>
-            </div>
-
-            <div className="flex">
-                <div className="radio">
-                    <label>
-                        <input 
-                            type="radio" 
-                            value={0}
-                            checked={status === 0}
-                            onChange={e => setStatus(0)}
-                            />
-                            Public
-                    </label>
+    render() {
+        if(this.state.isUploading) {
+            return(
+                <div className='sweet-loading'>
+                    <ClipLoader
+                        css={override}
+                        sizeUnit={"px"}
+                        size={150}
+                        color={'#123abc'}
+                        loading={this.state.isUploading}
+                    />
+                </div>
+            )
+        }
+        return (
+            <form onSubmit={this.onSubmit.bind(this)}>
+                <div className="title">
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline mb-2"
+                        type="text"
+                        value={this.state.title}
+                        onChange={e => this.setState({title: e.target.value})}
+                        placeholder="Problem Title" 
+                        required
+                    />
                 </div>
 
-                <div className="radio">
-                    <label>
-                        <input 
-                            type="radio"
-                            value={1}
-                            checked={status === 1}
-                            onChange={e => setStatus(1)}
-                            />
-                            Private
-                    </label>
+                <div className="problem__description mb-6">
+                    <textarea 
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+                        required
+                        cols='100'
+                        onChange={e => this.setState({description: e.target.value})}
+                        defaultValue={this.state.description}
+                        rows='6'>
+                    </textarea>
                 </div>
-            </div>
+    
+                <div className="flex justify-between">
+                    <div className="uploads">
+                        <ul className="flex list-reset">
+                            <li className="mr-2">
+                                <label style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4, pointer: 'cursor'}}>
+                                    Photo
+                                    <FileUploader
+                                        hidden
+                                        accept="image/*"
+                                        multiple
+                                        storageRef={firebase.storage().ref('images')}
+                                        onUploadStart={this.handleUploadStart.bind(this)}
+                                        onUploadError={this.handleUploadError.bind(this)}
+                                        onUploadSuccess={this.handleUploadSuccess.bind(this)}
+                                        onProgress={this.handleProgress.bind(this)}
+                                    />
+                                </label>
+                            </li>
+                            <li className="mr-2">
+                                <label style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4, pointer: 'cursor'}}>
+                                    Video
+                                    <FileUploader
+                                        hidden
+                                        accept="video/*"
+                                        multiple
+                                        storageRef={firebase.storage().ref('videos')}
+                                        onUploadStart={()=> console.log("Upload Videos")}
+                                        onUploadError={()=> console.log("Upload Videos")}
+                                        onUploadSuccess={()=> console.log("Upload Videos")}
+                                        onProgress={()=> console.log("Upload Videos")}
+                                    />
+                                </label>
+                            </li>
+                            <li className="mr-2">
+                                <label style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4, pointer: 'cursor'}}>
+                                    Documents
+                                    <FileUploader
+                                        hidden
+                                        accept="file/*"
+                                        multiple
+                                        storageRef={firebase.storage().ref('documents')}
+                                        onUploadStart={()=> console.log("Upload Documents")}
+                                        onUploadError={()=> console.log("Upload Documents")}
+                                        onUploadSuccess={()=> console.log("Upload Documents")}
+                                        onProgress={()=> console.log("Upload Documents")}
+                                    />
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
 
-            <div className="uploads">
-                <ul className="flex">
-                    <li>Photos</li>
-                    <li>Video</li>
-                    <li>Documents</li>
-                </ul>
-            </div>
+                    <div className="post-type">
+                        <div className="radio align-baseline">
+                            <label className="mr-3">
+                                <input
+                                    className="mr-2"
+                                    type="radio" 
+                                    value={0}
+                                    checked={this.state.status === 0}
+                                    onChange={e => this.setState({status: 0 })}
+                                    />
+                                    Public
+                            </label>
 
-            <button type='submit'>Submit</button>
-        </form>
-    )
+                            <label>
+                                <input
+                                    className="mr-2"
+                                    type="radio"
+                                    value={1}
+                                    checked={this.state.status === 1}
+                                    onChange={e => this.setState({status: 1 })}
+                                    />
+                                    Private
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button className="mt-6" type='submit' disabled={this.isUploading === true}>Submit</button>
+            </form>
+        )
+    }
 }
 
 
