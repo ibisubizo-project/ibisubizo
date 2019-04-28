@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { addComment } from '../actions/comments'
+import { addLike } from '../actions/likes'
 import TimeAgo from 'react-timeago'
 import actions from '../actions/actions'
 import problemsApi from '../services/problemsApi'
 import commentsApi from '../services/commentApi'
+import likesApi from '../services/likesApi'
 
 class DetailComponent extends Component {
 
@@ -13,15 +15,33 @@ class DetailComponent extends Component {
         problem : {},
         comments: [],
         comment: '',
+        isLiked: false,
+    }
+
+    onHandleLike() {
+        const { match: { params } } = this.props;
+
+        const problemId = params.id;
+        let loggedInUser = localStorage.getItem("userData");
+        let userId = JSON.parse(loggedInUser)._id;
+
+        let payload = {};
+        payload.problem_id = problemId;
+        payload.liked_by = userId;
+
+        console.dir(payload)
+        this.props.addLike(payload);
+        this.props.selectedProblemsLikes.unshift(payload)
     }
 
     handleSubmit(event) {
         event.preventDefault()
         console.log(this.props)
         const { match: { params } } = this.props;
-        let problemId = params.id
-        let loggedInUser = localStorage.getItem("userData")
-        let userId = JSON.parse(loggedInUser)._id
+        if(this.state.comment.length < 2) return;
+        let problemId = params.id;
+        let loggedInUser = localStorage.getItem("userData");
+        let userId = JSON.parse(loggedInUser)._id;
         let comment = {
           post_id: problemId,
           user_id: userId,
@@ -39,11 +59,13 @@ class DetailComponent extends Component {
         this.setState({isLoading: true})
         let problems = problemsApi.getProblem(params.id)
         let comments =  commentsApi.ListAllPostComments(params.id)
+        let likes  = likesApi.GetAllLikes(params.id)
 
 
-        Promise.all([problems, comments]).then(result => {
+        Promise.all([problems, comments, likes]).then(result => {
             console.dir(result)
             this.props.setSelectedProblemsComments(result[1])
+            this.props.setSelectedProblemsLikes(result[2])
             this.setState({problem: result[0], isLoading: false})
         }).catch(error => {
             console.error(error)
@@ -74,8 +96,10 @@ class DetailComponent extends Component {
                             className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                             <i className="fa fa-comment fa-lg mr-2"></i>{this.props.selectedProblemsComments.length}
                         </span>
-                        <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
-                            <i className="fa fa-heart fa-lg mr-2"></i> 56
+                        <span
+                            onClick={this.onHandleLike.bind(this)}
+                            className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                            <i className="fa fa-heart fa-lg mr-2"></i> {this.props.selectedProblemsLikes.length}
                         </span>
                         <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker">
                             <i className="fa fa-share fa-lg mr-2"></i> 247
@@ -90,7 +114,9 @@ class DetailComponent extends Component {
                             type="text"
                             name='comment'
                             value={this.state.comment}
-                            onChange={(e) => this.setState({comment: e.target.value})}
+                            onChange={(e) => {
+                                this.setState({comment: e.target.value})
+                            }}
                             placeholder="Add your comment" />
                     </form>
                 </div>
@@ -110,14 +136,17 @@ class DetailComponent extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        selectedProblemsComments: state.problems.selectedProblemsComments
+        selectedProblemsComments: state.problems.selectedProblemsComments,
+        selectedProblemsLikes: state.problems.selectedProblemsLikes,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
       addCommentToPost: (postId, comment) => dispatch(addComment(postId, comment)),
-      setSelectedProblemsComments: (comments) => dispatch(actions.currentSelectedProblemsComments(comments))
+      addLike: (like) => dispatch(addLike(like)),
+      setSelectedProblemsComments: (comments) => dispatch(actions.currentSelectedProblemsComments(comments)),
+      setSelectedProblemsLikes: (likes) => dispatch(actions.currentSelectedProblemsLikes(likes))
     }
 }
 

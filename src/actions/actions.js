@@ -8,6 +8,7 @@ export const actionTypes = {
     FETCHING_PROBLEMS_SUCCESS: 'FETCHING_PROBLEMS_SUCCESS',
     SELECTED_PROBLEM: 'SELECTED_PROBLEM',
     SELECTED_PROBLEMS_COMMENTS: 'SELECTED_PROBLEMS_COMMENTS',
+    SELECTED_PROBLEMS_LIKES: 'SELECTED_PROBLEMS_LIKES',
     FETCHING_PROBLEMS_FAILURE: 'FETCHING_PROBLEMS_FAILURE',
     ADDING_PROBLEM: 'ADDING_PROBLEM',
     ADDING_PROBLEM_SUCCESS: 'ADDING_PROBLEM_SUCCESS',
@@ -23,7 +24,13 @@ export const actionTypes = {
     ADDING_COMMENT_FAILURE: 'ADDING_COMMENT_FAILURE',
     FETCHING_COMMENTS : 'FETCHING_COMMENTS',
     FETCHING_COMMENTS_SUCCESS: 'FETCHING_COMMENTS_SUCCESS',
-    FETCHING_COMMENTS_FAILURE: 'FETCHING_COMMENTS_FAILURE'
+    FETCHING_COMMENTS_FAILURE: 'FETCHING_COMMENTS_FAILURE',
+    FETCHING_LIKES: 'FETCHING_LIKES',
+    FETCHING_LIKES_SUCCESS: 'FETCHING_LIKES_SUCCESS',
+    FETCHING_LIKES_FAILURE: 'FETCHING_LIKES_FAILURE',
+    ADDING_LIKE: 'ADDING_LIKE',
+    ADDING_LIKE_SUCCESS: 'ADDING_LIKE_SUCCESS',
+    ADDING_LIKE_FAILURE: 'ADDING_LIKE_FAILURE'
 }
 
 
@@ -60,6 +67,12 @@ const actions = {
         return {
             type: actionTypes.SELECTED_PROBLEMS_COMMENTS,
             payload: comments
+        }
+    },
+    currentSelectedProblemsLikes: (likes) => {
+        return {
+            type: actionTypes.SELECTED_PROBLEMS_LIKES,
+            payload: likes
         }
     },
     fetchingProblemsFailure: (error) => {
@@ -112,6 +125,25 @@ const actions = {
     }),
     fetchingCommentsFailure: (error) => ({
         type: actionTypes.FETCHING_COMMENTS_FAILURE,
+        payload: error
+    }),
+    //LIKES
+    addingLikes: buildActionCreator(actionTypes.ADDING_LIKE),
+    addingLikeSuccess: (like) => ({
+        type: actionTypes.ADDING_LIKE_SUCCESS,
+        payload: like
+    }),
+    addingLikeFailure: (error) => ({
+        type: actionTypes.ADDING_LIKE_FAILURE,
+        payload: error
+    }),
+    fetchingLikes: buildActionCreator(actionTypes.FETCHING_LIKES),
+    fetchingLikeSuccess: (like) => ({
+        type: actionTypes.FETCHING_LIKES_SUCCESS,
+        payload: like
+    }),
+    fetchingLikeFailure: (error) => ({
+        type: actionTypes.FETCHING_LIKES_FAILURE,
         payload: error
     })
 }

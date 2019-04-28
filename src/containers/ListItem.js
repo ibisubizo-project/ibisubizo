@@ -18,7 +18,9 @@ class ListItem extends Component {
         this.setState({reRender: !this.state.reRender})
     }
 
-    viewProblemDetails() {
+    viewProblemDetails(evt) {
+        evt.preventDefault()
+        if(!this.props.userIsAuthenticated) { alert("Please Login..."); return; }
         this.props.setSelectedProblem(this.props.problem)
         history.push(`/problem/${this.props._id}`)
     }
@@ -28,8 +30,8 @@ class ListItem extends Component {
         const localStorageUserData = localStorage.getItem("userData")
 
         return (
-            <div onClick={this.viewProblemDetails.bind(this)} className="rounded overflow-hidden shadow-lg mb-6">
-                <div className="px-6 py-6">
+            <div className="rounded overflow-hidden shadow-lg mb-6">
+                <div className="px-6 py-6" onClick={this.viewProblemDetails.bind(this)}>
                     <div className="font-bold mb-2 flex justify-between">
                         {title}
                         <TimeAgo date={new Date(created_at)} />
@@ -49,7 +51,8 @@ class ListItem extends Component {
 const mapStateToProps = (state) => {
     console.dir(state);
     return {
-        selectedProblem: state.problems.selectedProblem
+        selectedProblem: state.problems.selectedProblem,
+        userIsAuthenticated: state.usersReducer.isAuthenticated
     }
 }
 
@@ -57,4 +60,4 @@ const mapDispatchToProps = dispatch => ({
     setSelectedProblem: (problem) => dispatch(actions.currentSelectedProblem(problem))
 })
 
-export default connect(null, mapDispatchToProps)(ListItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ListItem);

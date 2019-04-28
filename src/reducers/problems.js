@@ -7,6 +7,7 @@ const initialState = {
     userProblems: [],
     selectedProblem: {},
     selectedProblemsComments: [],
+    selectedProblemsLikes: [],
     error: ''
 };
 
@@ -35,6 +36,8 @@ const problems = (state = initialState, action ) => {
             return {...state, selectedProblem: action.payload}
         case actionTypes.SELECTED_PROBLEMS_COMMENTS:
             return {...state, selectedProblemsComments: action.payload}
+        case actionTypes.SELECTED_PROBLEMS_LIKES:
+            return {...state, selectedProblemsLikes: action.payload}
         default:
             return state
     }

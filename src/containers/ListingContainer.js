@@ -16,10 +16,11 @@ class ListingContainer extends React.Component{
 
     componentDidMount() {
         let userData = JSON.parse(localStorage.getItem("userData"))
-        let userId = userData._id
-        if(this.props.data.isAuthenticated === true) {
-            this.props.fetchUsersProblem(userId)
-            this.setState({isAuthenticated: true, showPersonalListing: true})
+        if(userData !== null) {
+            if(this.props.data.isAuthenticated === true && userData._id !== null ) {
+                this.props.fetchUsersProblem(userData._id)
+                this.setState({isAuthenticated: true, showPersonalListing: true})
+            }
         } else {
             this.props.onFetchProblems()
             this.setState({showPersonalListing: false, showListings: true})

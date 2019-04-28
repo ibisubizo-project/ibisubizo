@@ -28,7 +28,7 @@ class AddProblemForm extends Component {
         status: 1,
         isUploading: false,
         progress: 0,
-        avatarURL: []
+        uploadedPictures: []
     }
    
     handleUploadStart() { 
@@ -49,15 +49,15 @@ class AddProblemForm extends Component {
           .child(filename)
           .getDownloadURL()
           .then(url => this.setState(state => {
-              const newURL = state.avatarURL.concat(url)
-              return { avatarURL: newURL}
+              const newURL = state.uploadedPictures.concat(url)
+              return { uploadedPictures: newURL}
           }));
-          console.dir(this.state.avatarURL)
+          console.dir(this.state.uploadedPictures)
     };
 
     onSubmit = (evt) => {
         evt.preventDefault();
-        console.dir(this.state.avatarURL)
+        console.dir(this.state.uploadedPictures)
         let userData = JSON.parse(localStorage.getItem("userData"))
         console.log(userData)
         let payload = {};
@@ -72,7 +72,7 @@ class AddProblemForm extends Component {
         payload.text = this.state.description;
         payload.status = this.state.status;
         payload.created_by = userData._id;
-        payload.pictures = this.state.avatarURL
+        payload.pictures = this.state.uploadedPictures
 
         console.dir(payload)
 
