@@ -28,7 +28,9 @@ class AddProblemForm extends Component {
         status: 1,
         isUploading: false,
         progress: 0,
-        uploadedPictures: []
+        uploadedPictures: [],
+        uploadedVideos: [],
+        uploadedDocuments: []
     }
    
     handleUploadStart() { 
@@ -55,6 +57,34 @@ class AddProblemForm extends Component {
           console.dir(this.state.uploadedPictures)
     };
 
+    handleVideoUploadSuccess(filename) {
+        this.setState({progress: 100, isUploading: false})
+        firebase
+          .storage()
+          .ref("videos")
+          .child(filename)
+          .getDownloadURL()
+          .then(url => this.setState(state => {
+              const newURL = state.uploadedVideos.concat(url)
+              return { uploadedVideos: newURL}
+          }));
+          console.dir(this.state.uploadedVideos)
+    }
+
+    handleDocumentUploadSuccess(filename) {
+        this.setState({progress: 100, isUploading: false})
+        firebase
+          .storage()
+          .ref("document")
+          .child(filename)
+          .getDownloadURL()
+          .then(url => this.setState(state => {
+              const newURL = state.uploadedDocuments.concat(url)
+              return { uploadedDocuments: newURL}
+          }));
+          console.dir(this.state.uploadedDocuments)
+    }
+
     onSubmit = (evt) => {
         evt.preventDefault();
         console.dir(this.state.uploadedPictures)
@@ -73,6 +103,8 @@ class AddProblemForm extends Component {
         payload.status = this.state.status;
         payload.created_by = userData._id;
         payload.pictures = this.state.uploadedPictures
+        payload.videos = this.state.uploadedVideos
+        payload.document = this.state.uploadedDocuments
 
         console.dir(payload)
 
@@ -95,7 +127,7 @@ class AddProblemForm extends Component {
                     <ClipLoader
                         css={override}
                         sizeUnit={"px"}
-                        size={150}
+                        size={30}
                         color={'#123abc'}
                         loading={this.state.isUploading}
                     />
@@ -152,10 +184,10 @@ class AddProblemForm extends Component {
                                         accept="video/*"
                                         multiple
                                         storageRef={firebase.storage().ref('videos')}
-                                        onUploadStart={()=> console.log("Upload Videos")}
-                                        onUploadError={()=> console.log("Upload Videos")}
-                                        onUploadSuccess={()=> console.log("Upload Videos")}
-                                        onProgress={()=> console.log("Upload Videos")}
+                                        onUploadStart={this.handleUploadStart.bind(this)}
+                                        onUploadError={this.handleUploadError.bind(this)}
+                                        onUploadSuccess={this.handleVideoUploadSuccess.bind(this)}
+                                        onProgress={this.handleProgress.bind(this)}
                                     />
                                 </label>
                             </li>
@@ -167,10 +199,10 @@ class AddProblemForm extends Component {
                                         accept="file/*"
                                         multiple
                                         storageRef={firebase.storage().ref('documents')}
-                                        onUploadStart={()=> console.log("Upload Documents")}
-                                        onUploadError={()=> console.log("Upload Documents")}
-                                        onUploadSuccess={()=> console.log("Upload Documents")}
-                                        onProgress={()=> console.log("Upload Documents")}
+                                        onUploadStart={this.handleUploadStart.bind(this)}
+                                        onUploadError={this.handleUploadError.bind(this)}
+                                        onUploadSuccess={this.handleDocumentUploadSuccess.bind(this)}
+                                        onProgress={this.handleProgress.bind(this)}
                                     />
                                 </label>
                             </li>
