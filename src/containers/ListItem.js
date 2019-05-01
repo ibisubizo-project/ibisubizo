@@ -28,6 +28,10 @@ class ListItem extends Component {
     render() {
         const {_id, title, text, created_at, updated_at, created_by, pictures, videos, documents, is_approved, status} = this.props;
         const localStorageUserData = localStorage.getItem("userData")
+        let renderedImage = null
+        if(pictures !== undefined){
+            renderedImage = (pictures.length > 0) ? <p><a href={pictures[0]}><img src={pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm w-full" /></a></p> : ''
+        }
 
         return (
             <div className="rounded overflow-hidden shadow-lg mb-6">
@@ -39,6 +43,7 @@ class ListItem extends Component {
                     <p className="text-grey-darker text-base">
                         {text}
                     </p>
+                    {renderedImage}
                 </div>
 
                 <ListItemToolBar problem_id={_id} />

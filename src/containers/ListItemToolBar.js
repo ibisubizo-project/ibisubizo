@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Twitter, Facebook } from 'react-social-sharing'
 import axios from 'axios'
 
 class ListItemToolBar extends Component {
@@ -36,8 +37,9 @@ class ListItemToolBar extends Component {
                     <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <i className="fa fa-heart fa-lg mr-2"></i> 56
                     </span>
-                    <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker">
-                        <i className="fa fa-share fa-lg mr-2"></i> 247
+                    <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker flex">
+                        <Twitter link={`http://localhost:3000/problem/${this.props.problem_id}`} />
+                        <Facebook link={`http://localhost:3000/problem/${this.props.problem_id}`} />
                     </span>
                 </div>
             </div>

@@ -87,7 +87,10 @@ class DetailComponent extends Component {
             return <div>Loading...</div>
         }
         let problemListing = this.state.featuredProblems.slice(0, 20)
-        let renderPostImage = (this.state.problem.pictures) ? <p><a href={this.state.problem.pictures[0]}><img src={this.state.problem.pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm" /></a></p> : '';
+        let renderPostImage = null
+        if(this.state.problem.pictures !== undefined) {
+            renderPostImage = (this.state.problem.pictures.length > 0) ? <p><a href={this.state.problem.pictures[0]}><img src={this.state.problem.pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm" /></a></p> : '';
+        }
         console.log(this.state.postedBy)
         return (
             <div className="container m-auto p-8 text-grey-darkest flex">
@@ -109,7 +112,6 @@ class DetailComponent extends Component {
                             <div className="mb-4">
                                 <p className="mb-6 font-bold">{this.state.problem.title}</p>
                                 <p className="mb-4">{this.state.problem.text}</p>
-                                <p className="mb-6">(based on some work <a href="#" className="text-teal">@Killgt</a> started for <a href="#" className="text-teal">tailwindcomponents.com</a> !)</p>
                                 {renderPostImage}
                             </div>
                             <div className="pb-2 mb-10">
