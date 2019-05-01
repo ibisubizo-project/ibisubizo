@@ -10,6 +10,8 @@ import Login from '../components/Login'
 import Register from '../components/Register'
 import history from '../../src/history'
 import DetailComponent from './DetailComponent'
+import AboutUsComponent from '../components/AboutUsComponent';
+import TermsAndConditionComponent from '../components/TermsAndConditionComponent';
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -22,6 +24,8 @@ const Root = ({ store }) => (
           <Route path='/auth/login' component={Login} />
           <Route path='/auth/register' component={Register} />
           <Route path='/problem/:id' component={DetailComponent} />
+          <Route path='/about' component={AboutUsComponent} />
+          <Route path='/term' component={TermsAndConditionComponent} />
           <Route path={'*'} component={()=> <h1>Page Not Found...</h1>} />
         </Switch>
         <DevTools />

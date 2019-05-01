@@ -130,7 +130,7 @@ class AddProblemForm extends Component {
                     <div className="uploads">
                         <ul className="flex list-reset">
                             <li className="mr-2">
-                                <label style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4, pointer: 'cursor'}}>
+                                <label style={{pointer: 'cursor'}}>
                                     Photo
                                     <FileUploader
                                         hidden
@@ -145,7 +145,7 @@ class AddProblemForm extends Component {
                                 </label>
                             </li>
                             <li className="mr-2">
-                                <label style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4, pointer: 'cursor'}}>
+                                <label style={{pointer: 'cursor'}}>
                                     Video
                                     <FileUploader
                                         hidden
@@ -160,7 +160,7 @@ class AddProblemForm extends Component {
                                 </label>
                             </li>
                             <li className="mr-2">
-                                <label style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4, pointer: 'cursor'}}>
+                                <label style={{pointer: 'cursor'}}>
                                     Documents
                                     <FileUploader
                                         hidden
@@ -203,7 +203,7 @@ class AddProblemForm extends Component {
                         </div>
                     </div>
                 </div>
-                <button className="mt-6" type='submit' disabled={this.isUploading === true}>Submit</button>
+                <button className="mt-6 bg-teal text-white p-3" type='submit' disabled={this.isUploading === true}>Submit</button>
             </form>
         )
     }
