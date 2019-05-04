@@ -11,30 +11,46 @@ class ListingContainer extends React.Component{
     state = {
         showListings: true,
         showPersonalListing: false,
-        isAuthenticated: false
+        isAuthenticated: false,
+        problems: [],
+        userProblems: [],
+        page: 1,
     }
 
-    componentDidMount() {
+    fetchFirstProblems() {
+        let { page } = this.state
         let userData = JSON.parse(localStorage.getItem("userData"))
         if(userData !== null) {
             if(this.props.data.isAuthenticated === true && userData._id !== null ) {
-                this.props.fetchUsersProblem(userData._id)
-                this.setState({isAuthenticated: true, showPersonalListing: true})
+                console.log("result[1]")
+                this.props.fetchUsersProblem(userData._id, page)
+                this.setState({isAuthenticated: true, showPersonalListing: true, problems: this.props.problems, userProblems: this.props.userProblems})
             }
         } else {
-            this.props.onFetchProblems()
+            console.log("result[2]")
+            this.props.onFetchProblems(page)
             this.setState({showPersonalListing: false, showListings: true})
         }
     }
 
+    componentDidMount() {
+        this.fetchFirstProblems()
+    }
+
     getUserProblems(event) {
         event.preventDefault()
-        this.setState({showPersonalListing: true, showListings: false})
+        this.setState({showPersonalListing: true, showListings: false, problems: [...this.props.problems, ...this.state.problems] , userProblems: this.props.userProblems})
     }
 
     showLatest(event) {
         event.preventDefault()
         this.setState({showPersonalListing: false, showListings: true})
+    }
+
+    loadMore() {
+        this.setState(prevState => ({
+            page: prevState.page + 1
+        }), this.fetchFirstProblem)
     }
 
     render() {
@@ -51,13 +67,13 @@ class ListingContainer extends React.Component{
                     </div>
                 </div>
                 {this.state.showPersonalListing && !this.state.showListings ?  (<Listing problems={this.props.userProblems} />) : (<Listing problems={this.props.problems} />)}
+                <div onClick={this.loadMore.bind(this)} className="mx-auto container">Load More</div>
             </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    console.dir(state);
     return {
         problems: state.problems.problems,
         userProblems: state.problems.userProblems
@@ -65,8 +81,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    onFetchProblems: () => dispatch(loadProblems()),
-    fetchUsersProblem: (id) => dispatch(loadUsersProblem(id))
+    onFetchProblems: (page) => dispatch(loadProblems(page)),
+    fetchUsersProblem: (id, page) => dispatch(loadUsersProblem(id, page))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListingContainer))
