@@ -2,28 +2,30 @@ import actions from "./actions";
 import problemsApi from "../services/problemsApi";
 
 
-export const loadProblems = () => dispatch => {
+export const loadProblems = (page = 1) => dispatch => {
     dispatch(actions.fetchingProblems())
-    problemsApi.getAllApprovedProblems().then((response) => {
-        dispatch(actions.fetchingProblemsSuccess(response));
-        //dispatch({type: 'FETCHING_PROBLEMS_SUCCESS', payload: response});
-    }).catch((error) => {
-        console.log(error);
-        dispatch(actions.fetchingProblemsFailure(error));
-    })
+    return problemsApi.getAllApprovedProblems(page)
+    // return problemsApi.getAllApprovedProblems(page).then((response) => {
+    //     dispatch(actions.fetchingProblemsSuccess(response));
+        
+    // }).catch((error) => {
+    //     console.log(error);
+    //     dispatch(actions.fetchingProblemsFailure(error));
+    // })
 }
 
 
 
 export const loadUsersProblem = (user_id) => dispatch => {
     dispatch(actions.fetchingUserProblems())
-    problemsApi.getAllUsersProblems(user_id).then((response) => {
-        console.dir(response)
-        dispatch(actions.fetchingUserProblemsSuccess(response))
-    }).catch((error) => {
-        console.log(error)
-        dispatch(actions.fetchingUserProblemsFailure(error))
-    })
+    return problemsApi.getAllUsersProblems(user_id)
+    // problemsApi.getAllUsersProblems(user_id).then((response) => {
+    //     console.dir(response)
+    //     dispatch(actions.fetchingUserProblemsSuccess(response))
+    // }).catch((error) => {
+    //     console.log(error)
+    //     dispatch(actions.fetchingUserProblemsFailure(error))
+    // })
 }
 
 

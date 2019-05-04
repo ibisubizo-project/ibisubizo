@@ -38,6 +38,8 @@ const problems = (state = initialState, action ) => {
             return {...state, selectedProblemsComments: action.payload}
         case actionTypes.SELECTED_PROBLEMS_LIKES:
             return {...state, selectedProblemsLikes: action.payload}
+        case actionTypes.ON_LOAD_MORE_SUCCESS:
+            return {...state, problems: [...state.problems, action.payload.problems]}
         default:
             return state
     }

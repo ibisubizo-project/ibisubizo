@@ -30,7 +30,8 @@ export const actionTypes = {
     FETCHING_LIKES_FAILURE: 'FETCHING_LIKES_FAILURE',
     ADDING_LIKE: 'ADDING_LIKE',
     ADDING_LIKE_SUCCESS: 'ADDING_LIKE_SUCCESS',
-    ADDING_LIKE_FAILURE: 'ADDING_LIKE_FAILURE'
+    ADDING_LIKE_FAILURE: 'ADDING_LIKE_FAILURE',
+    ON_LOAD_MORE_SUCCESS:  'ON_LOAD_MORE_SUCCESS'
 }
 
 
@@ -79,6 +80,12 @@ const actions = {
         return {
             type: actionTypes.FETCHING_PROBLEMS_FAILURE,
             payload: error
+        }
+    },
+    onLoadMoreSuccess:(newData) => {
+        return {
+            type: actionTypes.ON_LOAD_MORE_SUCCESS,
+            payload: newData
         }
     },
     fetchingUserProblemsSuccess: (problems) => ({

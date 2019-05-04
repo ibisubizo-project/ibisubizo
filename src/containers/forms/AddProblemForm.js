@@ -10,6 +10,7 @@ import Loader from '../../components/Loader';
 import { css } from '@emotion/core';
 // First way to import
 import { ClipLoader } from 'react-spinners';
+import MaxWidthDialog from '../../components/Dialog'
 
 firebase.initializeApp(config)
 
@@ -91,7 +92,7 @@ class AddProblemForm extends Component {
         let userData = JSON.parse(localStorage.getItem("userData"))
         console.log(userData)
         let payload = {};
-        if(!userData.hasOwnProperty("_id")) {
+        if(userData === undefined || userData === null || !userData.hasOwnProperty("_id")) {
             //We dont have the id of the currently logged in user
             console.error("WE can't find user id in local storage")
             //TODO: Show dialog telling the user to login 
@@ -118,6 +119,8 @@ class AddProblemForm extends Component {
         })
         console.log(payload);
 
+        this.setState({title:  '', description: ''}) //Clear form field
+        evt.target.reset()
     }
 
     render() {
@@ -152,8 +155,8 @@ class AddProblemForm extends Component {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
                         required
                         cols='100'
+                        placeholder={this.state.description} 
                         onChange={e => this.setState({description: e.target.value})}
-                        defaultValue={this.state.description}
                         rows='6'>
                     </textarea>
                 </div>
@@ -236,6 +239,7 @@ class AddProblemForm extends Component {
                     </div>
                 </div>
                 <button className="mt-6 bg-teal text-white p-3" type='submit' disabled={this.isUploading === true}>Submit</button>
+                <MaxWidthDialog />
             </form>
         )
     }
