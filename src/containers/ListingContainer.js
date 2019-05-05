@@ -31,7 +31,7 @@ class ListingContainer extends React.Component{
     getAllProblems() {
         let { page } = this.state
         this.setState({loading: true})
-        problemsApi.getAllProblems(page).then(result => {
+        problemsApi.getAllApprovedProblems(page).then(result => {
             console.dir(result)
             result.length === 0 ? this.setState({hasMore: false}) : this.setState({problems: [...this.state.problems, ...result], loading: false})
         }).catch(error => this.setState({error: error, loading: false}))
@@ -72,6 +72,8 @@ class ListingContainer extends React.Component{
         }), this.getAllProblems)
     }
     render() {
+        console.log("Evaluating state")
+        console.log(this.state.showPersonalListing && !this.state.showListings)
         return (
             <div className="listings mt-6">
                 <div className="listing-filter text-white h-12 bg-black align-baseline py-4 px-3 font-bold">
@@ -84,7 +86,9 @@ class ListingContainer extends React.Component{
                         </div>
                     </div>
                 </div>
-                {this.state.showPersonalListing && !this.state.showListings ?  (<Listing problems={this.state.userProblems} />) : (<Listing problems={this.state.problems} />)}
+                {!this.state.showPersonalListing && <Listing problems={this.state.problems} />}
+                {this.state.showPersonalListing && <Listing problems={this.state.userProblems} />}
+                {/* {this.state.showListings ? (<Listing problems={this.state.problems} />) : (<Listing problems={this.state.userProblems} />)} */}
                 {!this.state.showPersonalListing & this.state.hasMore ? (<div onClick={this.loadMore}>Load More</div>): ''}
             </div>
         )
