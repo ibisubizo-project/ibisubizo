@@ -16,9 +16,11 @@ class Listing extends Component {
         }
         return (
             <div>
-                {problems.map(problem => (
-                    <ListItem key={problem._id} {...problem} problem={problem} />
-                ))}
+                {problems.map((problem, index) => {
+                    return (
+                        <ListItem key={problem._id} index={index} problem={problem} {...problem} />
+                    )
+                })}
             </div>
         )
     }

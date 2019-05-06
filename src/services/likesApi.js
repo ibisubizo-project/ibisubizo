@@ -9,6 +9,7 @@ const likesApi = {};
 
 likesApi.AddLike = (like) => client.post('/likes/add/to/problem', like )
 likesApi.GetAllLikes = (postId) => client.get(`/likes/${postId}`)
+likesApi.RemoveLikeFromProblem = (like) => client.delete('/likes/remove/from/problem', like)
 
 
 export default likesApi;
