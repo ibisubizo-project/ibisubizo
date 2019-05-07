@@ -67,9 +67,8 @@ class ListItem extends Component {
                 const like = {}
                 like.problem_id = this.props._id
                 like.liked_by = userLocalStorage._id
-                like.id = likeId
 
-                likesApi.AddLike(like).then(result => {
+                likesApi.AddLike(like).then(result => { 
                     this.setState({likes: [...this.state.likes, like], hasLiked: !this.state.hasLiked})
                 }).catch(error => {
                     console.error(error)
