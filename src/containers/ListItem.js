@@ -28,8 +28,8 @@ class ListItem extends Component {
         })
     }
 
-    updateComment(commentId) {
-        this.setState({reRender: !this.state.reRender})
+    updateComment(comment) {
+        this.setState({comment: this.state.comments.push(comment)})
     }
 
     updateLike(likeId) {
@@ -56,6 +56,9 @@ class ListItem extends Component {
                     likesApi.RemoveLikeFromProblem(like).then(result => {
                         const newLikesArray = this.state.likes.filter( object => {
                             return object.id === like.id
+                        }).catch(error => {
+                            console.log("[Logging Error]")
+                            console.error(error)
                         })
                         console.log("[RemoveLikeFromProblem]")
                         console.dir(newLikesArray)
@@ -73,6 +76,9 @@ class ListItem extends Component {
                         console.log("[AddLike]")
                         console.dir(like)
                         this.setState({like: [...this.state.likes, like]}) 
+                    }).catch(error => {
+                        console.log("[AddLike] Logging error")
+                        console.error(error)
                     })
                 }
             })
