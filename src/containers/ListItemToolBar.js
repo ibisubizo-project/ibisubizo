@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { Twitter, Facebook } from 'react-social-sharing'
-import axios from 'axios'
 
 class ListItemToolBar extends Component {
     state = {
@@ -17,7 +16,7 @@ class ListItemToolBar extends Component {
         return (
             <div className="px-6 py-4">
                 <div>
-                    <span onClick={(e) => console.log(`You want to comment on post ${this.props.problem_id}`)}
+                    <span onClick={(e) => console.log(`${this.props.problem_id}`)}
                         className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <i className="fa fa-comment fa-lg mr-2"></i>{this.props.comments.length}
                     </span>
