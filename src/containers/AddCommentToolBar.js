@@ -18,7 +18,7 @@ class AddCommentToolBar extends Component {
       user_id: userId,
       comment:  this.state.comment
     }
-
+    this.props.updateComment(comment)
     this.props.addCommentToPost(problemId, comment)
     this.forceUpdate()
     this.setState({comment: ''})
@@ -29,12 +29,12 @@ class AddCommentToolBar extends Component {
       <div className="px-6 py-4">
         <form className="form" onSubmit={this.handleSubmit.bind(this)}>
           <input
-              className="w-full h-8 p-4"
-              type="text"
-              name='comment'
-              value={this.state.comment}
-              onChange={(e) => this.setState({comment: e.target.value})}
-              placeholder="Add your comment" />
+            className="w-full h-8 p-4"
+            type="text"
+            name='comment'
+            value={this.state.comment}
+            onChange={(e) => this.setState({comment: e.target.value})}
+            placeholder="Add your comment" />
         </form>
       </div>
     )
