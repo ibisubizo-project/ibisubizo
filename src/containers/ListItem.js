@@ -31,7 +31,6 @@ class ListItem extends Component {
         this.state.likes.map(like => {
             const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
             if(like.liked_by === userLocalStorage._id) {
-                //USER has already liked this problem
                 this.setState({hasLiked: true})
             }
         })
@@ -42,33 +41,25 @@ class ListItem extends Component {
     }
 
     updateLike(likeId) {
-        console.log("WE are here...")
         const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
 
         if(!this.props.userIsAuthenticated) {
             alert("Please sign in to comment and like posts")
             return
         } else {
-            console.log("Else...[]")
-            //If the user has already liked this problem
-            //Toggle the state
-            //If the user already liked the problem and clicked the like button
             if(this.state.hasLiked) {
-                //-Remove the like from the database(They are no longer liking the post)
-                console.log("You already liked this post, removing...")
                 const userLike = {}
                 userLike.problem_id = this.props._id
                 userLike.liked_by = userLocalStorage._id
                 likesApi.RemoveLike(this.props._id, userLocalStorage._id).then(result => {
-                    const newLikesArray = this.state.likes.filter(object => {
-                        return object.id === likeId
+                    this.state.likes.map((item, index) => {
+                        if(item.liked_by === userLocalStorage._id) {
+                            this.state.likes.splice(index, 1)
+                        }
                     })
-                    console.log("[newLikesArray]")
-                    console.log(newLikesArray)
-                    this.setState({likes: newLikesArray, hasLiked: !this.state.hasLiked})
+                    this.setState({hasLiked: !this.state.hasLiked})
                 }).catch(error => {
-                    console.dir(userLike)
-                    console.log(error)
+                    console.error(error)
                 })
             } else {
                 //If the user has not liked te post before and clicked the like button
@@ -78,12 +69,9 @@ class ListItem extends Component {
                 like.liked_by = userLocalStorage._id
                 like.id = likeId
 
-                likesApi.AddLike(like).then(result => { 
-                    console.log("[AddLike]")
-                    console.dir(like)
+                likesApi.AddLike(like).then(result => {
                     this.setState({likes: [...this.state.likes, like], hasLiked: !this.state.hasLiked})
                 }).catch(error => {
-                    console.log("[AddLike] Logging error")
                     console.error(error)
                 })
             }
