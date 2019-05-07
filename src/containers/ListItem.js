@@ -15,7 +15,8 @@ class ListItem extends Component {
         created_by: {},
         reRender: false,
         comments: [],
-        likes: []
+        likes: [],
+        hasLiked: false
     }
 
     componentWillMount() {
@@ -26,6 +27,14 @@ class ListItem extends Component {
         .then(result => {
             this.setState({comments: result[0], likes: result[1]})
         })
+
+        this.state.likes.map(like => {
+            const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
+            if(like.liked_by === userLocalStorage._id) {
+                //USER has already liked this problem
+                this.setState({hasLiked: true})
+            }
+        })
     }
 
     updateComment(comment) {
@@ -33,58 +42,52 @@ class ListItem extends Component {
     }
 
     updateLike(likeId) {
-        //Check if the signed in user has already liked this same post
-        //If the user has liked the post, then unlike the post and decrement the like counter 
-        //Else increase the counter of the like
-        //this.setState({likes: })
         console.log("WE are here...")
+        const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
 
         if(!this.props.userIsAuthenticated) {
             alert("Please sign in to comment and like posts")
             return
         } else {
             console.log("Else...[]")
-            this.state.likes.map(item => {
-                console.log("[MAP]")
-                const localStorageUserData = JSON.parse(localStorage.getItem("userData"))
-                if(item.liked_by === localStorageUserData._id) { //User liked this post, so we remove the like 
-                    console.log("You already liked this post, decrement the count")
-                    const like = {}
-                    like.problem_id = this.props._id
-                    like.liked_by = localStorageUserData._id
-                    like.id = likeId
-                    likesApi.RemoveLikeFromProblem(like).then(result => {
-                        const newLikesArray = this.state.likes.filter( object => {
-                            return object.id === like.id
-                        }).catch(error => {
-                            console.log("[Logging Error]")
-                            console.error(error)
-                        })
-                        console.log("[RemoveLikeFromProblem]")
-                        console.dir(newLikesArray)
-                        this.setState({likes: newLikesArray })
+            //If the user has already liked this problem
+            //Toggle the state
+            //If the user already liked the problem and clicked the like button
+            if(this.state.hasLiked) {
+                //-Remove the like from the database(They are no longer liking the post)
+                console.log("You already liked this post, removing...")
+                const userLike = {}
+                userLike.problem_id = this.props._id
+                userLike.liked_by = userLocalStorage._id
+                likesApi.RemoveLike(this.props._id, userLocalStorage._id).then(result => {
+                    const newLikesArray = this.state.likes.filter(object => {
+                        return object.id === likeId
                     })
-                } else { //User hasn't liked this post, so we add it
-                    console.log("User hasn't like this post")
-                    const like = {}
-                    like.id = likeId
-                    like.liked_by = localStorageUserData._id
-                    like.problem_id = this.props._id
-                    console.log(localStorageUserData)
+                    console.log("[newLikesArray]")
+                    console.log(newLikesArray)
+                    this.setState({likes: newLikesArray, hasLiked: !this.state.hasLiked})
+                }).catch(error => {
+                    console.dir(userLike)
+                    console.log(error)
+                })
+            } else {
+                //If the user has not liked te post before and clicked the like button
+                //-Add the like to the database (They just liked the post )
+                const like = {}
+                like.problem_id = this.props._id
+                like.liked_by = userLocalStorage._id
+                like.id = likeId
+
+                likesApi.AddLike(like).then(result => { 
+                    console.log("[AddLike]")
                     console.dir(like)
-                    likesApi.AddLike(like).then(result => { 
-                        console.log("[AddLike]")
-                        console.dir(like)
-                        this.setState({like: [...this.state.likes, like]}) 
-                    }).catch(error => {
-                        console.log("[AddLike] Logging error")
-                        console.error(error)
-                    })
-                }
-            })
+                    this.setState({likes: [...this.state.likes, like], hasLiked: !this.state.hasLiked})
+                }).catch(error => {
+                    console.log("[AddLike] Logging error")
+                    console.error(error)
+                })
+            }
         }
-        console.dir(this.state.likes)
-        //alert("You are liking...")
     }
 
     viewProblemDetails(evt) {
@@ -96,7 +99,6 @@ class ListItem extends Component {
 
     render() {
         const {_id, title, text, created_at, updated_at, created_by, pictures, videos, documents, is_approved, status} = this.props;
-        console.dir(this.props)
         const localStorageUserData = localStorage.getItem("userData")
         let renderedImage = null
         if(pictures !== undefined){
