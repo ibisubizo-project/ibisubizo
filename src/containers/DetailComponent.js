@@ -11,37 +11,64 @@ import likesApi from '../services/likesApi'
 import userApi from '../services/users';
 
 class DetailComponent extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            isLoading: false,
+            problem : {},
+            comments: [],
+            likes: [],
+            comment: '',
+            postedBy: {},
+            hasLiked: false,
+            featuredProblems: [],
+            error: ''
+        } 
 
-    state = {
-        isLoading: false,
-        problem : {},
-        comments: [],
-        comment: '',
-        postedBy: {},
-        isLiked: false,
-        featuredProblems: [],
-        error: ''
+        this.updateLike = this.updateLike.bind(this)
+        this.evaluateLikeState = this.evaluateLikeState.bind(this)
     }
 
-    onHandleLike() {
+    updateLike(problemId) {
+        const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
         const { match: { params } } = this.props;
 
-        const problemId = params.id;
-        let loggedInUser = localStorage.getItem("userData");
-        let userId = JSON.parse(loggedInUser)._id;
+        if(!this.props.userIsAuthenticated) {
+            alert("Please sign in to comment and like posts")
+            return
+        } else {
+            if(this.state.hasLiked) {
+                const userLike = {}
+                userLike.problem_id = params.id
+                userLike.liked_by = userLocalStorage._id
+                likesApi.RemoveLike(this.props._id, userLocalStorage._id).then(result => {
+                    this.state.likes.map((item, index) => {
+                        if(item.liked_by === userLocalStorage._id) {
+                            this.state.likes.splice(index, 1)
+                        }
+                    })
+                    this.setState({hasLiked: !this.state.hasLiked})
+                }).catch(error => {
+                    console.error(error)
+                })
+            } else {
+                //If the user has not liked te post before and clicked the like button
+                //-Add the like to the database (They just liked the post )
+                const like = {}
+                like.problem_id = params.id
+                like.liked_by = userLocalStorage._id
 
-        let payload = {};
-        payload.problem_id = problemId;
-        payload.liked_by = userId;
-
-        console.dir(payload)
-        this.props.addLike(payload);
-        this.props.selectedProblemsLikes.unshift(payload)
+                likesApi.AddLike(like).then(result => {
+                    this.setState({likes: [...this.state.likes, like], hasLiked: !this.state.hasLiked})
+                }).catch(error => {
+                    console.error(error)
+                })
+            }
+        }
     }
 
     handleSubmit(event) {
         event.preventDefault()
-        console.log(this.props)
         const { match: { params } } = this.props;
         if(this.state.comment.length < 2) return;
         let problemId = params.id;
@@ -60,25 +87,38 @@ class DetailComponent extends Component {
 
     componentDidMount() {
         const { match: { params } } = this.props;
-
         this.setState({isLoading: true})
+        //For the sideBAR Listings
         let problems = problemsApi.getProblem(params.id)
         problemsApi.getAllApprovedProblems().then(result => this.setState({featuredProblems: result})).catch(error => this.setState({error: error}))
+
+
         let comments =  commentsApi.ListAllPostComments(params.id)
         let likes  = likesApi.GetAllLikes(params.id)
-
-
         Promise.all([problems, comments, likes]).then(result => {
-            console.dir(result)
             this.props.setSelectedProblemsComments(result[1])
             this.props.setSelectedProblemsLikes(result[2])
             userApi.GetUserById(result[0]._id).then(userData => this.setState({postedBy: userData})).catch(error => this.setState({error: error}));
-            this.setState({problem: result[0], isLoading: false})
+            result[2].map(like => {
+                const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
+                if(like.liked_by === userLocalStorage._id) {
+                    this.setState({hasLiked: true})
+                }
+            })
+            this.setState({problem: result[0], isLoading: false, likes: result[2]})
         }).catch(error => {
             console.error(error)
             this.setState({isLoading: false})
         });
+    }
 
+    evaluateLikeState(data) {
+        data.map(like => {
+            const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
+            if(like.liked_by === userLocalStorage._id) {
+                this.setState({hasLiked: true})
+            }
+        })
     }
 
     render() {
@@ -86,6 +126,7 @@ class DetailComponent extends Component {
         if(this.state.isLoading) {
             return <div>Loading...</div>
         }
+
         let problemListing = this.state.featuredProblems.slice(0, 20)
         let renderPostImage = null
         if(this.state.problem.pictures !== undefined) {
@@ -119,9 +160,9 @@ class DetailComponent extends Component {
                                     <i className="fa fa-comment fa-lg mr-2"></i>{this.props.selectedProblemsComments.length}
                                 </span>
                                 <span 
-                                    onClick={this.onHandleLike.bind(this)}
+                                    onClick={(e) => this.updateLike(params.id)}
                                     className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-green">
-                                    <i className="fa fa-heart fa-lg mr-2"></i> {this.props.selectedProblemsLikes.length}
+                                    <i className="fa fa-heart fa-lg mr-2"></i> {this.state.likes.length}
                                 </span>
                                 <span className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-red">
                                     <i className="fa fa-share fa-lg mr-2"></i> 247
@@ -177,6 +218,7 @@ const mapStateToProps = (state) => {
     return {
         selectedProblemsComments: state.problems.selectedProblemsComments,
         selectedProblemsLikes: state.problems.selectedProblemsLikes,
+        userIsAuthenticated: state.usersReducer.isAuthenticated
     }
 }
 

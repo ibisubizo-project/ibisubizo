@@ -4,13 +4,11 @@ import axios from 'axios'
 import firebase from 'firebase'
 import FileUploader from 'react-firebase-file-uploader'
 import { addProblem } from '../../actions/problems'
-import actions from '../../actions/actions';
+import actions from '../../actions/actions'
 import config from '../../firebase'
-import Loader from '../../components/Loader';
-import { css } from '@emotion/core';
-// First way to import
-import { ClipLoader } from 'react-spinners';
-import MaxWidthDialog from '../../components/Dialog'
+import Loader from '../../components/Loader'
+import { css } from '@emotion/core'
+import { ClipLoader } from 'react-spinners'
 
 firebase.initializeApp(config)
 
@@ -19,7 +17,7 @@ const override = css`
     display: block;
     margin: 0 auto;
     border-color: red;
-`;
+`
 
 
 class AddProblemForm extends Component {
@@ -42,8 +40,8 @@ class AddProblemForm extends Component {
     }
     handleUploadError(error) {
         this.setState({isUploading: false})
-        console.error(error);
-    };
+        console.error(error)
+    }
     handleUploadSuccess(filename) {
         this.setState({progress: 100, isUploading: false})
         firebase
@@ -54,9 +52,9 @@ class AddProblemForm extends Component {
           .then(url => this.setState(state => {
               const newURL = state.uploadedPictures.concat(url)
               return { uploadedPictures: newURL}
-          }));
+          }))
           console.dir(this.state.uploadedPictures)
-    };
+    }
 
     handleVideoUploadSuccess(filename) {
         this.setState({progress: 100, isUploading: false})
@@ -68,7 +66,7 @@ class AddProblemForm extends Component {
           .then(url => this.setState(state => {
               const newURL = state.uploadedVideos.concat(url)
               return { uploadedVideos: newURL}
-          }));
+          }))
           console.dir(this.state.uploadedVideos)
     }
 
@@ -82,16 +80,16 @@ class AddProblemForm extends Component {
           .then(url => this.setState(state => {
               const newURL = state.uploadedDocuments.concat(url)
               return { uploadedDocuments: newURL}
-          }));
+          }))
           console.dir(this.state.uploadedDocuments)
     }
 
     onSubmit = (evt) => {
-        evt.preventDefault();
+        evt.preventDefault()
         console.dir(this.state.uploadedPictures)
         let userData = JSON.parse(localStorage.getItem("userData"))
         console.log(userData)
-        let payload = {};
+        let payload = {}
         if(userData === undefined || userData === null || !userData.hasOwnProperty("_id")) {
             //We dont have the id of the currently logged in user
             console.error("WE can't find user id in local storage")
@@ -100,9 +98,9 @@ class AddProblemForm extends Component {
         }
 
         payload.title = this.state.title
-        payload.text = this.state.description;
-        payload.status = this.state.status;
-        payload.created_by = userData._id;
+        payload.text = this.state.description
+        payload.status = this.state.status
+        payload.created_by = userData._id
         payload.pictures = this.state.uploadedPictures
         payload.videos = this.state.uploadedVideos
         payload.document = this.state.uploadedDocuments
@@ -111,13 +109,13 @@ class AddProblemForm extends Component {
 
         console.log("Before API request")
         axios.post('http://localhost:8000/api/problems', payload).then(response => {
-            console.log(response);
+            console.log(response)
             this.props.addingProblemSuccess(response)
         }).catch(error => {
-            console.error(error);
+            console.error(error)
             this.props.addingProblemFailure(error)
         })
-        console.log(payload);
+        console.log(payload)
 
         this.setState({title:  '', description: ''}) //Clear form field
         evt.target.reset()
@@ -239,7 +237,6 @@ class AddProblemForm extends Component {
                     </div>
                 </div>
                 <button className="mt-6 bg-teal text-white p-3" type='submit' disabled={this.isUploading === true}>Submit</button>
-                <MaxWidthDialog />
             </form>
         )
     }
@@ -253,4 +250,4 @@ const mapDispatchToProps = dispatch => {
     }
   }
 
-export default  connect(null, mapDispatchToProps)(AddProblemForm); //connect(null, mapDispatchToProps)()
+export default  connect(null, mapDispatchToProps)(AddProblemForm) //connect(null, mapDispatchToProps)()

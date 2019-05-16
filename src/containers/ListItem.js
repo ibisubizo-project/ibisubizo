@@ -7,15 +7,74 @@ import ListItemToolBar from './ListItemToolBar';
 import AddCommentToolBar from './AddCommentToolBar';
 import history from '../history';
 import actions from '../actions/actions'
+import commentApi from '../services/commentApi';
+import likesApi from '../services/likesApi'
 
 class ListItem extends Component {
     state = {
         created_by: {},
         reRender: false,
+        comments: [],
+        likes: [],
+        hasLiked: false
     }
 
-    update() {
-        this.setState({reRender: !this.state.reRender})
+    componentWillMount() {
+        const comments = commentApi.ListAllPostComments(this.props._id)
+        const likes = likesApi.GetAllLikes(this.props._id)
+
+        Promise.all([comments, likes])
+        .then(result => {
+            this.setState({comments: result[0], likes: result[1]})
+        })
+
+        this.state.likes.map(like => {
+            const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
+            if(like.liked_by === userLocalStorage._id) {
+                this.setState({hasLiked: true})
+            }
+        })
+    }
+
+    updateComment(comment) {
+        this.setState({comment: this.state.comments.push(comment)})
+    }
+
+    updateLike(likeId) {
+        const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
+
+        if(!this.props.userIsAuthenticated) {
+            alert("Please sign in to comment and like posts")
+            return
+        } else {
+            if(this.state.hasLiked) {
+                const userLike = {}
+                userLike.problem_id = this.props._id
+                userLike.liked_by = userLocalStorage._id
+                likesApi.RemoveLike(this.props._id, userLocalStorage._id).then(result => {
+                    this.state.likes.map((item, index) => {
+                        if(item.liked_by === userLocalStorage._id) {
+                            this.state.likes.splice(index, 1)
+                        }
+                    })
+                    this.setState({hasLiked: !this.state.hasLiked})
+                }).catch(error => {
+                    console.error(error)
+                })
+            } else {
+                //If the user has not liked te post before and clicked the like button
+                //-Add the like to the database (They just liked the post )
+                const like = {}
+                like.problem_id = this.props._id
+                like.liked_by = userLocalStorage._id
+
+                likesApi.AddLike(like).then(result => { 
+                    this.setState({likes: [...this.state.likes, like], hasLiked: !this.state.hasLiked})
+                }).catch(error => {
+                    console.error(error)
+                })
+            }
+        }
     }
 
     viewProblemDetails(evt) {
@@ -46,8 +105,8 @@ class ListItem extends Component {
                     {renderedImage}
                 </div>
 
-                <ListItemToolBar problem_id={_id} />
-                {localStorageUserData ? <AddCommentToolBar callback={this.update.bind(this)} problem_id={_id} user_data={JSON.parse(localStorageUserData)} /> : '' }
+                <ListItemToolBar problem_id={_id} comments={this.state.comments} likes={this.state.likes} updateLike={this.updateLike.bind(this)} />
+                {localStorageUserData ? <AddCommentToolBar updateComment={this.updateComment.bind(this)}  problem_id={_id} user_data={JSON.parse(localStorageUserData)} /> : '' }
             </div>
         )
     }
