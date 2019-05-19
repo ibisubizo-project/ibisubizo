@@ -23,7 +23,7 @@ const Root = ({ store }) => (
           <Route path='/bye' component={()=> <h1>Bye Bye</h1>} />
           <Route path='/auth/login' component={Login} />
           <Route path='/auth/register' component={Register} />
-          <Route path='/problem/:id' component={DetailComponent} />
+          <PrivateRoute path='/problem/:id' component={DetailComponent} />
           <Route path='/about' component={AboutUsComponent} />
           <Route path='/term' component={TermsAndConditionComponent} />
           <Route path={'*'} component={()=> <h1>Page Not Found...</h1>} />

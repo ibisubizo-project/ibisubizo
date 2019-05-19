@@ -31,6 +31,7 @@ export const login =  (form) => {
 export function register(credentials) {
 	return dispatch => userApi.Register(credentials)
 		.then((response) => {
+			console.log("response")
 			console.dir(response)
 			dispatch(actions.authenticateUser(response.user))
 			localStorage.setItem("token", response.token)
