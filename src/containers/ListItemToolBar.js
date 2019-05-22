@@ -25,8 +25,10 @@ class ListItemToolBar extends Component {
                         className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <i className="fa fa-heart fa-lg mr-2"></i> {this.props.likes.length}
                     </span>
-                    <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker flex">
+                    <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <Twitter link={`http://localhost:3000/problem/${this.props.problem_id}`} />
+                    </span>
+                    <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <Facebook link={`http://localhost:3000/problem/${this.props.problem_id}`} />
                     </span>
                 </div>

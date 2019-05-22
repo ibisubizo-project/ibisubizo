@@ -8,7 +8,8 @@ import actions from '../actions/actions'
 import problemsApi from '../services/problemsApi'
 import commentsApi from '../services/commentApi'
 import likesApi from '../services/likesApi'
-import userApi from '../services/users';
+import userApi from '../services/users'
+import { Twitter, Facebook } from 'react-social-sharing'
 
 class DetailComponent extends Component {
     constructor(props){
@@ -164,8 +165,11 @@ class DetailComponent extends Component {
                                     className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-green">
                                     <i className="fa fa-heart fa-lg mr-2"></i> {this.state.likes.length}
                                 </span>
-                                <span className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-red">
-                                    <i className="fa fa-share fa-lg mr-2"></i> 247
+                                <span className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-blue-light">
+                                    <Twitter link={`http://localhost:3000/problem/${params.id}`} />
+                                </span>
+                                <span className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-blue-light">
+                                    <Facebook link={`http://localhost:3000/problem/${params.id}`} />
                                 </span>
                             </div>
                         </div>

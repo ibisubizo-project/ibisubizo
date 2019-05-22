@@ -63,7 +63,7 @@ class ListItem extends Component {
                 })
             } else {
                 //If the user has not liked te post before and clicked the like button
-                //-Add the like to the database (They just liked the post )
+                //-Add the like to the database (They just liked the post)
                 const like = {}
                 like.problem_id = this.props._id
                 like.liked_by = userLocalStorage._id
@@ -119,7 +119,6 @@ class ListItem extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.dir(state);
     return {
         selectedProblem: state.problems.selectedProblem,
         userIsAuthenticated: state.usersReducer.isAuthenticated
