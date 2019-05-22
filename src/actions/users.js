@@ -43,6 +43,8 @@ export function register(credentials) {
 		})
 		.catch((err) => {
 			let error = err
+			console.log("[REGISTER ERROR]")
+			console.dir(error)
 			return dispatch(actions.authenticationError(error));
 		})
 }

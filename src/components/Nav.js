@@ -6,6 +6,11 @@ import {connect} from 'react-redux'
 
 
 class NavBar extends Component {
+  logout() {
+    localStorage.clear()
+    window.location.href = '/'
+
+  }
   render() {
     return (
       <div className="container mx-auto bg-teal h-12 text-white pl-10">
@@ -36,6 +41,16 @@ class NavBar extends Component {
               </div>
             )
           }
+
+          {this.props.userIsAuthenticated && (
+            <div className="navbar-right">
+              <ul className="list-reset inline-block flex mt-3">
+                <li className="mr-2">
+                  <Link className="text-white no-underline" onClick={() => this.logout.bind(this)}>Logout</Link>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     )

@@ -21,6 +21,8 @@ export default function usersReducer ( state = initialState, action) {
 			return {...state, isAuthenticated: false, authedUser: {}}
         case actionTypes.AUTH_ERROR:
 			return {...state, error: action.payload}
+				case actionTypes.CLEAR_AUTH_ERRORS:
+						return {...state, error: ''}
         case actionTypes.FETCHING_USER:
 			return {...state, isFetching: true}
         case actionTypes.FETCHING_USER_FAILURE:

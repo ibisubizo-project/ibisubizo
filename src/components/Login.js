@@ -2,6 +2,7 @@ import React from 'react'
 import {bindActionCreators} from 'redux'  
 import {connect} from 'react-redux'
 import * as usersActions from '../actions/users';
+import actions from '../actions/actions';
 
 class Login extends React.Component {
     onSubmit (event) {
@@ -11,6 +12,10 @@ class Login extends React.Component {
 
     onFieldChanged (event) {
         this.setState({[event.target.name]: event.target.value})
+    }
+
+    componentWillUnmount() {
+      this.props.clearAuthError()
     }
   
     render () {
@@ -50,7 +55,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-      actions: bindActionCreators(usersActions, dispatch)
+      actions: bindActionCreators(usersActions, dispatch),
+      clearAuthError: () =>  dispatch(actions.clearAuthenticationError())
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
