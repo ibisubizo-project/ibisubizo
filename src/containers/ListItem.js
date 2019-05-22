@@ -16,7 +16,8 @@ class ListItem extends Component {
         reRender: false,
         comments: [],
         likes: [],
-        hasLiked: false
+        hasLiked: false,
+        unAuthenticatedAction: false
     }
 
     componentWillMount() {
@@ -44,8 +45,7 @@ class ListItem extends Component {
         const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
 
         if(!this.props.userIsAuthenticated) {
-            alert("Please sign in to comment and like posts")
-            return
+            this.setState({unAuthenticatedAction : true})
         } else {
             if(this.state.hasLiked) {
                 const userLike = {}
@@ -79,7 +79,9 @@ class ListItem extends Component {
 
     viewProblemDetails(evt) {
         evt.preventDefault()
-        if(!this.props.userIsAuthenticated) { alert("Please Login..."); return; }
+        if(!this.props.userIsAuthenticated) { 
+            this.setState({unAuthenticatedAction : true})
+        }
         this.props.setSelectedProblem(this.props.problem)
         history.push(`/problem/${this.props._id}`)
     }
@@ -88,6 +90,10 @@ class ListItem extends Component {
         const {_id, title, text, created_at, updated_at, created_by, pictures, videos, documents, is_approved, status} = this.props;
         const localStorageUserData = localStorage.getItem("userData")
         let renderedImage = null
+        if(this.state.unAuthenticatedAction == true) {
+            return <Redirect to="/auth/login" />
+        }
+
         if(pictures !== undefined){
             renderedImage = (pictures.length > 0) ? <p><a href={pictures[0]}><img src={pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm w-full" /></a></p> : ''
         }
