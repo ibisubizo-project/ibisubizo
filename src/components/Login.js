@@ -14,10 +14,15 @@ class Login extends React.Component {
     }
   
     render () {
+      const hasErrors = (this.props.authenticationError) ? 'block border border-red-500 p-2 mb-2' : 'hidden';
+
       return (
-        <form 
+        <form
           onChange={this.onFieldChanged.bind(this)} onSubmit={this.onSubmit.bind(this)}
           className="font-sans text-sm rounded w-full max-w-md mx-auto my-8 px-8 pt-6 pb-8">
+          <div className={hasErrors}>
+            {this.props.authenticationError}
+          </div>
           <div className="relative border rounded mb-4 shadow appearance-none label-floating">
             <input className="w-full py-2 px-3 text-grey-darker leading-normal rounded" name="phone" type="text" placeholder="Phone Number" />
           </div>
@@ -37,9 +42,15 @@ class Login extends React.Component {
     }
   }
 
+
+function mapStateToProps(state) {
+  return {
+    authenticationError: state.usersReducer.error
+  }
+}
 function mapDispatchToProps(dispatch) {
     return {
       actions: bindActionCreators(usersActions, dispatch)
     };
 }
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
