@@ -11,7 +11,7 @@ class Listing extends Component {
 
     render() {
         const { problems } = this.props;
-        if(problems.length === 0) {
+        if(!problems || problems.length === 0) {
             return (<div>No Post...</div>)
         }
         return (
