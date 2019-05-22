@@ -72,8 +72,6 @@ class ListingContainer extends React.Component{
         }), this.getAllProblems)
     }
     render() {
-        console.log("Evaluating state")
-        console.log(this.state.showPersonalListing && !this.state.showListings)
         return (
             <div className="listings mt-6">
                 <div className="listing-filter text-white h-12 bg-black align-baseline py-4 px-3 font-bold">
@@ -87,8 +85,7 @@ class ListingContainer extends React.Component{
                     </div>
                 </div>
                 {!this.state.showPersonalListing && <Listing problems={this.state.problems} />}
-                {this.state.showPersonalListing && <Listing problems={this.state.userProblems} />}
-                {/* {this.state.showListings ? (<Listing problems={this.state.problems} />) : (<Listing problems={this.state.userProblems} />)} */}
+                {this.state.showPersonalListing && <Listing problems={this.state.userProblems || []} />}
                 {!this.state.showPersonalListing & this.state.hasMore ? (<div onClick={this.loadMore}>Load More</div>): ''}
             </div>
         )
