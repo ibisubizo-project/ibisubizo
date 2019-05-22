@@ -167,7 +167,7 @@ class AddProblemForm extends Component {
                     <div className="uploads">
                         <ul className="flex list-reset">
                             <li className="mr-2">
-                                <label style={{pointer: 'cursor'}}>
+                                <label className="cursor-pointer">
                                     Photo
                                     <FileUploader
                                         hidden
@@ -182,7 +182,7 @@ class AddProblemForm extends Component {
                                 </label>
                             </li>
                             <li className="mr-2">
-                                <label style={{pointer: 'cursor'}}>
+                                <label className="cursor-pointer">
                                     Video
                                     <FileUploader
                                         hidden
@@ -197,7 +197,7 @@ class AddProblemForm extends Component {
                                 </label>
                             </li>
                             <li className="mr-2">
-                                <label style={{pointer: 'cursor'}}>
+                                <label className="cursor-pointer">
                                     Documents
                                     <FileUploader
                                         hidden
