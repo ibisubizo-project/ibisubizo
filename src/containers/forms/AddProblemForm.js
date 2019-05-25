@@ -30,7 +30,8 @@ class AddProblemForm extends Component {
         progress: 0,
         uploadedPictures: [],
         uploadedVideos: [],
-        uploadedDocuments: []
+        uploadedDocuments: [],
+        redirectToLogin: false
     }
    
     handleUploadStart() { 
@@ -93,12 +94,8 @@ class AddProblemForm extends Component {
         let payload = {}
 
         if(userData === undefined || userData === null || !userData.hasOwnProperty("_id")) {
-            console.error("WE can't find user id in local storage")
-            payload.title = this.state.title
-            payload.text = this.state.description
-            payload.status = this.state.status
-            //TODO: Show dialog telling the user to login 
-            return <Redirect to='/auth/login' />
+            this.setState({redirectToLogin: true})
+            return
         }
 
         payload.title = this.state.title
@@ -126,6 +123,11 @@ class AddProblemForm extends Component {
     }
 
     render() {
+
+        if(this.state.redirectToLogin) {
+            return <Redirect to='/auth/login' />
+        }
+
         if(this.state.isUploading) {
             return(
                 <div className='sweet-loading'>
