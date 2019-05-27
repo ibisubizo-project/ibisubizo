@@ -42,7 +42,7 @@ class NavBar extends Component {
             <div className="navbar-right">
               <ul className="list-reset inline-block flex mt-3">
                 <li className="mr-2">
-                  <Link className="text-white no-underline" onClick={() => this.props.logout()}>Logout</Link>
+                  <p className="text-white no-underline cursor-pointer" onClick={() => this.props.logout()}>Logout</p>
                 </li>
               </ul>
             </div>

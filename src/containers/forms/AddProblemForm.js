@@ -149,7 +149,7 @@ class AddProblemForm extends Component {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
                         required
                         cols='100'
-                        placeholder={this.state.description} 
+                        value={this.state.description} 
                         onChange={e => this.setState({description: e.target.value})}
                         rows='6'>
                     </textarea>
