@@ -55,7 +55,6 @@ class AddProblemForm extends Component {
               const newURL = state.uploadedPictures.concat(url)
               return { uploadedPictures: newURL}
           }))
-          console.dir(this.state.uploadedPictures)
     }
 
     handleVideoUploadSuccess(filename) {
@@ -69,26 +68,23 @@ class AddProblemForm extends Component {
               const newURL = state.uploadedVideos.concat(url)
               return { uploadedVideos: newURL}
           }))
-          console.dir(this.state.uploadedVideos)
     }
 
     handleDocumentUploadSuccess(filename) {
         this.setState({progress: 100, isUploading: false})
         firebase
           .storage()
-          .ref("document")
+          .ref("documents")
           .child(filename)
           .getDownloadURL()
           .then(url => this.setState(state => {
               const newURL = state.uploadedDocuments.concat(url)
               return { uploadedDocuments: newURL}
           }))
-          console.dir(this.state.uploadedDocuments)
     }
 
     onSubmit = (evt) => {
         evt.preventDefault()
-        console.dir(this.state.uploadedPictures)
         let userData = JSON.parse(localStorage.getItem("userData"))
         console.log(userData)
         let payload = {}
@@ -104,19 +100,13 @@ class AddProblemForm extends Component {
         payload.created_by = userData._id
         payload.pictures = this.state.uploadedPictures
         payload.videos = this.state.uploadedVideos
-        payload.document = this.state.uploadedDocuments
+        payload.documents = this.state.uploadedDocuments
 
-        console.dir(payload)
-
-        console.log("Before API request")
         axios.post('http://46.101.146.153:8000/api/problems', payload).then(response => {
-            console.log(response)
             this.props.addingProblemSuccess(response)
         }).catch(error => {
-            console.error(error)
             this.props.addingProblemFailure(error)
         })
-        console.log(payload)
 
         this.setState({title:  '', description: ''}) //Clear form field
         evt.target.reset()
@@ -203,7 +193,7 @@ class AddProblemForm extends Component {
                                     Documents
                                     <FileUploader
                                         hidden
-                                        accept="file/*"
+                                        accept="*"
                                         multiple
                                         storageRef={firebase.storage().ref('documents')}
                                         onUploadStart={this.handleUploadStart.bind(this)}
