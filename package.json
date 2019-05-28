@@ -39,7 +39,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://46.101.146.153:8000/api",
   "eslintConfig": {
     "extends": "react-app"
   },
