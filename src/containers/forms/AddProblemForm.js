@@ -10,6 +10,8 @@ import config from '../../firebase'
 import Loader from '../../components/Loader'
 import { css } from '@emotion/core'
 import { ClipLoader } from 'react-spinners'
+import AppConfig from '../../utils/config'
+
 
 firebase.initializeApp(config)
 
@@ -101,7 +103,8 @@ class AddProblemForm extends Component {
         payload.videos = this.state.uploadedVideos
         payload.documents = this.state.uploadedDocuments
 
-        axios.post('/problems', payload).then(response => {
+
+        axios.post(`${AppConfig.API_URL}/problems`, payload).then(response => {
             this.props.addingProblemSuccess(response)
         }).catch(error => {
             this.props.addingProblemFailure(error)
