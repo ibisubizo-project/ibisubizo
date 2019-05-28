@@ -1,8 +1,7 @@
 import ApiService from "./Api";
 
 
-const BASE_URL = process.env.URL || 'http://localhost:8000/api'
-const client = new ApiService({ baseURL: BASE_URL });
+const client = new ApiService({});
 
 const problemsApi = {};
 

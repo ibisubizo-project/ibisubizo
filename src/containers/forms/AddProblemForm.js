@@ -19,7 +19,6 @@ const override = css`
     margin: 0 auto;
     border-color: red;
 `
-const API_URL = 'http://localhost:8000/api';
 
 class AddProblemForm extends Component {
     state = {
@@ -89,7 +88,7 @@ class AddProblemForm extends Component {
         console.log(userData)
         let payload = {}
 
-        if(userData === undefined || userData === null || !userData.hasOwnProperty("_id")) {
+        if(userData === undefined || userData === null || !userData.hasOwnProperty("_id") || !this.props.userIsAuthenticated) {
             this.setState({redirectToLogin: true})
             return
         }
@@ -102,7 +101,7 @@ class AddProblemForm extends Component {
         payload.videos = this.state.uploadedVideos
         payload.documents = this.state.uploadedDocuments
 
-        axios.post(`${API_URL}/problems`, payload).then(response => {
+        axios.post('/api/problems', payload).then(response => {
             this.props.addingProblemSuccess(response)
         }).catch(error => {
             this.props.addingProblemFailure(error)
@@ -239,6 +238,12 @@ class AddProblemForm extends Component {
 }
 
 
+const mapStateToProps = (state) => {
+    return {
+        userIsAuthenticated: state.usersReducer.isAuthenticated
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         addingProblemSuccess: (response) => dispatch(actions.addingProblemSuccess(response)),
@@ -246,4 +251,4 @@ const mapDispatchToProps = dispatch => {
     }
   }
 
-export default  connect(null, mapDispatchToProps)(AddProblemForm)
+export default  connect(mapStateToProps, mapDispatchToProps)(AddProblemForm)

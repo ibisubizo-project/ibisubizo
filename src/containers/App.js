@@ -12,8 +12,6 @@ class App extends Component {
         this.props.onFetchProblems();
     }
     render() {
-        console.log("<App />")
-        console.dir(this.props.user.authedUser)
         return (
             <div className="container m-auto p-8 text-grey-darkest">
               <div className="w-3/5">
