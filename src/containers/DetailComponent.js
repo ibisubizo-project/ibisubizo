@@ -20,7 +20,7 @@ class DetailComponent extends Component {
             comments: [],
             likes: [],
             comment: '',
-            postedBy: {},
+            postedBy: '',
             hasLiked: false,
             featuredProblems: [],
             error: ''
@@ -92,14 +92,17 @@ class DetailComponent extends Component {
         //For the sideBAR Listings
         let problems = problemsApi.getProblem(params.id)
         problemsApi.getAllApprovedProblems().then(result => this.setState({featuredProblems: result})).catch(error => this.setState({error: error}))
-
-
         let comments =  commentsApi.ListAllPostComments(params.id)
         let likes  = likesApi.GetAllLikes(params.id)
         Promise.all([problems, comments, likes]).then(result => {
             this.props.setSelectedProblemsComments(result[1])
             this.props.setSelectedProblemsLikes(result[2])
-            userApi.GetUserById(result[0]._id).then(userData => this.setState({postedBy: userData})).catch(error => this.setState({error: error}));
+
+            userApi.GetUserById(result[0].created_by).then(userData => {
+                let { firstname, lastname } = userData;
+                let name = `${firstname} ${lastname}`;
+                this.setState({postedBy: name})
+            }).catch(error => this.setState({error: error}));
             result[2].map(like => {
                 const userLocalStorage = JSON.parse(localStorage.getItem("userData"))
                 if(like.liked_by === userLocalStorage._id) {
@@ -133,7 +136,7 @@ class DetailComponent extends Component {
         if(this.state.problem.pictures !== undefined) {
             renderPostImage = (this.state.problem.pictures.length > 0) ? <p><a href={this.state.problem.pictures[0]}><img src={this.state.problem.pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm" /></a></p> : '';
         }
-        console.log(this.state.postedBy)
+        
         return (
             <div className="container m-auto p-8 text-grey-darkest flex">
               <div className="w-3/5 px-6 py-4">
@@ -141,8 +144,8 @@ class DetailComponent extends Component {
                 <div className="flex border-b border-solid border-grey-light">
                     <div className="w-full p-3 pl-0">
                         <div className="flex justify-between">
-                            <div>
-                                <span className="font-bold">Ofonime Francis</span>
+                            <div className="flex justify-between">
+                                <span className="font-bold">{this.state.postedBy}</span>
                                 <span className="text-grey-dark"><TimeAgo date={new Date(this.state.problem.created_at)} /></span>
                             </div>
                             <div>
@@ -166,10 +169,10 @@ class DetailComponent extends Component {
                                     <i className="fa fa-heart fa-lg mr-2"></i> {this.state.likes.length}
                                 </span>
                                 <span className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-blue-light">
-                                    <Twitter link={`http://localhost:3000/problem/${params.id}`} />
+                                    <Twitter link={`http://ibisubizo.com/problem/${params.id}`} />
                                 </span>
                                 <span className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-blue-light">
-                                    <Facebook link={`http://localhost:3000/problem/${params.id}`} />
+                                    <Facebook link={`http://ibisubizo.com/problem/${params.id}`} />
                                 </span>
                             </div>
                         </div>

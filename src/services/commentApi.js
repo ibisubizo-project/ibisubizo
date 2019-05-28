@@ -1,7 +1,7 @@
 import ApiService from "./Api";
 
 
-const BASE_URL = 'http://46.101.146.153:8000/api'
+const BASE_URL = process.env.URL || 'http://localhost:8000/api'
 const client = new ApiService({ baseURL: BASE_URL });
 
 const commentApi = {};

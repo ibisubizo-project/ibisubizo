@@ -19,7 +19,7 @@ const override = css`
     margin: 0 auto;
     border-color: red;
 `
-
+const API_URL = 'http://localhost:8000/api';
 
 class AddProblemForm extends Component {
     state = {
@@ -102,7 +102,7 @@ class AddProblemForm extends Component {
         payload.videos = this.state.uploadedVideos
         payload.documents = this.state.uploadedDocuments
 
-        axios.post('http://46.101.146.153:8000/api/problems', payload).then(response => {
+        axios.post(`${API_URL}/problems`, payload).then(response => {
             this.props.addingProblemSuccess(response)
         }).catch(error => {
             this.props.addingProblemFailure(error)
@@ -246,4 +246,4 @@ const mapDispatchToProps = dispatch => {
     }
   }
 
-export default  connect(null, mapDispatchToProps)(AddProblemForm) //connect(null, mapDispatchToProps)()
+export default  connect(null, mapDispatchToProps)(AddProblemForm)

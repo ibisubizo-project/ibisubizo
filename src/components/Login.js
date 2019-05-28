@@ -1,5 +1,6 @@
 import React from 'react'
-import {bindActionCreators} from 'redux'  
+import {bindActionCreators} from 'redux'
+import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import * as usersActions from '../actions/users';
 import actions from '../actions/actions';
@@ -41,6 +42,10 @@ class Login extends React.Component {
             <a className="inline-block align-baseline text-grey hover:text-grey-darker" href="/auth/forget">
               Forgot Password?
             </a>
+          </div>
+
+          <div className="flex mt-5">
+            <p>You don't have an account? <Link to='/auth/register'>Register Here</Link></p>
           </div>
         </form>
       )
