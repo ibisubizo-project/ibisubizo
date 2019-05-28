@@ -32,7 +32,7 @@ class AddProblemForm extends Component {
         uploadedDocuments: [],
         redirectToLogin: false
     }
-   
+
     handleUploadStart() { 
         this.setState({isUploading: true, progress: 0})
      }
@@ -101,7 +101,7 @@ class AddProblemForm extends Component {
         payload.videos = this.state.uploadedVideos
         payload.documents = this.state.uploadedDocuments
 
-        axios.post('/api/problems', payload).then(response => {
+        axios.post('/problems', payload).then(response => {
             this.props.addingProblemSuccess(response)
         }).catch(error => {
             this.props.addingProblemFailure(error)
