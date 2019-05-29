@@ -3,7 +3,6 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as usersActions from '../actions/users';
 import actions from '../actions/actions';
-import _ from 'lodash'
 
 
 class Register extends React.Component {

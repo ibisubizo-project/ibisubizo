@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { loadProblems } from '../actions/problems'
@@ -13,10 +12,10 @@ class App extends Component {
     }
     render() {
         return (
-            <React.Fragment>
+            <div className="content-container p-8 bg-gray-100">
                 <ProblemBox />
                 <ListingContainer data={this.props.user} />
-            </React.Fragment>
+            </div>
         )
     }
 }

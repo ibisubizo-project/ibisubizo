@@ -12,7 +12,6 @@ import history from '../../src/history'
 import DetailComponent from './DetailComponent'
 import AboutUsComponent from '../components/AboutUsComponent';
 import TermsAndConditionComponent from '../components/TermsAndConditionComponent';
-import Auth from '../utils/auth';
 
 const Root = ({ store }) => (
   <Provider store={store}>

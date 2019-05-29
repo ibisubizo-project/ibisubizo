@@ -26,10 +26,10 @@ class AddCommentToolBar extends Component {
 
   render() {
     return (
-      <div className="px-6 py-4">
+      <div className="px-2 rounded">
         <form className="form" onSubmit={this.handleSubmit.bind(this)}>
           <input
-            className="w-full h-8 p-4"
+            className="w-full h-8 p-4 mb-3"
             type="text"
             name='comment'
             value={this.state.comment}

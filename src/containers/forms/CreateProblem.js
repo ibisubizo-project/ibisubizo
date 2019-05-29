@@ -4,12 +4,8 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import firebase from 'firebase'
 import FileUploader from 'react-firebase-file-uploader'
-import { addProblem } from '../../actions/problems'
 import actions from '../../actions/actions'
 import config from '../../firebase'
-import Loader from '../../components/Loader'
-import { css } from '@emotion/core'
-import { ClipLoader } from 'react-spinners'
 import AppConfig from '../../utils/config'
 
 
@@ -81,7 +77,6 @@ class CreateProblemForm extends Component {
   onSubmit = (evt) => {
     evt.preventDefault()
     let userData = JSON.parse(localStorage.getItem("userData"))
-    console.log(userData)
     let payload = {}
 
     if(userData === undefined || userData === null || !userData.hasOwnProperty("_id") || !this.props.userIsAuthenticated) {
@@ -112,51 +107,101 @@ class CreateProblemForm extends Component {
         return <Redirect to='/auth/login' />
       }
       return (
-        <div class="content-container p-8 bg-gray-100">
-          <div class="container sm:w-full mx-auto mt-2 overflow-x-hidden p-4">
-            <div class="w-full m-4 sm:w-4/5 md:w-3/5 rounded border border-gray">
-              <form class="bg-white text-black rounded" onSubmit={this.onSubmit.bind(this)}>
-                <div class="bg-teal-800 text-white p-2">Create Problem</div>
-                <div>
-                  <input 
-                    type="text"
-                    value={this.state.title}
-                    onChange={e => this.setState({title: e.target.value})}
-                    placeholder="Problem Title"
-                    required
-                    class="w-full appearance-none bg-white py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" placeholder='Enter Problem title' />
-                </div>
-                <div>
-                  <textarea 
-                    rows='3'
-                    value={this.state.description}
-                    onChange={e => this.setState({description: e.target.value})}
-                    class="w-full appearance-none py-2 px-3 bg-white text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mb-4">Enter your Description</textarea>
+        <div className="container sm:w-full mx-auto mt-2 overflow-x-hidden p-4">
+          <div className="w-full m-4 sm:w-4/5 md:w-3/5 rounded border border-gray">
+            <form className="bg-white text-black rounded" onSubmit={this.onSubmit.bind(this)}>
+              <div className="bg-teal-800 text-white p-2">Create Problem</div>
+              <div>
+                <input 
+                  type="text"
+                  value={this.state.title}
+                  onChange={e => this.setState({title: e.target.value})}
+                  required
+                  className="w-full appearance-none bg-white py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+                  placeholder='Enter Problem title' />
+              </div>
+              <div>
+                <textarea 
+                  rows='3'
+                  value={this.state.description}
+                  onChange={e => this.setState({description: e.target.value})}
+                  className="w-full appearance-none py-2 px-3 bg-white text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mb-4">Enter your Description</textarea>
+              </div>
+
+              <div className="flex justify-between p-2">
+                <div className="uploads">
+                  <ul className="flex">
+                    <li className="mr-3">
+                    <label className="cursor-pointer">
+                      Photo
+                      <FileUploader
+                        hidden
+                        accept="image/*"
+                        multiple
+                        storageRef={firebase.storage().ref('images')}
+                        onUploadStart={this.handleUploadStart.bind(this)}
+                        onUploadError={this.handleUploadError.bind(this)}
+                        onUploadSuccess={this.handleUploadSuccess.bind(this)}
+                        onProgress={this.handleProgress.bind(this)}
+                      />
+                      </label>
+                    </li>
+                    <li className="mr-3">
+                      <label className="cursor-pointer">
+                        Video
+                        <FileUploader
+                          hidden
+                          accept="video/*"
+                          multiple
+                          storageRef={firebase.storage().ref('videos')}
+                          onUploadStart={this.handleUploadStart.bind(this)}
+                          onUploadError={this.handleUploadError.bind(this)}
+                          onUploadSuccess={this.handleVideoUploadSuccess.bind(this)}
+                          onProgress={this.handleProgress.bind(this)}
+                        />
+                      </label>
+                    </li>
+                    <li className="mr-3">
+                      <label className="cursor-pointer">
+                        Documents
+                        <FileUploader
+                          hidden
+                          accept="*"
+                          multiple
+                          storageRef={firebase.storage().ref('documents')}
+                          onUploadStart={this.handleUploadStart.bind(this)}
+                          onUploadError={this.handleUploadError.bind(this)}
+                          onUploadSuccess={this.handleDocumentUploadSuccess.bind(this)}
+                          onProgress={this.handleProgress.bind(this)}
+                        />
+                      </label>
+                    </li>
+                  </ul>
                 </div>
 
-                <div class="flex justify-between p-2">
-                  <div class="uploads">
-                    <ul class="flex">
-                      <li class="mr-3">PHOTOS</li>
-                      <li class="mr-3">VIDEOS</li>
-                      <li class="mr-3">DOCUMENTS</li>
-                    </ul>
-                  </div>
-
-                  <div class="privacy">
-                    <div class="radio align-baseline">
-                      <label class="mr-3">
-                        <input class="mr-2" type="radio" value="0" />Public
-                      </label>
-                      <label>
-                        <input class="mr-2" type="radio" value="1" checked="" />Private
-                      </label>
-                    </div>
+                <div className="privacy">
+                  <div className="radio align-baseline">
+                    <label className="mr-3">
+                      <input 
+                        className="mr-2" 
+                        type="radio"
+                        value={0}
+                        checked={this.state.status === 0}
+                        onChange={e => this.setState({status: 0 })} />Public
+                    </label>
+                    <label>
+                      <input 
+                        className="mr-2" 
+                        type="radio" 
+                        value={1}
+                        checked={this.state.status === 1}
+                        onChange={e => this.setState({status: 1 })} />Private
+                    </label>
                   </div>
                 </div>
-                <button type='submit' class="text-white rounded p-3 m-2 leading-tight bg-teal-400">Submit</button>
-              </form>
-            </div>
+              </div>
+              <button type='submit' className="text-white rounded p-3 m-2 leading-tight bg-teal-400">Submit</button>
+            </form>
           </div>
         </div>
       )

@@ -71,24 +71,46 @@ class ListingContainer extends React.Component{
             page: prevState.page + 1
         }), this.getAllProblems)
     }
-    render() {
-        return (
-            <div className="listings mt-6">
-                <div className="listing-filter text-white h-12 bg-black align-baseline py-4 px-3 font-bold">
-                    <div className="flex justify-between">
-                        Trending Problems
+    // render() {
+    //     return (
+    //         <div className="listings mt-6">
+    //             <div className="listing-filter text-white h-12 bg-black align-baseline py-4 px-3 font-bold">
+    //                 <div className="flex justify-between">
+    //                     Trending Problems
 
-                        <div className="flex justify-between">
-                            <div className="mr-3 cursor-pointer" onClick={this.showLatest.bind(this)}>Latest Problems</div>
-                            <div className="cursor-pointer" onClick={this.getUserProblems.bind(this)}>Mine</div>
-                        </div>
-                    </div>
+    //                     <div className="flex justify-between">
+    //                         <div className="mr-3 cursor-pointer" onClick={this.showLatest.bind(this)}>Latest Problems</div>
+    //                         <div className="cursor-pointer" onClick={this.getUserProblems.bind(this)}>Mine</div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             {!this.state.showPersonalListing && <Listing problems={this.state.problems} />}
+    //             {this.state.showPersonalListing && <Listing problems={this.state.userProblems || []} />}
+    //             {!this.state.showPersonalListing & this.state.hasMore ? (<div onClick={this.loadMore}>Load More</div>): ''}
+    //         </div>
+    //     )
+    // }
+
+    render() {
+      return (
+        <div className="container sm:w-full mx-auto mt-2 overflow-x-hidden p-4">
+          <div className="w-full m-4 sm:w-4/5 md:w-3/5 rounded">
+            <div>
+              <div className="flex justify-between bg-teal-800 text-white p-2">
+                <h4 className="font-medium">Trending Problems</h4>
+                <div className="flex">
+                  <p className="mr-3 cursor-pointer" onClick={this.showLatest.bind(this)}>Latest Problems</p>
+                  <p className="mr-3 cursor-pointer" onClick={this.getUserProblems.bind(this)}>My Listings</p>
                 </div>
-                {!this.state.showPersonalListing && <Listing problems={this.state.problems} />}
-                {this.state.showPersonalListing && <Listing problems={this.state.userProblems || []} />}
-                {!this.state.showPersonalListing & this.state.hasMore ? (<div onClick={this.loadMore}>Load More</div>): ''}
+              </div>
             </div>
-        )
+
+            {!this.state.showPersonalListing && <Listing problems={this.state.problems} />}
+            {this.state.showPersonalListing && <Listing problems={this.state.userProblems || []} />}
+            {!this.state.showPersonalListing & this.state.hasMore ? (<div onClick={this.loadMore}>Load More</div>): ''}
+          </div>
+        </div>
+      )
     }
 }
 

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import SinglePost from './SinglePost';
 import ListItem from './ListItem';
 
 
@@ -15,13 +14,13 @@ class Listing extends Component {
             return (<div>No Post...</div>)
         }
         return (
-            <div>
+            <React.Fragment>
                 {problems.map((problem, index) => {
                     return (
                         <ListItem key={problem._id} index={index} problem={problem} {...problem} />
                     )
                 })}
-            </div>
+            </React.Fragment>
         )
     }
 }

@@ -15,20 +15,20 @@ class ListItemToolBar extends Component {
 
         return (
             <div className="px-6 py-4">
-                <div>
+                <div className="flex">
                     <span onClick={(e) => console.log(`${this.props.problem_id}`)}
-                        className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                        className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <i className="fa fa-comment fa-lg mr-2"></i>{this.props.comments.length}
                     </span>
                     <span
                         onClick={(e) => this.props.updateLike(this.props.problem_id)}
-                        className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                        className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <i className="fa fa-heart fa-lg mr-2"></i> {this.props.likes.length}
                     </span>
-                    <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                    <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <Twitter link={`http://ibisubizo.com/problem/${this.props.problem_id}`} />
                     </span>
-                    <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                    <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <Facebook link={`http://ibisubizo.com/problem/${this.props.problem_id}`} />
                     </span>
                 </div>

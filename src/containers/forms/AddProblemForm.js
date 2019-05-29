@@ -13,7 +13,7 @@ import { ClipLoader } from 'react-spinners'
 import AppConfig from '../../utils/config'
 
 
-firebase.initializeApp(config)
+//firebase.initializeApp(config)
 
 
 const override = css`
