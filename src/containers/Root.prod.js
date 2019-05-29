@@ -3,19 +3,19 @@ import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { Router, Route, Switch } from 'react-router-dom'
 import App from './App'
-import NavBar from '../components/Nav';
+import PrivateRoute from './PrivateRoute'
+import NavBar from '../components/NavBar';
 import Login from '../components/Login'
 import Register from '../components/Register'
 import history from '../../src/history'
 import DetailComponent from './DetailComponent'
-import PrivateRoute from './PrivateRoute'
 import AboutUsComponent from '../components/AboutUsComponent';
 import TermsAndConditionComponent from '../components/TermsAndConditionComponent';
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={history}>
-      <div>
+      <React.Fragment>
         <NavBar />
         <Switch>
           <Route exact path='/' component={App} />
@@ -27,7 +27,7 @@ const Root = ({ store }) => (
           <Route path='/term' component={TermsAndConditionComponent} />
           <Route path={'*'} component={()=> <h1>Page Not Found...</h1>} />
         </Switch>
-      </div>
+      </React.Fragment>
     </Router>
   </Provider>
 )
