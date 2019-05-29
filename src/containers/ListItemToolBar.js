@@ -10,13 +10,13 @@ class ListItemToolBar extends Component {
 
     render() {
         if(this.state.isFetching) {
-            return <div>Loading....</div>
+            return <div></div>
         }
 
         return (
             <div className="px-6 py-4">
                 <div className="flex">
-                    <span onClick={(e) => console.log(`${this.props.problem_id}`)}
+                    <span  onClick={(e) => console.log(`${this.props.problem_id}`)}
                         className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <i className="fa fa-comment fa-lg mr-2"></i>{this.props.comments.length}
                     </span>

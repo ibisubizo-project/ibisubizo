@@ -3,7 +3,7 @@ import React from 'react'
 
 const TermsAndConditionComponent = () => {
     return (
-        <div className="container mx-auto">
+        <div className="container m-auto p-8 text-grey-darkest">
             <div className="w-3/5 px-6 py-4">
                 <div className="term-condition mt-10">
                     <h1>TERMS AND CONDITIONS </h1>

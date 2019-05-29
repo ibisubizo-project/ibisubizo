@@ -127,7 +127,7 @@ class DetailComponent extends Component {
     render() {
         const { match: { params } } = this.props;
         if(this.state.isLoading) {
-            return <div>Loading...</div>
+            return <div></div>
         }
 
         let problemListing = this.state.featuredProblems.slice(0, 20)
@@ -138,14 +138,13 @@ class DetailComponent extends Component {
         
         return (
             <div className="container m-auto p-8 text-grey-darkest flex">
-              <div className="w-3/5 px-6 py-4">
-                {/*  */}
-                <div className="flex border-b border-solid border-grey-light">
-                    <div className="w-full p-3 pl-0">
+              <div className="w-full sm:w-3/5 md:w-3/5 px-6 py-4">
+                <div className="flex border-b border-solid border-gray-100">
+                    <div className="w-full p-4 pl-0">
                         <div className="flex justify-between">
                             <div className="flex justify-between">
-                                <span className="font-bold">{this.state.postedBy}</span>
-                                <span className="text-grey-dark"><TimeAgo date={new Date(this.state.problem.created_at)} /></span>
+                                <div><span className="font-bold mr-12">{this.state.postedBy}</span></div>
+                                <div><span className="text-grey-dark"><TimeAgo date={new Date(this.state.problem.created_at)} /></span></div>
                             </div>
                             <div>
                                 <span href="#" className="text-grey-dark hover:text-teal"><i className="fa fa-chevron-down"></i></span>
@@ -158,21 +157,25 @@ class DetailComponent extends Component {
                                 <p className="mb-4">{this.state.problem.text}</p>
                                 {renderPostImage}
                             </div>
-                            <div className="pb-2 mb-10">
-                                <span className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-blue-light">
-                                    <i className="fa fa-comment fa-lg mr-2"></i>{this.props.selectedProblemsComments.length}
-                                </span>
-                                <span 
-                                    onClick={(e) => this.updateLike(params.id)}
-                                    className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-green">
-                                    <i className="fa fa-heart fa-lg mr-2"></i> {this.state.likes.length}
-                                </span>
-                                <span className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-blue-light">
-                                    <Twitter link={`http://ibisubizo.com/problem/${params.id}`} />
-                                </span>
-                                <span className="mr-8 text-grey-dark no-underline hover:no-underline hover:text-blue-light">
-                                    <Facebook link={`http://ibisubizo.com/problem/${params.id}`} />
-                                </span>
+
+                            <div className="px-6 py-4">
+                                <div className="flex">
+                                    <span
+                                        className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                                        <i className="fa fa-comment fa-lg mr-2"></i>{this.props.selectedProblemsComments.length}
+                                    </span>
+                                    <span
+                                        onClick={(e) => this.updateLike(params.id)}
+                                        className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                                        <i className="fa fa-heart fa-lg mr-2"></i> {this.state.likes.length}
+                                    </span>
+                                    <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                                        <Twitter link={`http://ibisubizo.com/problem/${params.id}`} />
+                                    </span>
+                                    <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                                        <Facebook link={`http://ibisubizo.com/problem/${params.id}`} />
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
@@ -202,11 +205,12 @@ class DetailComponent extends Component {
                 {/*  */}
               </div>
 
-              <div className="2/5 mt-10">
+              <div className="w-2/5 mt-10 hidden sm:block md:block">
                   <h1>Problem Listing</h1>
+                  <hr className="mb-2" />
                   {!this.state.featuredProblems && <p>No Problem Listing</p>}
                   {problemListing.map(problem => (
-                      <a href={`/problem/${problem._id}`} className="no-underline text-black font-bold">
+                      <a href={`/problem/${problem._id}`} key={problem._id} className="no-underline text-black font-bold">
                         <div className="h-16 bg-white p-2 mb-2 mt-2">
                             {problem.title}
                         </div>
