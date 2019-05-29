@@ -5,7 +5,7 @@ import DevTools from './DevTools'
 import { Router, Route, Switch } from 'react-router-dom'
 import App from './App'
 import PrivateRoute from './PrivateRoute'
-import NavBar from '../components/Nav';
+import NavBar from '../components/NavBar';
 import Login from '../components/Login'
 import Register from '../components/Register'
 import history from '../../src/history'
@@ -17,7 +17,7 @@ import Auth from '../utils/auth';
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={history}>
-      <div>
+      <React.Fragment>
         <NavBar />
         <Switch>
           <Route exact path='/' component={App} />
@@ -29,8 +29,8 @@ const Root = ({ store }) => (
           <Route path='/term' component={TermsAndConditionComponent} />
           <Route path={'*'} component={()=> <h1>Page Not Found...</h1>} />
         </Switch>
-        <DevTools />
-      </div>
+        {/* <DevTools /> */}
+      </React.Fragment>
     </Router>
   </Provider>
 )

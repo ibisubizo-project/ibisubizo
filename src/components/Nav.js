@@ -6,10 +6,10 @@ import Auth from '../utils/auth';
 
 
 
-class NavBar extends Component {
+class Nav extends Component {
   render() {
     return (
-      <div className="container mx-auto bg-teal h-12 text-white pl-10">
+      <div className="container mx-auto bg-blue-dark h-12 text-white pl-10">
         <div className="flex justify-between">
           <ul className="list-reset inline-block flex mt-3">
             <li className="mr-2">
@@ -51,7 +51,6 @@ class NavBar extends Component {
       </div>
     )
   }
-    
 }
 
 const mapStateToProps = (state) => {
@@ -65,4 +64,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
+export default connect(mapStateToProps, mapDispatchToProps)(Nav)

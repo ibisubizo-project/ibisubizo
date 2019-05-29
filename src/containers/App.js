@@ -13,18 +13,15 @@ class App extends Component {
     }
     render() {
         return (
-            <div className="container m-auto p-8 text-grey-darkest">
-              <div className="w-3/5">
+            <React.Fragment>
                 <ProblemBox />
                 <ListingContainer data={this.props.user} />
-              </div>
-            </div>
+            </React.Fragment>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    console.dir(state);
     return {
         problems: state.problems.problems,
         user: state.usersReducer
