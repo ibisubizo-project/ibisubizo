@@ -12,6 +12,7 @@ import history from '../../src/history'
 import DetailComponent from './DetailComponent'
 import AboutUsComponent from '../components/AboutUsComponent';
 import TermsAndConditionComponent from '../components/TermsAndConditionComponent';
+import PageNotFound from '../components/PageNotFound';
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -26,7 +27,7 @@ const Root = ({ store }) => (
           <PrivateRoute path='/problem/:id' component={DetailComponent} />
           <Route path='/about' component={AboutUsComponent} />
           <Route path='/term' component={TermsAndConditionComponent} />
-          <Route path={'*'} component={()=> <h1>Page Not Found...</h1>} />
+          <Route path={'*'} component={PageNotFound} />
         </Switch>
         {/* <DevTools /> */}
       </React.Fragment>

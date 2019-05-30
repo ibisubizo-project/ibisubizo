@@ -57,9 +57,10 @@ class Register extends React.Component {
     }
   
     render () {
-        const hasErrors = (this.props.authenticationError || this.state.error) ? 'block border border-red-500 p-2 mb-2' : 'hidden';
+      const hasErrors = (this.props.authenticationError || this.state.error) ? 'block border border-red-500 p-2 mb-2' : 'hidden';
       return (
         <form className="font-sans text-sm rounded w-full max-w-md mx-auto my-8 px-8 pt-6 pb-8" onChange={this.onFieldChanged.bind(this)} onSubmit={this.onSubmit.bind(this)}>
+            <h1 className="text-2xl pb-2 font-medium">Create An Account</h1>
             <div className={hasErrors}>
                 {this.state.error && <p>{this.state.error} </p>}
                 {this.props.authenticationError && <p>{this.props.authenticationError}</p>}
