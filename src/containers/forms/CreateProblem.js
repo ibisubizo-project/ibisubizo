@@ -108,7 +108,7 @@ class CreateProblemForm extends Component {
       }
       return (
         <div className="container sm:w-full mx-auto mt-2 overflow-x-hidden p-4">
-          <div className="w-full m-4 sm:w-4/5 md:w-4/5 rounded border border-gray">
+          <div className="w-full m-0 sm:m-4 sm:w-4/5 md:w-4/5 rounded border border-gray">
             <form className="bg-white text-black rounded" onSubmit={this.onSubmit.bind(this)}>
               <div className="bg-teal-800 text-white p-2">Create Problem</div>
               <div>

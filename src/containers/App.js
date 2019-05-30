@@ -12,7 +12,7 @@ class App extends Component {
     }
     render() {
         return (
-            <div className="content-container p-8 bg-gray-100">
+            <div className="content-container p-0 sm:p-8 bg-gray-100">
                 <ProblemBox />
                 <ListingContainer data={this.props.user} />
             </div>
