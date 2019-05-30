@@ -117,7 +117,7 @@ class CreateProblemForm extends Component {
                   value={this.state.title}
                   onChange={e => this.setState({title: e.target.value})}
                   required
-                  className="w-full appearance-none bg-white py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+                  className="w-full appearance-none bg-white py-2 px-3 text-gray-700 mb-3 border border-white leading-tight outline-none focus:border-gray-200 focus:outline-none focus:bg-white" 
                   placeholder='Enter Problem title' />
               </div>
               <div>
@@ -125,7 +125,7 @@ class CreateProblemForm extends Component {
                   rows='3'
                   value={this.state.description}
                   onChange={e => this.setState({description: e.target.value})}
-                  className="w-full appearance-none py-2 px-3 bg-white text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mb-4">Enter your Description</textarea>
+                  className="w-full appearance-none py-2 px-3 bg-white text-gray-700 mb-3 border border-white leading-tight outline-none focus:border-gray-200 focus:outline-none mb-4">Enter your Description</textarea>
               </div>
 
               <div className="flex justify-between p-2">

@@ -27,7 +27,7 @@ class NavBar extends Component {
                     </div>
   
                     <div className="w-1/6 text-center text-black text-2xl">
-                        Ibisubizo
+                        <Link to='/'>Ibisubizo</Link>
                     </div>
 
                     <div className="w-2/6 text-right">
