@@ -23,7 +23,7 @@ class Login extends React.Component {
       const hasErrors = (this.props.authenticationError) ? 'block border border-red-500 p-2 mb-2' : 'hidden';
 
       return (
-        <div class="container mx-auto mt-12">
+        <div className="container mx-auto mt-12">
           <form
             onChange={this.onFieldChanged.bind(this)} onSubmit={this.onSubmit.bind(this)}
             className="font-sans text-sm rounded w-full max-w-md mx-auto my-8 px-8 pt-6 pb-8 bg-gray-200">

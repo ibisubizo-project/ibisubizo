@@ -77,7 +77,7 @@ class ListingContainer extends React.Component{
         <div className="container sm:w-full mx-auto mt-2 overflow-x-hidden p-4">
           <div className="w-full m-0 sm:m-4 sm:w-4/5 md:w-3/5 rounded">
             <div>
-              <div className="flex justify-between bg-teal-800 text-white p-2">
+              <div className="flex justify-between bg-gray-800 text-white p-2">
                 <h4 className="font-medium">Trending Problems</h4>
                 <div className="flex">
                   <p className="mr-3 cursor-pointer" onClick={this.showLatest.bind(this)}>Latest Problems</p>
