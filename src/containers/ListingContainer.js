@@ -17,7 +17,7 @@ class ListingContainer extends React.Component{
             problems: [],
             userProblems: [],
             page: 1,
-            hasMore: true, 
+            hasMore: true,
             error: ''
         }
         this.getAllProblems = this.getAllProblems.bind(this)
@@ -27,12 +27,11 @@ class ListingContainer extends React.Component{
     }
 
 
-    //Fetching all problems whether the user is authenticated or not 
+    //Fetching all problems whether the user is authenticated or not
     getAllProblems() {
         let { page } = this.state
         this.setState({loading: true})
         problemsApi.getAllApprovedProblems(page).then(result => {
-            console.dir(result)
             result.length === 0 ? this.setState({hasMore: false}) : this.setState({problems: [...this.state.problems, ...result], loading: false})
         }).catch(error => this.setState({error: error, loading: false}))
     }
@@ -43,7 +42,6 @@ class ListingContainer extends React.Component{
         let userData = JSON.parse(localStorage.getItem("userData"))
         if(userData !== null) {
             if(this.props.data.isAuthenticated === true && userData._id !== null ) {
-                console.log("result[1]")
                 this.getAllUsersProblems(userData._id)
             }
         }
@@ -56,7 +54,6 @@ class ListingContainer extends React.Component{
 
     getAllUsersProblems(user_id) {
         problemsApi.getAllUsersProblems(user_id, 0).then(result => {
-            console.dir(result)
             this.setState({isAuthenticated: true, userProblems: result})
         })
     }
@@ -71,7 +68,7 @@ class ListingContainer extends React.Component{
         page: prevState.page + 1
       }), this.getAllProblems)
     }
-   
+
     render() {
       return (
         <div className="container sm:w-full mx-auto mt-2 overflow-x-hidden p-4">

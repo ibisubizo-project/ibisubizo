@@ -9,6 +9,8 @@ import commentsApi from '../services/commentApi'
 import likesApi from '../services/likesApi'
 import userApi from '../services/users'
 import { Twitter, Facebook } from 'react-social-sharing'
+import { Redirect, Link } from 'react-router-dom'
+
 
 class DetailComponent extends Component {
     constructor(props){
@@ -22,8 +24,9 @@ class DetailComponent extends Component {
             postedBy: '',
             hasLiked: false,
             featuredProblems: [],
-            error: ''
-        } 
+            error: '',
+            redirectToLogin: false,
+        }
 
         this.updateLike = this.updateLike.bind(this)
         this.evaluateLikeState = this.evaluateLikeState.bind(this)
@@ -34,7 +37,7 @@ class DetailComponent extends Component {
         const { match: { params } } = this.props;
 
         if(!this.props.userIsAuthenticated) {
-            alert("Please sign in to comment and like posts")
+            this.setState({redirectToLogin: true})
             return
         } else {
             if(this.state.hasLiked) {
@@ -71,6 +74,7 @@ class DetailComponent extends Component {
         event.preventDefault()
         const { match: { params } } = this.props;
         if(this.state.comment.length < 2) return;
+
         let problemId = params.id;
         let loggedInUser = localStorage.getItem("userData");
         let userId = JSON.parse(loggedInUser)._id;
@@ -86,12 +90,16 @@ class DetailComponent extends Component {
     }
 
     componentDidMount() {
+        if(this.state.redirectToLogin) {
+          return <Redirect to='/auth/login' />
+        }
+
         const { match: { params } } = this.props;
         this.setState({isLoading: true})
         //For the sideBAR Listings
         let problems = problemsApi.getProblem(params.id)
         problemsApi.getAllApprovedProblems().then(result => this.setState({featuredProblems: result})).catch(error => this.setState({error: error}))
-        let comments =  commentsApi.ListAllPostComments(params.id)
+        let comments = commentsApi.ListAllPostComments(params.id)
         let likes  = likesApi.GetAllLikes(params.id)
         Promise.all([problems, comments, likes]).then(result => {
             this.props.setSelectedProblemsComments(result[1])
@@ -135,7 +143,7 @@ class DetailComponent extends Component {
         if(this.state.problem.pictures !== undefined) {
             renderPostImage = (this.state.problem.pictures.length > 0) ? <p><a href={this.state.problem.pictures[0]}><img src={this.state.problem.pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm" /></a></p> : '';
         }
-        
+
         return (
             <div className="container m-auto p-8 text-grey-darkest flex">
               <div className="w-full sm:w-3/5 md:w-3/5 px-6 py-4">
@@ -210,11 +218,11 @@ class DetailComponent extends Component {
                   <hr className="mb-2" />
                   {!this.state.featuredProblems && <p>No Problem Listing</p>}
                   {problemListing.map(problem => (
-                      <a href={`/problem/${problem._id}`} key={problem._id} className="no-underline text-black font-bold">
+                      <Link to={`/problem/${problem._id}`} key={problem._id} className="no-underline text-black font-bold">
                         <div className="h-16 bg-white p-2 mb-2 mt-2">
                             {problem.title}
                         </div>
-                      </a>
+                      </Link>
                   ))}
 
               </div>

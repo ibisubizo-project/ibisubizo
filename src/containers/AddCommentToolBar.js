@@ -10,7 +10,6 @@ class AddCommentToolBar extends Component {
   }
   handleSubmit(event) {
     event.preventDefault()
-    console.log(this.props)
     let problemId = this.props.problem_id
     let userId = this.props.user_data._id
     let comment = {

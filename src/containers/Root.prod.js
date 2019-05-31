@@ -20,7 +20,6 @@ const Root = ({ store }) => (
         <NavBar />
         <Switch>
           <Route exact path='/' component={App} />
-          <Route path='/bye' component={()=> <h1>Bye Bye</h1>} />
           <Route path='/auth/login' component={Login} />
           <Route path='/auth/register' component={Register} />
           <PrivateRoute path='/problem/:id' component={DetailComponent} />

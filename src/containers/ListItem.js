@@ -65,7 +65,7 @@ class ListItem extends Component {
         like.problem_id = this.props._id
         like.liked_by = userLocalStorage._id
 
-        likesApi.AddLike(like).then(result => { 
+        likesApi.AddLike(like).then(result => {
           this.setState({likes: [...this.state.likes, like], hasLiked: !this.state.hasLiked})
         }).catch(error => {
           console.error(error)
@@ -76,7 +76,7 @@ class ListItem extends Component {
 
   viewProblemDetails(evt) {
     evt.preventDefault()
-    if(!this.props.userIsAuthenticated) { 
+    if(!this.props.userIsAuthenticated) {
       this.setState({unAuthenticatedAction : true})
     }
     this.props.setSelectedProblem(this.props.problem)
