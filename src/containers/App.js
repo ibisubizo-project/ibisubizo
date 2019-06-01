@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { loadProblems } from '../actions/problems'
 import ProblemBox from './ProblemBox'
 import ListingContainer from './ListingContainer'
+import Banner from '../components/Banner';
 
 
 class App extends Component {

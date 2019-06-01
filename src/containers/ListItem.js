@@ -95,7 +95,7 @@ class ListItem extends Component {
       renderedImage = (pictures.length > 0) ? <p><a href={pictures[0]}><img src={pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm w-full" /></a></p> : ''
     }
     return (
-      <div className="text-black mb-3">
+      <div className="text-black mb-3  rounded border border-gray shadow">
         <div className="px-2 pt-4 bg-white">
           <div  onClick={this.viewProblemDetails.bind(this)}>
             <div className="flex justify-between pb-4">
