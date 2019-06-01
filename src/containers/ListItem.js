@@ -99,7 +99,7 @@ class ListItem extends Component {
         <div className="px-2 pt-4 bg-white">
           <div  onClick={this.viewProblemDetails.bind(this)}>
             <div className="flex justify-between pb-4">
-              <h3>{title}</h3>
+              <h3 className="font-bold text-2xl">{title}</h3>
               <TimeAgo date={new Date(created_at)} />
             </div>
 

@@ -22,7 +22,9 @@ class CreateProblemForm extends Component {
     uploadedPictures: [],
     uploadedVideos: [],
     uploadedDocuments: [],
-    redirectToLogin: false
+    redirectToLogin: false,
+    error: '',
+    message: ''
   }
 
   handleUploadStart() { 
@@ -95,8 +97,10 @@ class CreateProblemForm extends Component {
 
     axios.post(`${AppConfig.API_URL}/problems`, payload).then(response => {
       this.props.addingProblemSuccess(response)
+      this.setState({message: 'Your Post was successfully added'})
     }).catch(error => {
       this.props.addingProblemFailure(error)
+      this.setState({error: 'An error occurred...'})
     })
 
     this.setState({title:  '', description: ''}) //Clear form field
@@ -106,9 +110,19 @@ class CreateProblemForm extends Component {
       if(this.state.redirectToLogin) {
         return <Redirect to='/auth/login' />
       }
+      const hasErrors = (this.state.error) ? 'block border border-red-800 p-2 mb-2' : 'hidden';
+      const hasMessage = (this.state.message) ? 'block border bg-teal-100 text-white border-gray-800 font-bold p-2' : 'hidden';
+
       return (
         <div className="container sm:w-full mx-auto mt-2 overflow-x-hidden p-4">
           <div className="w-full m-0 sm:m-4 sm:w-4/5 md:w-3/5 rounded border border-gray">
+            <div className={hasErrors}>
+              {this.state.error && <p>{this.state.error} </p>}
+            </div>
+            <div className={hasMessage}>
+              {this.state.message && <p>{this.state.message} </p>}
+            </div>
+
             <form className="bg-white text-black rounded" onSubmit={this.onSubmit.bind(this)}>
               <div className="text-white p-2 bg-gray-800">Submit Problem</div>
               <div>
@@ -116,7 +130,6 @@ class CreateProblemForm extends Component {
                   type="text"
                   value={this.state.title}
                   onChange={e => this.setState({title: e.target.value})}
-                  required
                   className="w-full appearance-none bg-white py-2 px-3 text-gray-700 mb-3 border border-white leading-tight outline-none focus:border-gray-200 focus:outline-none focus:bg-white" 
                   placeholder='Enter Problem title' />
               </div>

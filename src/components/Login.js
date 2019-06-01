@@ -48,7 +48,7 @@ class Login extends React.Component {
               </div>
 
               <div className="flex mt-5">
-                <p>You don't have an account? <Link to='/auth/register'>Register Here</Link></p>
+                <p>You don't have an account? <Link to='/auth/register' className="text-blue-500 font-bold">Register Here</Link></p>
               </div>
           </form>
         </div>
