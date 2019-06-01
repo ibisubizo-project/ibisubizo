@@ -1,10 +1,6 @@
-FROM mhart/alpine-node:11 AS builder
-WORKDIR /app
-COPY . .
-RUN yarn run build
-
-FROM mhart/alpine-node
-RUN yarn global add serve
-WORKDIR /app
-COPY --from=builder /app/build .
-CMD ["serve", "-p", "80", "-s", "."]
+FROM nginx:alpine
+LABEL author="Ofonime Francis"
+COPY ./build /var/www
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
+ENTRYPOINT ["nginx","-g","daemon off;"]
