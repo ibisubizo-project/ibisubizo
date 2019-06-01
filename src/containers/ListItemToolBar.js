@@ -14,7 +14,7 @@ class ListItemToolBar extends Component {
         }
 
         return (
-            <div className="px-6 py-4">
+            <div className="p-0 sm:px-6 py-4">
                 <div className="flex">
                     <span  onClick={(e) => console.log(`${this.props.problem_id}`)}
                         className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
@@ -28,10 +28,8 @@ class ListItemToolBar extends Component {
                           </i>
                           {this.props.likes.length}
                     </span>
-                    <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+                    <span className="flex rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <Twitter link={`/problem/${this.props.problem_id}`} />
-                    </span>
-                    <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                         <Facebook link={`/problem/${this.props.problem_id}`} />
                     </span>
                 </div>
