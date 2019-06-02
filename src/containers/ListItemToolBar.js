@@ -29,8 +29,8 @@ class ListItemToolBar extends Component {
                           {this.props.likes.length}
                     </span>
                     <span className="flex rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
-                        <Twitter link={`/problem/${this.props.problem_id}`} />
-                        <Facebook link={`/problem/${this.props.problem_id}`} />
+                        <Twitter link={`http://bisubizo.com/problem/${this.props.problem_id}`} />
+                        <Facebook link={`http://bisubizo.com/problem/${this.props.problem_id}`} />
                     </span>
                 </div>
             </div>

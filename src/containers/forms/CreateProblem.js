@@ -15,7 +15,7 @@ firebase.initializeApp(config)
 class CreateProblemForm extends Component {
   state = {
     title: "",
-    description: "Enter problem description",
+    description: "",
     status: 1,
     isUploading: false,
     progress: 0,
@@ -82,6 +82,8 @@ class CreateProblemForm extends Component {
     let payload = {}
 
     if(userData === undefined || userData === null || !userData.hasOwnProperty("_id") || !this.props.userIsAuthenticated) {
+      localStorage.setItem("post_title", this.state.title)
+      localStorage.setItem("post_description", this.state.description)
       this.setState({redirectToLogin: true})
       return
     }
@@ -98,6 +100,8 @@ class CreateProblemForm extends Component {
     axios.post(`${AppConfig.API_URL}/problems`, payload).then(response => {
       this.props.addingProblemSuccess(response)
       this.setState({message: 'Your Post was successfully added'})
+      localStorage.removeItem("post_title")
+      localStorage.removeItem("post_description")
     }).catch(error => {
       this.props.addingProblemFailure(error)
       this.setState({error: 'An error occurred...'})
@@ -111,7 +115,7 @@ class CreateProblemForm extends Component {
         return <Redirect to='/auth/login' />
       }
       const hasErrors = (this.state.error) ? 'block border border-red-800 p-2 mb-2' : 'hidden';
-      const hasMessage = (this.state.message) ? 'block border bg-teal-100 text-white border-gray-800 font-bold p-2' : 'hidden';
+      const hasMessage = (this.state.message) ? 'block border bg-teal-600 text-white border-gray-800 font-bold p-2' : 'hidden';
 
       return (
         <div className="container sm:w-full mx-auto mt-2 overflow-x-hidden p-4">
@@ -128,7 +132,7 @@ class CreateProblemForm extends Component {
               <div>
                 <input 
                   type="text"
-                  value={this.state.title}
+                  value={this.state.title || localStorage.getItem("post_title")}
                   onChange={e => this.setState({title: e.target.value})}
                   className="w-full appearance-none bg-white py-2 px-3 text-gray-700 mb-3 border border-white leading-tight outline-none focus:border-gray-200 focus:outline-none focus:bg-white" 
                   placeholder='Enter Problem title' />
@@ -136,9 +140,10 @@ class CreateProblemForm extends Component {
               <div>
                 <textarea 
                   rows='3'
-                  value={this.state.description}
+                  value={this.state.description || localStorage.getItem("post_description")}
                   onChange={e => this.setState({description: e.target.value})}
-                  className="w-full appearance-none py-2 px-3 bg-white text-gray-700 mb-3 border border-white leading-tight outline-none focus:border-gray-200 focus:outline-none mb-4">Enter your Description</textarea>
+                  defaultValue="Enter Problem description"
+                  className="w-full appearance-none py-2 px-3 bg-white text-gray-700 mb-3 border border-white leading-tight outline-none focus:border-gray-200 focus:outline-none mb-4"></textarea>
               </div>
 
               <div className="flex justify-between p-2">

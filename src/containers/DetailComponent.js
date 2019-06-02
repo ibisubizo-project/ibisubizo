@@ -178,10 +178,10 @@ class DetailComponent extends Component {
                                         <i className="fa fa-heart fa-lg mr-2"></i> {this.state.likes.length}
                                     </span>
                                     <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
-                                        <Twitter link={`http://ibisubizo.com/problem/${params.id}`} />
+                                        <Twitter link={`http://bisubizo.com/problem/${params.id}`} />
                                     </span>
                                     <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
-                                        <Facebook link={`http://ibisubizo.com/problem/${params.id}`} />
+                                        <Facebook link={`http://bisubizo.com/problem/${params.id}`} />
                                     </span>
                                 </div>
                             </div>
