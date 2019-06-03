@@ -97,13 +97,25 @@ class ListItem extends Component {
     return (
       <div className="text-black mb-3  rounded border border-gray shadow">
         <div className="px-2 pt-4 bg-white">
-          <div  onClick={this.viewProblemDetails.bind(this)}>
+          <div>
             <div className="flex justify-between pb-4">
-              <h3 className="font-bold text-2xl">{title}</h3>
-              <TimeAgo date={new Date(created_at)} />
+              <div className="flex">
+                <h3 className="font-bold text-2xl">{title}</h3>
+                <TimeAgo date={new Date(created_at)} />
+              </div>
+
+              <div>
+                <span className="bg-red-300 relative">
+                  <i className="fa fa-chevron-down"></i>
+                </span>
+                <ul className="menu absolute bg-teal-800 text-white text-center">
+                    <li>Edit</li>
+                    <li>Delete</li>
+                  </ul>
+              </div>
             </div>
 
-            <p className="description pb-2">
+            <p className="description pb-2" onClick={this.viewProblemDetails.bind(this)}>
               {text}
             </p>
             {renderedImage}
