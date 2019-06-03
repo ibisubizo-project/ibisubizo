@@ -100,15 +100,15 @@ class ListItem extends Component {
           <div>
             <div className="flex justify-between pb-4">
               <div className="flex">
-                <h3 className="font-bold text-2xl">{title}</h3>
+                <h3 className="font-bold text-2xl mr-2">{title}</h3>
                 <TimeAgo date={new Date(created_at)} />
               </div>
 
               <div>
-                <span className="bg-red-300 relative">
+                <span className="relative">
                   <i className="fa fa-chevron-down"></i>
                 </span>
-                <ul className="menu absolute bg-teal-800 text-white text-center">
+                <ul className="menu hidden absolute bg-teal-800 text-white text-center">
                     <li>Edit</li>
                     <li>Delete</li>
                   </ul>
