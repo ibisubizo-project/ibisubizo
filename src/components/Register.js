@@ -1,6 +1,7 @@
 import React from 'react'
 import {bindActionCreators} from 'redux'  
 import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom';
 import * as usersActions from '../actions/users';
 import actions from '../actions/actions';
 
@@ -8,7 +9,8 @@ import actions from '../actions/actions';
 class Register extends React.Component {
     state = {
         error: '',
-        selectedFile: null
+        selectedFile: null,
+        redirectToHomePage: false,
     }
 
     fileSelectedHandler = event => { 
@@ -30,7 +32,7 @@ class Register extends React.Component {
             return 
         }
 
-        if(!firstname || !lastname || !middlename || !phone || !password) {
+        if(!firstname || !lastname || !phone || !password) {
             this.setState({error: 'Please enter required fields'})
             return 
         }
@@ -51,12 +53,21 @@ class Register extends React.Component {
         this.setState({[event.target.name]: event.target.value})
     }
 
+    componentWillMount() {
+        if(this.props.userIsAuthenticated) {
+          this.setState({redirectToHomePage: true})
+        }
+      }
+
 
     componentWillUnmount() {
         this.props.clearAuthError()
     }
   
     render () {
+        if(this.state.redirectToHomePage) {
+            return <Redirect to='/' />
+        }
       const hasErrors = (this.props.authenticationError || this.state.error) ? 'block border border-red-500 p-2 mb-2' : 'hidden';
       return (
         <form className="font-sans text-sm rounded w-full max-w-md mx-auto my-8 px-8 pt-6 pb-8 bg-gray-200" onChange={this.onFieldChanged.bind(this)} onSubmit={this.onSubmit.bind(this)}>
@@ -95,7 +106,8 @@ class Register extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        authenticationError: state.usersReducer.error
+        authenticationError: state.usersReducer.error,
+        userIsAuthenticated: state.usersReducer.isAuthenticated
     }
 }
 
