@@ -1,11 +1,15 @@
 import React from 'react'
 import {bindActionCreators} from 'redux'
-import { Link } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import * as usersActions from '../actions/users';
 import actions from '../actions/actions';
 
 class Login extends React.Component {
+
+    state = {
+      redirectToHomePage: false
+    }
     onSubmit (event) {
         event.preventDefault()
         this.props.actions.login(this.state)
@@ -15,11 +19,20 @@ class Login extends React.Component {
         this.setState({[event.target.name]: event.target.value})
     }
 
+    componentWillMount() {
+      if(this.props.userIsAuthenticated) {
+        this.setState({redirectToHomePage: true})
+      }
+    }
+
     componentWillUnmount() {
       this.props.clearAuthError()
     }
 
     render () {
+      if(this.state.redirectToHomePage) {
+        return <Redirect to='/' />
+      }
       const hasErrors = (this.props.authenticationError) ? 'block border border-red-500 p-2 mb-2' : 'hidden';
 
       return (
@@ -59,7 +72,8 @@ class Login extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    authenticationError: state.usersReducer.error
+    authenticationError: state.usersReducer.error,
+    userIsAuthenticated: state.usersReducer.isAuthenticated
   }
 }
 function mapDispatchToProps(dispatch) {

@@ -83,6 +83,27 @@ class ListItem extends Component {
     history.push(`/problem/${this.props._id}`)
   }
 
+  dropDownStyle={
+      color: '#676767',
+      position: 'absolute',
+      backgroundColor: '#fff',
+      borderRadius: '4px',
+      boxShadow: '0 2px 8px rgba(0,0,0,.1)',
+      opacity: '.001',
+      transition: 'transform .2s ease-in-out,opacity .2s ease-in-out,width .2s ease-in-out,height .2s ease-in-out',
+      border: '1px solid #dfdfdf',
+      borderTop: '1px solid #dfdfdf,10px solid #fff',
+      margin: '0 0 25px -6px',
+      transform: 'translate3d(calc(-50% + .5px),-10px,0)',
+      webkitBackfaceVisibility: 'hidden',
+      pointerEvents: 'none',
+      zIndex: '2',
+      left: '50%',
+      top: 'calc(50% + 22px)',
+      minWidth: '150px',
+      // display: 'none'
+  }
+
   render() {
     const {_id, title, text, created_at, pictures } = this.props;
     const localStorageUserData = localStorage.getItem("userData")
@@ -106,12 +127,41 @@ class ListItem extends Component {
 
               <div>
                 <span className="relative">
-                  <i className="fa fa-chevron-down"></i>
+                  <i className="fa fa-ellipsis-h"></i>
                 </span>
-                <ul className="menu hidden absolute bg-teal-800 text-white text-center">
-                    <li>Edit</li>
-                    <li>Delete</li>
+                
+                <div className="menu-dropdown absolute">
+                  <div className="menu-dropdownView overflow-hidden relative" style={{transition: 'all .3s ease-in-out'}}>
+                  <ul class="menu-dropdownItems">
+                    <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2055="2055">
+                    Add a domain
+                    </li>
+                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2057="2057">
+                    Access console
+                    </li>
+                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2059="2059">
+                    Resize droplet
+                    </li>
+                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2061="2061">
+                    View usage
+                    </li>
+                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2063="2063">
+                    Enable backups
+                    </li>
+                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2065="2065">
+                    Add tags
+                    </li>
+                    <div data-html="false" title="" data-toggle="tooltip" data-placement="top" id="ember2067" data-original-title="Create a new project to move this droplet." class="tooltip-wrap multiline ember-view">          <li role="button" class="is-disabled dropdown-menu-item-button " data-ember-action="" data-ember-action-2068="2068">
+                        Move to...
+                        </li>
+                    </div>        
+                    <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2070="2070">
+                      Destroy
+                    </li>
                   </ul>
+
+                  </div>
+                </div>
               </div>
             </div>
 
