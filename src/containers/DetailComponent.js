@@ -146,16 +146,13 @@ class DetailComponent extends Component {
 
         return (
             <div className="container m-auto p-8 text-grey-darkest flex">
-              <div className="w-full sm:w-3/5 md:w-3/5 px-6 py-4">
-                <div className="flex border-b border-solid border-gray-100">
-                    <div className="w-full p-4 pl-0">
+              <div className="w-full sm:w-4/5 md:w-4/5 py-4">
+                <div className="flex">
+                    <div className="w-full pl-0">
                         <div className="flex justify-between">
                             <div className="flex justify-between">
                                 <div><span className="font-bold mr-12">{this.state.postedBy}</span></div>
                                 <div><span className="text-grey-dark"><TimeAgo date={new Date(this.state.problem.created_at)} /></span></div>
-                            </div>
-                            <div>
-                                <span href="#" className="text-grey-dark hover:text-teal"><i className="fa fa-chevron-down"></i></span>
                             </div>
                         </div>
 
@@ -166,7 +163,7 @@ class DetailComponent extends Component {
                                 {renderPostImage}
                             </div>
 
-                            <div className="px-6 py-4">
+                            <div className="py-4">
                                 <div className="flex">
                                     <span
                                         className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
@@ -178,10 +175,10 @@ class DetailComponent extends Component {
                                         <i className="fa fa-heart fa-lg mr-2"></i> {this.state.likes.length}
                                     </span>
                                     <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
-                                        <Twitter link={`http://bisubizo.com/problem/${params.id}`} />
+                                        <Twitter solidcircle small link={`http://bisubizo.com/problem/${params.id}`} />
                                     </span>
                                     <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
-                                        <Facebook link={`http://bisubizo.com/problem/${params.id}`} />
+                                        <Facebook solidcircle small link={`http://bisubizo.com/problem/${params.id}`} />
                                     </span>
                                 </div>
                             </div>
@@ -190,7 +187,7 @@ class DetailComponent extends Component {
                         <div>
                             <form className="form" onSubmit={this.handleSubmit.bind(this)}>
                                 <input
-                                    className="w-full h-8 p-4"
+                                    className="w-full h-8 p-2"
                                     type="text"
                                     name='comment'
                                     value={this.state.comment}

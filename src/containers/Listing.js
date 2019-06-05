@@ -17,7 +17,7 @@ class Listing extends Component {
             <React.Fragment>
                 {problems.map((problem, index) => {
                     return (
-                        <ListItem key={problem._id} index={index} problem={problem} {...problem} />
+                        <ListItem key={problem._id} personalListings={this.props.personalListings} index={index} problem={problem} {...problem} />
                     )
                 })}
             </React.Fragment>

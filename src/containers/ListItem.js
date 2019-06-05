@@ -124,45 +124,6 @@ class ListItem extends Component {
                 <h3 className="font-bold text-2xl mr-2">{title}</h3>
                 <TimeAgo date={new Date(created_at)} />
               </div>
-
-              <div>
-                <span className="relative">
-                  <i className="fa fa-ellipsis-h"></i>
-                </span>
-                
-                <div className="menu-dropdown absolute">
-                  <div className="menu-dropdownView overflow-hidden relative" style={{transition: 'all .3s ease-in-out'}}>
-                  <ul class="menu-dropdownItems">
-                    <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2055="2055">
-                    Add a domain
-                    </li>
-                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2057="2057">
-                    Access console
-                    </li>
-                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2059="2059">
-                    Resize droplet
-                    </li>
-                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2061="2061">
-                    View usage
-                    </li>
-                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2063="2063">
-                    Enable backups
-                    </li>
-                          <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2065="2065">
-                    Add tags
-                    </li>
-                    <div data-html="false" title="" data-toggle="tooltip" data-placement="top" id="ember2067" data-original-title="Create a new project to move this droplet." class="tooltip-wrap multiline ember-view">          <li role="button" class="is-disabled dropdown-menu-item-button " data-ember-action="" data-ember-action-2068="2068">
-                        Move to...
-                        </li>
-                    </div>        
-                    <li role="button" class=" dropdown-menu-item-button " data-ember-action="" data-ember-action-2070="2070">
-                      Destroy
-                    </li>
-                  </ul>
-
-                  </div>
-                </div>
-              </div>
             </div>
 
             <p className="description pb-2" onClick={this.viewProblemDetails.bind(this)}>
@@ -170,7 +131,7 @@ class ListItem extends Component {
             </p>
             {renderedImage}
           </div>
-          <ListItemToolBar problem_id={_id} comments={this.state.comments} likes={this.state.likes} updateLike={this.updateLike.bind(this)} />
+          <ListItemToolBar personalListings={this.props.personalListings} user_data={JSON.parse(localStorageUserData)} problem_id={_id} comments={this.state.comments} likes={this.state.likes} updateLike={this.updateLike.bind(this)} />
           {localStorageUserData ? <AddCommentToolBar updateComment={this.updateComment.bind(this)}  problem_id={_id} user_data={JSON.parse(localStorageUserData)} /> : '' }
         </div>
       </div>

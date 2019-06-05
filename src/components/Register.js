@@ -29,12 +29,12 @@ class Register extends React.Component {
 
         if(password !== confirm_password) {
             this.setState({error: 'Password mismatch'})
-            return 
+            return
         }
 
         if(!firstname || !lastname || !phone || !password) {
             this.setState({error: 'Please enter required fields'})
-            return 
+            return
         }
 
 

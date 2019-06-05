@@ -102,6 +102,7 @@ class CreateProblemForm extends Component {
       this.setState({message: 'Your Post was successfully added'})
       localStorage.removeItem("post_title")
       localStorage.removeItem("post_description")
+      window.location.reload();
     }).catch(error => {
       this.props.addingProblemFailure(error)
       this.setState({error: 'An error occurred...'})
