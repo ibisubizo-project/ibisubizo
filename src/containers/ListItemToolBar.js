@@ -67,8 +67,12 @@ class ListItemToolBar extends Component {
                     </span>
                     {this.props.personalListings && (
                         <div className="flex">
-                            <p>Edit</p>
-                            <p onClick={() => this.delete(this.props.problem_id)}>Delete</p>
+                            <span className="mr-2">
+                                <i className="fa fa-edit" aria-hidden="true" onClick={() => console.log("Editing...")}></i>
+                            </span>
+                            <span className="mr-2">
+                                <i className="fa fa-trash" aria-hidden="true" onClick={() => this.delete(this.props.problem_id)}></i>
+                            </span>
                         </div>
                     )}
                     <span className="flex rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">

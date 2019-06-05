@@ -27,6 +27,14 @@ class CreateProblemForm extends Component {
     message: ''
   }
 
+  componentWillMount() {
+    let postTitle = localStorage.getItem("post_title");
+    let postDescription = localStorage.getItem("post_description");
+    if(postTitle && postDescription) {
+      this.setState({title: postTitle, description: postDescription})
+    }
+  }
+
   handleUploadStart() { 
     this.setState({isUploading: true, progress: 0})
   }
@@ -133,7 +141,7 @@ class CreateProblemForm extends Component {
               <div>
                 <input 
                   type="text"
-                  value={this.state.title || localStorage.getItem("post_title")}
+                  value={this.state.title}
                   onChange={e => this.setState({title: e.target.value})}
                   className="w-full appearance-none bg-white py-2 px-3 text-gray-700 mb-3 border border-white leading-tight outline-none focus:border-gray-200 focus:outline-none focus:bg-white" 
                   placeholder='Enter Problem title' />
