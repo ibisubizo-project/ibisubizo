@@ -76,6 +76,7 @@ class ListItem extends Component {
 
   viewProblemDetails(evt) {
     evt.preventDefault()
+    
     if(!this.props.userIsAuthenticated) {
       this.setState({unAuthenticatedAction : true})
     }

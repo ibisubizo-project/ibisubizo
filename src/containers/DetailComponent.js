@@ -26,10 +26,13 @@ class DetailComponent extends Component {
             featuredProblems: [],
             error: '',
             redirectToLogin: false,
+            first_name: '',
+            last_name: ''
         }
 
         this.updateLike = this.updateLike.bind(this)
         this.evaluateLikeState = this.evaluateLikeState.bind(this)
+        this.getLoggedInUser = this.getLoggedInUser.bind(this)
     }
 
     updateLike(problemId) {
@@ -121,6 +124,17 @@ class DetailComponent extends Component {
             console.error(error)
             this.setState({isLoading: false})
         });
+        this.getLoggedInUser();
+    }
+
+    getLoggedInUser() {
+        let loggedInUser = localStorage.getItem("userData");
+        let userId = JSON.parse(loggedInUser)._id;
+        userApi.GetUserById(userId).then(result => {
+            console.log("Currently Logged in User: ")
+            console.dir(result);
+            this.setState({first_name: result.first_name, last_name: result.last_name});
+        })
     }
 
     evaluateLikeState(data) {
@@ -143,6 +157,17 @@ class DetailComponent extends Component {
         if(this.state.problem.pictures !== undefined) {
             renderPostImage = (this.state.problem.pictures.length > 0) ? <p><a href={this.state.problem.pictures[0]}><img src={this.state.problem.pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm" /></a></p> : '';
         }
+
+        let firstname = undefined;
+        let lastname = undefined;
+
+        if(this.props.authenticatedUser !== undefined) {
+             firstname = this.props.authenticatedUser.firstname;
+             lastname = this.props.authenticatedUser.lastname;
+        }
+
+        console.log("Comments")
+        console.dir(this.props.selectedProblemsComments);
 
         return (
             <div className="container m-auto p-8 text-grey-darkest flex">
@@ -201,7 +226,14 @@ class DetailComponent extends Component {
                         <div className="comments mt-6 border-grey-lighter">
                             {this.props.selectedProblemsComments.map((comments, index) => (
                                 <div key={index} className="bg-white p-5 mb-4">
-                                    {comments.comment}
+                                    <div className="flex justify-between">
+                                        <h4 className="font-extrabold">{`${firstname}, ${lastname}`}</h4>
+                                        <TimeAgo date={new Date(comments.commented_at)} />
+                                    </div>
+
+                                    <div>
+                                        {comments.comment}
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -210,7 +242,7 @@ class DetailComponent extends Component {
                 {/*  */}
               </div>
 
-              <div className="w-2/5 mt-10 hidden sm:block md:block">
+              <div className="w-2/5 ml-4 mt-10 hidden sm:block md:block">
                   <h1>Problem Listing</h1>
                   <hr className="mb-2" />
                   {!this.state.featuredProblems && <p>No Problem Listing</p>}
@@ -233,7 +265,8 @@ const mapStateToProps = (state) => {
     return {
         selectedProblemsComments: state.problems.selectedProblemsComments,
         selectedProblemsLikes: state.problems.selectedProblemsLikes,
-        userIsAuthenticated: state.usersReducer.isAuthenticated
+        userIsAuthenticated: state.usersReducer.isAuthenticated,
+        authenticatedUser: state.usersReducer.authedUser
     }
 }
 
