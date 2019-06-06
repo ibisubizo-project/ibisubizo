@@ -31,7 +31,7 @@ class NavBar extends Component {
                     </div>
 
                     <div className="w-2/6 text-right">
-                        <div className="text-black nav-content-right hidden sm:hidden md:hidden lg:block">
+                        <div className="text-black nav-content-right hidden sm:hidden md:block lg:block">
                             <ul className="flex">
                                 <li className="mr-3">
                                     <Link to='/about'>About Us</Link>
