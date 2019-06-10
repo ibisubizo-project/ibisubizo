@@ -15,7 +15,7 @@ firebase.initializeApp(config)
 class CreateProblemForm extends Component {
   state = {
     title: "",
-    description: "",
+    description: "Enter Description",
     status: 1,
     isUploading: false,
     progress: 0,
@@ -43,7 +43,6 @@ class CreateProblemForm extends Component {
   }
   handleUploadError(error) {
     this.setState({isUploading: false})
-    console.error(error)
   }
   handleUploadSuccess(filename) {
     this.setState({progress: 100, isUploading: false})
@@ -149,9 +148,8 @@ class CreateProblemForm extends Component {
               <div>
                 <textarea 
                   rows='3'
-                  value={this.state.description || localStorage.getItem("post_description")}
+                  value={this.state.description}
                   onChange={e => this.setState({description: e.target.value})}
-                  defaultValue="Enter Problem description"
                   className="w-full appearance-none py-2 px-3 bg-white text-gray-700 mb-3 border border-white leading-tight outline-none focus:border-gray-200 focus:outline-none mb-4"></textarea>
               </div>
 

@@ -99,7 +99,6 @@ class DetailComponent extends Component {
 
         const { match: { params } } = this.props;
         this.setState({isLoading: true})
-        //For the sideBAR Listings
         let problems = problemsApi.getProblem(params.id)
         problemsApi.getAllApprovedProblems().then(result => this.setState({featuredProblems: result})).catch(error => this.setState({error: error}))
         let comments = commentsApi.ListAllPostComments(params.id)
@@ -165,9 +164,6 @@ class DetailComponent extends Component {
              firstname = this.props.authenticatedUser.firstname;
              lastname = this.props.authenticatedUser.lastname;
         }
-
-        console.log("Comments")
-        console.dir(this.props.selectedProblemsComments);
 
         return (
             <div className="container m-auto p-8 text-grey-darkest flex">

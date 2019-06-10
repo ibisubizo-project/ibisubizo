@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom';
 import problemsApi from '../services/problemsApi';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 class ListItemToolBar extends Component {
     constructor(props) {
@@ -11,10 +18,39 @@ class ListItemToolBar extends Component {
         this.state = {
             isFetching: false,
             comments: {},
-            commentCount: 0
+            commentCount: 0,
+            openDialog: false,
+            text: '',
+            title: ''
         }
 
         this.deleteProblem = this.deleteProblem.bind(this);
+        this.openDialog = this.openDialog.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
+        this.editPost = this.editPost.bind(this);
+    }
+
+    openDialog() {
+        this.setState({openDialog: true})
+    }
+
+    closeDialog() {
+        this.setState({openDialog: false})
+    }
+
+    editPost(problemId, userId) {
+        let update = {
+            text: this.state.text,
+            title: this.state.title
+        }
+        problemsApi.updateProblem(problemId, userId, update).then(result => {
+            window.location.reload();
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let problem = nextProps.problem;
+        this.setState({title: problem.title, text: problem.text})
     }
 
     delete(problem_id){
@@ -48,7 +84,7 @@ class ListItemToolBar extends Component {
             return <div></div>
         }
 
-        console.log(this.props.user_data);
+        console.log(this.props);
 
         return (
             <div className="p-0 sm:px-2 py-2">
@@ -68,7 +104,7 @@ class ListItemToolBar extends Component {
                     {this.props.personalListings && (
                         <div className="flex">
                             <span className="mr-2">
-                                <i className="fa fa-edit" aria-hidden="true" onClick={() => console.log("Editing...")}></i>
+                                <i className="fa fa-edit" aria-hidden="true" onClick={() => this.openDialog()}></i>
                             </span>
                             <span className="mr-2">
                                 <i className="fa fa-trash" aria-hidden="true" onClick={() => this.delete(this.props.problem_id)}></i>
@@ -80,6 +116,43 @@ class ListItemToolBar extends Component {
                         <Facebook solidcircle small link={`http://bisubizo.com/problem/${this.props.problem_id}`} />
                     </span>
                 </div>
+
+                <Dialog fullWidth={true} maxWidth={`sm`} open={this.state.openDialog} onClose={this.closeDialog} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Edit Post</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Edit Your Post...
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="title"
+                            label="Title"
+                            onChange={e => this.setState({title: e.target.value})}
+                            value={this.state.title}
+                            fullWidth
+                        />
+
+                        <TextField
+                            autoFocus
+                            multiline={true}
+                            margin="dense"
+                            id="description"
+                            label="Description"
+                            onChange={e => this.setState({text: e.target.value})}
+                            value={this.state.text}
+                            fullWidth
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.closeDialog} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={() => this.editPost(this.props.problem_id, this.props.user_data._id)} color="primary">
+                            Submit
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         )
     }

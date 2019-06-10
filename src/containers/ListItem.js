@@ -132,7 +132,7 @@ class ListItem extends Component {
             </p>
             {renderedImage}
           </div>
-          <ListItemToolBar personalListings={this.props.personalListings} user_data={JSON.parse(localStorageUserData)} problem_id={_id} comments={this.state.comments} likes={this.state.likes} updateLike={this.updateLike.bind(this)} />
+          <ListItemToolBar problem={this.props.problem} personalListings={this.props.personalListings} user_data={JSON.parse(localStorageUserData)} problem_id={_id} comments={this.state.comments} likes={this.state.likes} updateLike={this.updateLike.bind(this)} />
           {localStorageUserData ? <AddCommentToolBar updateComment={this.updateComment.bind(this)}  problem_id={_id} user_data={JSON.parse(localStorageUserData)} /> : '' }
         </div>
       </div>
