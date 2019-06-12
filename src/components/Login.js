@@ -4,6 +4,7 @@ import { Redirect, Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import * as usersActions from '../actions/users';
 import actions from '../actions/actions';
+import { Helmet } from 'react-helmet'
 
 class Login extends React.Component {
 
@@ -37,11 +38,14 @@ class Login extends React.Component {
 
       return (
         <div className="container mx-auto mt-12">
+          <Helmet>
+            <title>Login | Ibisubizo</title>
+          </Helmet>
           <form
             onChange={this.onFieldChanged.bind(this)} onSubmit={this.onSubmit.bind(this)}
             className="font-sans text-sm rounded w-full max-w-md mx-auto my-8 px-8 pt-6 pb-8 bg-gray-200"
             >
-              <h1 className="text-2xl pb-3 font-medium mt-4 mb-4">Sign In to Ibusibuzo</h1>
+              <h1 className="text-2xl pb-3 font-medium mt-4 mb-4">Sign In to Ibisubizo</h1>
               <div className={hasErrors}>
                 {this.props.authenticationError && <p>{this.props.authenticationError}</p>}
               </div>

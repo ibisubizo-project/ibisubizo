@@ -1,9 +1,24 @@
 import React from 'react'
-
+import { Helmet } from 'react-helmet'
 
 const TermsAndConditionComponent = () => {
     return (
         <div className="content-container p-0 sm:p-8">
+            <Helmet>
+                <title>Ibisubizo | A Solution Platform.</title>
+
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:site" content="@ibisubizo" />
+                <meta name="twitter:title" content="Ibisubizo - A Solution Platform." />
+                <meta name="twitter:description" content="Are you facing any issue? Submit it to us and get a Solution!." />
+                <meta name="twitter:image" content="%PUBLIC_URL%/ibisubizo.jpg" />
+                <meta name="twitter:creator" content="@opiumated" />
+                <meta property="og:url" content="http://bisubizo.com/" />
+                <meta property="og:type" content="article" />
+                <meta property="og:title" content="Ibisubizo - A Solution Platform." />
+                <meta property="og:description" content="Are you facing any issue? Submit it to us and get a Solution!." />
+                <meta property="og:image" content="%PUBLIC_URL%/ibisubizo.jpg"  />
+            </Helmet>
             <div className="font-sans text-sm container  rounded w-full mx-auto pt-6 pb-8 border border:teal">
                 <div className="w-full px-6 py-4">
                     <div className="term-condition mt-10">

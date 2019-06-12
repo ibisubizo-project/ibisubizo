@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import * as usersActions from '../actions/users';
 import actions from '../actions/actions';
+import { Helmet} from 'react-helmet'
 
 
 class Register extends React.Component {
@@ -71,6 +72,10 @@ class Register extends React.Component {
       const hasErrors = (this.props.authenticationError || this.state.error) ? 'block border border-red-500 p-2 mb-2' : 'hidden';
       return (
         <form className="font-sans text-sm rounded w-full max-w-md mx-auto my-8 px-8 pt-6 pb-8 bg-gray-200" onChange={this.onFieldChanged.bind(this)} onSubmit={this.onSubmit.bind(this)}>
+            <Helmet>
+                <title>Sign Up | Ibisubizo</title>
+            </Helmet>
+
             <h1 className="text-2xl pb-2 font-medium">Create An Account</h1>
             <div className={hasErrors}>
                 {this.state.error && <p>{this.state.error} </p>}
