@@ -85,7 +85,7 @@ class ListingContainer extends React.Component{
 
             {!this.state.showPersonalListing && <Listing problems={this.state.problems} />}
             {this.state.showPersonalListing && <Listing personalListings={true} problems={this.state.userProblems || []} />}
-            {!this.state.showPersonalListing & this.state.hasMore ? (<div className="w-full text-center p-2 bg-white text-black border border-teal-600" onClick={this.loadMore}>Load More</div>): ''}
+            {!this.state.showPersonalListing & this.state.hasMore ? (<div className="w-full text-center p-2 bg-white text-black border border-teal-600 cursor-pointer hover:bg-teal-700 hover:text-white" onClick={this.loadMore}>Load More</div>): ''}
           </div>
         </div>
       )

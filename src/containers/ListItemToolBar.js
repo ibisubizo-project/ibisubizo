@@ -104,10 +104,10 @@ class ListItemToolBar extends Component {
                     {this.props.personalListings && (
                         <div className="flex">
                             <span className="mr-2">
-                                <i className="fa fa-edit" aria-hidden="true" onClick={() => this.openDialog()}></i>
+                                <i className="fa fa-edit cursor-pointer" aria-hidden="true" onClick={() => this.openDialog()}></i>
                             </span>
                             <span className="mr-2">
-                                <i className="fa fa-trash" aria-hidden="true" onClick={() => this.delete(this.props.problem_id)}></i>
+                                <i className="fa fa-trash cursor-pointer hover:bg-red-600 hover:text-white" aria-hidden="true" onClick={() => this.delete(this.props.problem_id)}></i>
                             </span>
                         </div>
                     )}
