@@ -28,12 +28,21 @@ class DetailComponent extends Component {
             error: '',
             redirectToLogin: false,
             first_name: '',
-            last_name: ''
+            last_name: '',
+            redirectTo: ''
         }
 
         this.updateLike = this.updateLike.bind(this)
         this.evaluateLikeState = this.evaluateLikeState.bind(this)
         this.getLoggedInUser = this.getLoggedInUser.bind(this)
+        this.fetchFreshData = this.fetchFreshData.bind(this)
+        this.problemListing = this.problemListing.bind(this)
+    }
+
+    problemListing(problem_id) {
+        window.location.href = `/problem/${problem_id}`
+        // console.log(problem_id)
+        // return <Redirect to={`/problem/${problem_id}`} />
     }
 
     updateLike(problemId) {
@@ -99,11 +108,16 @@ class DetailComponent extends Component {
         }
 
         const { match: { params } } = this.props;
+        this.fetchFreshData(params.id)
+        this.getLoggedInUser();
+    }
+
+    fetchFreshData(problem_id) {
         this.setState({isLoading: true})
-        let problems = problemsApi.getProblem(params.id)
+        let problems = problemsApi.getProblem(problem_id)
         problemsApi.getAllApprovedProblems().then(result => this.setState({featuredProblems: result})).catch(error => this.setState({error: error}))
-        let comments = commentsApi.ListAllPostComments(params.id)
-        let likes  = likesApi.GetAllLikes(params.id)
+        let comments = commentsApi.ListAllPostComments(problem_id)
+        let likes  = likesApi.GetAllLikes(problem_id)
         Promise.all([problems, comments, likes]).then(result => {
             this.props.setSelectedProblemsComments(result[1])
             this.props.setSelectedProblemsLikes(result[2])
@@ -124,8 +138,13 @@ class DetailComponent extends Component {
             console.error(error)
             this.setState({isLoading: false})
         });
-        this.getLoggedInUser();
     }
+
+    // componentWillReceiveProps(nextProps) {
+    //     const problem_id = nextProps.match.params.id;
+    //     this.fetchFreshData(problem_id);
+    //     this.getLoggedInUser();
+    // }
 
     getLoggedInUser() {
         let loggedInUser = localStorage.getItem("userData");
@@ -214,10 +233,10 @@ class DetailComponent extends Component {
                                         <i className="fa fa-heart fa-lg mr-2"></i> {this.state.likes.length}
                                     </span>
                                     <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
-                                        <Twitter solidcircle small link={`http://bisubizo.com/problem/${params.id}`} />
+                                        <Twitter solidcircle small message={this.state.problem.title} link={`http://bisubizo.com/problem/${params.id}`} />
                                     </span>
                                     <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
-                                        <Facebook solidcircle small link={`http://bisubizo.com/problem/${params.id}`} />
+                                        <Facebook solidcircle small message={this.state.problem.title} link={`http://bisubizo.com/problem/${params.id}`} />
                                     </span>
                                 </div>
                             </div>
@@ -261,11 +280,11 @@ class DetailComponent extends Component {
                   <hr className="mb-2" />
                   {!this.state.featuredProblems && <p>No Problem Listing</p>}
                   {problemListing.map(problem => (
-                      <Link to={`/problem/${problem._id}`} key={problem._id} className="no-underline text-black font-bold">
+                      <div onClick={() => this.problemListing(problem._id)} key={problem._id} className="no-underline text-black font-bold cursor-pointer">
                         <div className="h-16 bg-white p-2 mb-2 mt-2">
                             {problem.title}
                         </div>
-                      </Link>
+                      </div>
                   ))}
 
               </div>
