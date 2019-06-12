@@ -10,6 +10,7 @@ import likesApi from '../services/likesApi'
 import userApi from '../services/users'
 import { Twitter, Facebook } from 'react-social-sharing'
 import { Redirect, Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 
 class DetailComponent extends Component {
@@ -153,8 +154,10 @@ class DetailComponent extends Component {
 
         let problemListing = this.state.featuredProblems.slice(0, 20)
         let renderPostImage = null
+        let renderedImage = null 
         if(this.state.problem.pictures !== undefined) {
             renderPostImage = (this.state.problem.pictures.length > 0) ? <p><a href={this.state.problem.pictures[0]}><img src={this.state.problem.pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm" /></a></p> : '';
+            renderedImage = this.state.problem.pictures[0]
         }
 
         let firstname = undefined;
@@ -167,6 +170,21 @@ class DetailComponent extends Component {
 
         return (
             <div className="container m-auto p-8 text-grey-darkest flex">
+              <Helmet>
+                  <title>
+                      {this.state.problem.title}
+                  </title>
+                  {this.state.problem.pictures !== undefined && (
+                    <meta property="og:image" content={renderedImage} />
+                  )}
+
+                  {this.state.problem.pictures !== undefined && (
+                    <meta property="twitter:image" content={renderedImage} />
+                  )}
+                  <meta name="twitter:title" content={this.state.problem.title} />
+                  <meta property="og:title" content={this.state.problem.title} />
+
+              </Helmet>
               <div className="w-full sm:w-4/5 md:w-4/5 py-4">
                 <div className="flex">
                     <div className="w-full pl-0">

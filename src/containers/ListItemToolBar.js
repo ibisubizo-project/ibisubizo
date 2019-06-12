@@ -112,8 +112,8 @@ class ListItemToolBar extends Component {
                         </div>
                     )}
                     <span className="flex rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
-                        <Twitter solidcircle small link={`http://bisubizo.com/problem/${this.props.problem_id}`} />
-                        <Facebook solidcircle small link={`http://bisubizo.com/problem/${this.props.problem_id}`} />
+                        <Twitter solidcircle small message={this.state.title} link={`http://bisubizo.com/problem/${this.props.problem_id}`} />
+                        <Facebook solidcircle small message={this.state.title} link={`http://bisubizo.com/problem/${this.props.problem_id}`} />
                     </span>
                 </div>
 
