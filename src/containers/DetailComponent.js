@@ -4,6 +4,7 @@ import { addComment } from '../actions/comments'
 import { addLike } from '../actions/likes'
 import TimeAgo from 'react-timeago'
 import actions from '../actions/actions'
+import { confirmAlert } from 'react-confirm-alert';
 import problemsApi from '../services/problemsApi'
 import commentsApi from '../services/commentApi'
 import likesApi from '../services/likesApi'
@@ -83,6 +84,33 @@ class DetailComponent extends Component {
         }
     }
 
+    delete(comment){
+        confirmAlert({
+          title: 'Confirm to submit',
+          message: 'Are you sure to delete this comment?',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => this.deleteComment(comment._id)
+            },
+            {
+              label: 'No',
+              onClick: () => {
+                return null;
+              }
+            }
+          ]
+        });
+    };
+
+    deleteComment(comment_id) {
+        commentsApi.Remove(comment_id).then((result) => {
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000)
+        })
+    }
+
     handleSubmit(event) {
         event.preventDefault()
         const { match: { params } } = this.props;
@@ -140,12 +168,6 @@ class DetailComponent extends Component {
         });
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     const problem_id = nextProps.match.params.id;
-    //     this.fetchFreshData(problem_id);
-    //     this.getLoggedInUser();
-    // }
-
     getLoggedInUser() {
         let loggedInUser = localStorage.getItem("userData");
         let userId = JSON.parse(loggedInUser)._id;
@@ -165,15 +187,22 @@ class DetailComponent extends Component {
         })
     }
 
+    getTrashClassNames(comments) {
+        let state = (this.props.authenticatedUser._id !== comments.user_id) ? " hidden" : " ";
+        return `${state}`
+    }
+
     render() {
         const { match: { params } } = this.props;
         if(this.state.isLoading) {
             return <div></div>
         }
+        console.log("Authenticated USer")
+        console.dir(this.props.authenticatedUser)
 
         let problemListing = this.state.featuredProblems.slice(0, 20)
         let renderPostImage = null
-        let renderedImage = null 
+        let renderedImage = null
         if(this.state.problem.pictures !== undefined) {
             renderPostImage = (this.state.problem.pictures.length > 0) ? <p><a href={this.state.problem.pictures[0]}><img src={this.state.problem.pictures[0]} alt="Upload" className="border border-solid border-grey-light rounded-sm" /></a></p> : '';
             renderedImage = this.state.problem.pictures[0]
@@ -261,8 +290,22 @@ class DetailComponent extends Component {
                             {this.props.selectedProblemsComments.map((comments, index) => (
                                 <div key={index} className="bg-white p-5 mb-4">
                                     <div className="flex justify-between">
-                                        <h4 className="font-extrabold">{`${firstname}, ${lastname}`}</h4>
-                                        <TimeAgo date={new Date(comments.commented_at)} />
+                                        <div className="flex">
+                                            <h4 className="font-extrabold">{`${firstname}, ${lastname}`}</h4>
+                                            <TimeAgo date={new Date(comments.commented_at)} />
+                                        </div>
+                                        <div className={this.getTrashClassNames(comments)}>
+                                            <span className="mr-2 ">
+                                                {console.log("Authenticated User " + this.props.authenticatedUser._id)}
+                                                {console.log("Commented By " + comments.user_id)}
+                                                {console.log(this.props.authenticatedUser._id === comments.user_id)}
+                                                {/* <p>{console.log(this.props.authenticatedUser._id === comments.user_id)}</p> */}
+                                                <i
+                                                    onClick={() => this.delete(comments)}
+                                                    className={`fa fa-trash cursor-pointer hover:bg-red-600 hover:text-white`}
+                                                    aria-hidden="true"></i>
+                                            </span>
+                                        </div>
                                     </div>
 
                                     <div>
