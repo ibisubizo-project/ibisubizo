@@ -116,7 +116,7 @@ class DetailComponent extends Component {
         this.setState({isLoading: true})
         let problems = problemsApi.getProblem(problem_id)
         problemsApi.getAllApprovedProblems().then(result => this.setState({featuredProblems: result})).catch(error => this.setState({error: error}))
-        let comments = commentsApi.ListAllPostComments(problem_id)
+        let comments = commentsApi.GetPublicComments(problem_id)
         let likes  = likesApi.GetAllLikes(problem_id)
         Promise.all([problems, comments, likes]).then(result => {
             this.props.setSelectedProblemsComments(result[1])
@@ -252,6 +252,7 @@ class DetailComponent extends Component {
                                     onChange={(e) => {
                                         this.setState({comment: e.target.value})
                                     }}
+                                    autoComplete="off"
                                     placeholder="Add your comment" />
                             </form>
                         </div>
@@ -276,7 +277,7 @@ class DetailComponent extends Component {
               </div>
 
               <div className="w-2/5 ml-4 mt-10 hidden sm:block md:block">
-                  <h1>Problem Listing</h1>
+                  <h1 className="font-bold text-2xl">Trending Problems</h1>
                   <hr className="mb-2" />
                   {!this.state.featuredProblems && <p>No Problem Listing</p>}
                   {problemListing.map(problem => (
@@ -286,7 +287,6 @@ class DetailComponent extends Component {
                         </div>
                       </div>
                   ))}
-
               </div>
             </div>
         )

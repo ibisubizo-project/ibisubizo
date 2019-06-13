@@ -6,7 +6,7 @@ const AboutUsComponent = () => {
     return (
         <div className="container m-auto h-screen p-8 text-grey-darkest">
             <Helmet>
-                <title>Ibisubizo | A Solution Platform.</title>
+                <title>About Us | Ibisubizo</title>
 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@ibisubizo" />

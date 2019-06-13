@@ -5,7 +5,7 @@ const TermsAndConditionComponent = () => {
     return (
         <div className="content-container p-0 sm:p-8">
             <Helmet>
-                <title>Ibisubizo | A Solution Platform.</title>
+                <title>Terms and Conditions | Ibisubizo</title>
 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@ibisubizo" />

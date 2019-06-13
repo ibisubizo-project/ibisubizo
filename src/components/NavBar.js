@@ -82,7 +82,7 @@ class NavBar extends Component {
                       </React.Fragment>
                     )}
                     {this.props.userIsAuthenticated && (
-                      <div className="text-black no-underline cursor-pointer" onClick={() => this.props.logout()}>Logout</div>
+                      <div className="no-underline text-base items-center text-white hover:text-gray-700 mb-4" onClick={() => this.props.logout()}>Logout</div>
                     )}
                 </div>
             </div>

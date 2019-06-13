@@ -33,6 +33,7 @@ class AddCommentToolBar extends Component {
             name='comment'
             value={this.state.comment}
             onChange={(e) => this.setState({comment: e.target.value})}
+            autoComplete='off'
             placeholder="Add your comment" />
         </form>
       </div>
