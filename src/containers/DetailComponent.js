@@ -12,6 +12,7 @@ import userApi from '../services/users'
 import { Twitter, Facebook } from 'react-social-sharing'
 import { Redirect, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import metricsApi from '../services/metricsApi';
 
 
 class DetailComponent extends Component {
@@ -130,6 +131,14 @@ class DetailComponent extends Component {
         this.setState({comment: ''})
     }
 
+    addMetrics(problemId) {
+        let metrics = {}
+        metrics.problem_id = problemId
+        metricsApi.addProblemMetrics(metrics).then(result => {
+            console.log("Metrics added...")
+        }).catch(error => console.log("[Error] Unable to add metrics"))
+    }
+
     componentDidMount() {
         if(this.state.redirectToLogin) {
           return <Redirect to='/auth/login' />
@@ -138,6 +147,41 @@ class DetailComponent extends Component {
         const { match: { params } } = this.props;
         this.fetchFreshData(params.id)
         this.getLoggedInUser();
+        this.getProblemCurrentMetrics(params.id)
+    }
+
+    getProblemCurrentMetrics(problemId) {
+        metricsApi.getProblemMetrics(problemId).then(result => {
+            console.log(result)
+            let visits = result.visits + 1
+            let metrics = {
+                problem_id: result.problem_id,
+                visits: visits,
+                year: result.year,
+                month: result.month
+            }
+            metricsApi.updateProblemMetrics(problemId, metrics).then(result => {
+                console.log(result)
+                console.log("Previous metrics Updated")
+            })
+
+            //Update Metrics cos we just visited this page
+        }).catch(error => {
+            console.dir(error)
+            if(error.response.status === 400) {
+                //Build the metrics, cos its a new one
+                let metrics = {}
+                metrics.problem_id = problemId
+                metrics.visits = 1
+                metrics.year = new Date().getFullYear()
+                metrics.month = new Date().getMonth() + 1 //JS displays months from 0 - 11, Golang goes from 1 - 12 
+
+                metricsApi.addProblemMetrics(metrics).then(result => {
+                    console.log("New Metrics Added..[First Visit]")
+                })
+            }
+        })
+
     }
 
     fetchFreshData(problem_id) {
@@ -296,10 +340,6 @@ class DetailComponent extends Component {
                                         </div>
                                         <div className={this.getTrashClassNames(comments)}>
                                             <span className="mr-2 ">
-                                                {console.log("Authenticated User " + this.props.authenticatedUser._id)}
-                                                {console.log("Commented By " + comments.user_id)}
-                                                {console.log(this.props.authenticatedUser._id === comments.user_id)}
-                                                {/* <p>{console.log(this.props.authenticatedUser._id === comments.user_id)}</p> */}
                                                 <i
                                                     onClick={() => this.delete(comments)}
                                                     className={`fa fa-trash cursor-pointer hover:bg-red-600 hover:text-white`}

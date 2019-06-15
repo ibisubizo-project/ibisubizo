@@ -50,7 +50,6 @@ export function login (form) {
 			localStorage.setItem('token', response.data.token)
 			UserProfile.setUserData(response.data.user)
 			dispatch(actions.fetchingUserSuccess(response.data.user))
-			//return history.push('/') //GOTO: Homepage
 		})
 		.catch((err) => {
 			let error = err
@@ -66,7 +65,6 @@ export function register(credentials) {
 			localStorage.setItem("token", response.data.token)
 			UserProfile.setUserData(response.data.user)
 			dispatch(actions.fetchingUserSuccess(response.data.user))
-			//return history.push('/')
 		})
 		.catch((err) => {
 			let error = err

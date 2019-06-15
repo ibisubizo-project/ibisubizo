@@ -22,7 +22,6 @@ const problems = (state = initialState, action ) => {
         case actionTypes.FETCHING_USER_PROBLEMS_FAILURE:
             return {...state, loading: false, error: action.payload}
         case actionTypes.FETCHING_PROBLEMS_SUCCESS:
-            console.log(action.payload)
             return { ...state, loading: false, problems: action.payload}
         case actionTypes.FETCHING_PROBLEMS_FAILURE:
             return { ...state, loading: false, error: action.payload}

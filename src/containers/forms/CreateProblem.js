@@ -243,8 +243,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      addingProblemSuccess: (response) => dispatch(actions.addingProblemSuccess(response)),
-      addingProblemFailure: (error) => dispatch(actions.addingProblemFailure(error))
+    addingProblemSuccess: (response) => dispatch(actions.addingProblemSuccess(response)),
+    addingProblemFailure: (error) => dispatch(actions.addingProblemFailure(error))
   }
 }
 
