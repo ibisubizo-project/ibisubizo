@@ -7,6 +7,7 @@ import FileUploader from 'react-firebase-file-uploader'
 import actions from '../../actions/actions'
 import config from '../../firebase'
 import AppConfig from '../../utils/config'
+import Loader from 'react-loader-spinner'
 
 
 firebase.initializeApp(config)
@@ -45,7 +46,6 @@ class CreateProblemForm extends Component {
     this.setState({isUploading: false})
   }
   handleUploadSuccess(filename) {
-    this.setState({progress: 100, isUploading: false})
     firebase
       .storage()
       .ref("images")
@@ -55,10 +55,10 @@ class CreateProblemForm extends Component {
         const newURL = state.uploadedPictures.concat(url)
         return { uploadedPictures: newURL}
       }))
+      this.setState({progress: 100, isUploading: false})
   }
 
   handleVideoUploadSuccess(filename) {
-    this.setState({progress: 100, isUploading: false})
     firebase
       .storage()
       .ref("videos")
@@ -68,10 +68,10 @@ class CreateProblemForm extends Component {
         const newURL = state.uploadedVideos.concat(url)
         return { uploadedVideos: newURL}
       }))
+      this.setState({progress: 100, isUploading: false})
   }
 
   handleDocumentUploadSuccess(filename) {
-    this.setState({progress: 100, isUploading: false})
     firebase
       .storage()
       .ref("documents")
@@ -81,6 +81,7 @@ class CreateProblemForm extends Component {
         const newURL = state.uploadedDocuments.concat(url)
         return { uploadedDocuments: newURL}
       }))
+      this.setState({progress: 100, isUploading: false})
   }
 
   onSubmit = (evt) => {
@@ -136,7 +137,6 @@ class CreateProblemForm extends Component {
             <div className={hasMessage}>
               {this.state.message && <p>{this.state.message} </p>}
             </div>
-
             <form className="bg-white text-black rounded" onSubmit={this.onSubmit.bind(this)}>
               <div className="text-white p-2 bg-gray-800">Submit Problem</div>
               <div>
@@ -153,6 +153,7 @@ class CreateProblemForm extends Component {
                   value={this.state.description}
                   onChange={e => this.setState({description: e.target.value})}
                   className="w-full appearance-none py-2 px-3 bg-white text-gray-700 mb-3 border border-white leading-tight outline-none focus:border-gray-200 focus:outline-none mb-4"></textarea>
+                  {this.state.isUploading && <Loader className="mx-auto" type="Oval" color="green" height={40} width={40} /> }
               </div>
 
               <div className="flex justify-between p-2">

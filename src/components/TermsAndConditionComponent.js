@@ -178,7 +178,7 @@ const TermsAndConditionComponent = () => {
                         <div className="privacy_policy mt-4 mb-10">
                             <h4 className="text-2xl">Privacy Policy Changes</h4>
                             <p>Although most changes are likely to be minor, Ibisubizo.com may change its Privacy Policy from time to time, and in Ibisubizo.com's sole discretion. Ibisubizo.com encourages visitors to frequently check this page for any changes to its Privacy Policy. Your continued use of this site after any change in this Privacy Policy will constitute your acceptance of such change.	</p>
-                            <p>For your request of information about our terms and conditions and Privacy Policy, you can write to us at thousandskillsltd@gmail.com  </p>
+                            <p>For your request of information about our terms and conditions and Privacy Policy, you can write to us at <span>Email: <a className="link text-blue-500" href="mailto:ibisubizo.com@gmail.com">ibisubizo.com@gmail.com</a></span> </p>
                         </div>
                     </div>
                 </div>
