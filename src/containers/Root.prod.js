@@ -12,13 +12,11 @@ import DetailComponent from './DetailComponent'
 import AboutUsComponent from '../components/AboutUsComponent';
 import TermsAndConditionComponent from '../components/TermsAndConditionComponent';
 import PageNotFound from '../components/PageNotFound';
-import Banner from '../components/Banner';
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={history}>
       <React.Fragment>
-        <Banner />
         <NavBar />
         <Switch>
           <Route exact path='/' component={App} />

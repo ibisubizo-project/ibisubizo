@@ -127,7 +127,7 @@ class DetailComponent extends Component {
         }
 
         this.props.addCommentToPost(problemId, comment)
-        this.props.selectedProblemsComments.unshift(comment)
+        //this.props.selectedProblemsComments.unshift(comment)
         this.setState({comment: ''})
     }
 
@@ -241,8 +241,6 @@ class DetailComponent extends Component {
         if(this.state.isLoading) {
             return <div></div>
         }
-        console.log("Authenticated USer")
-        console.dir(this.props.authenticatedUser)
 
         let problemListing = this.state.featuredProblems.slice(0, 20)
         let renderPostImage = null
@@ -334,8 +332,11 @@ class DetailComponent extends Component {
                             {this.props.selectedProblemsComments.map((comments, index) => (
                                 <div key={index} className="bg-white p-5 mb-4">
                                     <div className="flex justify-between">
-                                        <div className="flex">
-                                            <h4 className="font-extrabold">{`${firstname}, ${lastname}`}</h4>
+                                        <div className="flex justify-between">
+                                            <div className="flex">
+                                                <p className="font-extrabold text-2xl">{`${firstname}, ${lastname}`}</p>
+                                                {comments.is_admin && <span className="text-teal-400 mr-4 text-xs">ADMIN</span>}
+                                            </div>
                                             <TimeAgo date={new Date(comments.commented_at)} />
                                         </div>
                                         <div className={this.getTrashClassNames(comments)}>
@@ -356,7 +357,6 @@ class DetailComponent extends Component {
                         </div>
                     </div>
                 </div>
-                {/*  */}
               </div>
 
               <div className="w-2/5 ml-4 mt-10 hidden sm:block md:block">

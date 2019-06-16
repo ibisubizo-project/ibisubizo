@@ -22,8 +22,16 @@ const AboutUsComponent = () => {
             </Helmet>
             <div className="w-3/5 px-6 py-4">
                 <h1 className="text-3xl">About Us</h1>
-                <p className="mt-5 p-0">Ibisubizo.com is an online platform owned by Thousand Skills Ltd, a company which uses sciences and technology to design and provide solutions needed by its clients. </p>
-                <p className="mt-5">Ibisubizo.com allows users to submit their individual and/or social issues so that they can be fixed by professionals</p>
+                <p className="mt-5 p-0">Ibisubizo.com is an online platform owned by Thousand Skills Ltd </p>
+                <p className="mt-5">Ibisubizo.com allows users to submit their individual and/or social challenging issues so that they can be fixed by professionals. 
+                    We help in resolving issues thanks to collaboration with experts and the use of sciences and technology for solutions design.
+                </p>
+
+                <p className="mt-4">
+                Our Contacts: 
+                <div><span> Phone: <a className="text-blue-500" href="tel:250786382301">+250 786 382 301</a> </span></div>
+                <div><span>Email: <a className="link text-blue-500" href="mailto:ibisubizo.com@gmail.com">ibisubizo.com@gmail.com</a></span></div>
+                </p>
             </div>
         </div>
     )
