@@ -43,11 +43,11 @@ class ListingContainer extends React.Component{
   componentDidMount() {
     let { page } = this.state
     this.getAllProblems(page) //Get the first initial problems
+    this.getTrendingProblems()
     let userData = JSON.parse(localStorage.getItem("userData"))
     if(userData !== null) {
       if(this.props.data.isAuthenticated === true && userData._id !== null ) {
         this.getAllUsersProblems(userData._id)
-        this.getTrendingProblems()
       }
     }
   }

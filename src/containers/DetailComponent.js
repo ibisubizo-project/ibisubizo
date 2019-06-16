@@ -152,7 +152,6 @@ class DetailComponent extends Component {
 
     getProblemCurrentMetrics(problemId) {
         metricsApi.getProblemMetrics(problemId).then(result => {
-            console.log(result)
             let visits = result.visits + 1
             let metrics = {
                 problem_id: result.problem_id,
@@ -161,7 +160,6 @@ class DetailComponent extends Component {
                 month: result.month
             }
             metricsApi.updateProblemMetrics(problemId, metrics).then(result => {
-                console.log(result)
                 console.log("Previous metrics Updated")
             })
 
