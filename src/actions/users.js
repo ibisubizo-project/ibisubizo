@@ -23,6 +23,7 @@ export const login =  (form) => {
 		})
 		.catch((err) => {
 			let error = err
+			console.log(error)
 			return dispatch(actions.authenticationError(error.response.data.error));
 		})
 	}

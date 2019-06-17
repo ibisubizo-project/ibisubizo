@@ -31,7 +31,10 @@ class DetailComponent extends Component {
             redirectToLogin: false,
             first_name: '',
             last_name: '',
-            redirectTo: ''
+            redirectTo: '',
+            commentsByUser: [],
+            approvedComments: [],
+            displayedComments: []
         }
 
         this.updateLike = this.updateLike.bind(this)
@@ -126,8 +129,13 @@ class DetailComponent extends Component {
           comment:  this.state.comment
         }
 
-        this.props.addCommentToPost(problemId, comment)
+        // this.props.addCommentToPost(problemId, comment)
         //this.props.selectedProblemsComments.unshift(comment)
+        commentsApi.AddComment(problemId, comment).then(result => {
+            console.log(result)
+            this.setState({commentsByUser: this.state.commentsByUser.push(result.comment)})
+            this.props.selectedProblemsComments.unshift(result.comment)
+        })
         this.setState({comment: ''})
     }
 
@@ -148,6 +156,24 @@ class DetailComponent extends Component {
         this.fetchFreshData(params.id)
         this.getLoggedInUser();
         this.getProblemCurrentMetrics(params.id)
+        console.log("this.props.selectedProblemsComments")
+        console.dir(this.props.selectedProblemsComments)
+
+        //Get all the comments by the currently loggedIn User for this post
+        //get all the resolved comments for this post
+        let loggedInUser = localStorage.getItem("userData");
+        let userId = JSON.parse(loggedInUser)._id;
+        if(userId) {
+            console.log("Is authenticated...")
+            commentsApi.GetAllCommentByUserOnPost(params.id, userId).then(result => {
+                console.log("Comments By User on Post...")
+                console.log(result)
+
+            }).catch(error => {
+                console.log("Error")
+                console.dir(error)
+            })
+        }
     }
 
     getProblemCurrentMetrics(problemId) {
@@ -332,7 +358,7 @@ class DetailComponent extends Component {
                                     <div className="flex justify-between">
                                         <div className="flex justify-between">
                                             <div className="flex">
-                                                <p className="font-extrabold text-2xl">{`${firstname}, ${lastname}`}</p>
+                                                <p className="font-extrabold text-2xl">{`${comments.commentedby.firstname}, ${comments.commentedby.lastname}`}</p>
                                                 {comments.is_admin && <span className="text-teal-400 mr-4 text-xs">ADMIN</span>}
                                             </div>
                                             <TimeAgo date={new Date(comments.commented_at)} />

@@ -11,6 +11,7 @@ commentApi.ListAllPostComments = (postId) => client.get(`/comments/${postId}/all
 commentApi.GetAllUnapprovedComments = () => client.get('/comments/unapproved')
 commentApi.Remove = (commentId) => client.delete(`/comments/${commentId}`)
 commentApi.ApproveComment = (commentId) => client.put(`/comments/${commentId}/approve`)
+commentApi.GetAllCommentByUserOnPost = (postId, userId) => client.get(`/comments/${postId}/${userId}/all`)
 
 
 export default commentApi;
