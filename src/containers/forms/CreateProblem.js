@@ -8,6 +8,7 @@ import actions from '../../actions/actions'
 import config from '../../firebase'
 import AppConfig from '../../utils/config'
 import Loader from 'react-loader-spinner'
+import Switch from 'react-ios-switch'
 
 
 firebase.initializeApp(config)
@@ -25,7 +26,8 @@ class CreateProblemForm extends Component {
     uploadedDocuments: [],
     redirectToLogin: false,
     error: '',
-    message: ''
+    message: '',
+    checked: false
   }
 
   componentWillMount() {
@@ -207,25 +209,24 @@ class CreateProblemForm extends Component {
                   </ul>
                 </div>
 
-                <div className="privacy">
-                  <div className="radio align-baseline">
-                    <label className="mr-3">
-                      <input 
-                        className="mr-2" 
-                        type="radio"
-                        value={0}
-                        checked={this.state.status === 0}
-                        onChange={e => this.setState({status: 0 })} />Public
-                    </label>
-                    <label>
-                      <input 
-                        className="mr-2" 
-                        type="radio" 
-                        value={1}
-                        checked={this.state.status === 1}
-                        onChange={e => this.setState({status: 1 })} />Private
-                    </label>
-                  </div>
+                <div className="privacy flex">
+                  <p className="mr-2 font-bold">
+                    {this.state.checked ? 'Public' : 'Private'}
+                  </p>
+
+                  <Switch
+                    checked={this.state.checked}
+                    className="switch"
+                    onChange={checked => {
+                      let status = undefined;
+                      if(checked) {
+                        status = 0
+                      } else {
+                        status = 1
+                      }
+                      this.setState({ checked: !this.state.checked, status })}
+                    }
+                  />
                 </div>
               </div>
               <button type='submit' className="text-white rounded p-3 m-2 leading-tight bg-teal-400">Submit</button>

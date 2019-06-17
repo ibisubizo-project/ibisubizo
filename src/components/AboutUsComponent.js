@@ -29,11 +29,11 @@ const AboutUsComponent = () => {
                             We help in resolving issues thanks to collaboration with experts and the use of sciences and technology for solutions design.
                         </p>
 
-                        <p className="mt-4">
-                            Our Contacts: 
+                        <div className="mt-4">
+                            Our Contacts:
                             <div><span> Phone: <a className="text-blue-500" href="tel:250786382301">+250 786 382 301</a> </span></div>
                             <div><span>Email: <a className="link text-blue-500" href="mailto:ibisubizo.com@gmail.com">ibisubizo.com@gmail.com</a></span></div>
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>
