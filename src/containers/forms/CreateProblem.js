@@ -163,7 +163,7 @@ class CreateProblemForm extends Component {
                   <ul className="flex">
                     <li className="mr-3">
                     <label className="cursor-pointer">
-                      Photo
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                       <FileUploader
                         hidden
                         accept="image/*"
@@ -178,7 +178,7 @@ class CreateProblemForm extends Component {
                     </li>
                     <li className="mr-3">
                       <label className="cursor-pointer">
-                        Video
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 8v8l5-4-5-4zm9-5H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
                         <FileUploader
                           hidden
                           accept="video/*"
@@ -191,9 +191,9 @@ class CreateProblemForm extends Component {
                         />
                       </label>
                     </li>
-                    <li className="mr-3">
+                    <li className="mr-8">
                       <label className="cursor-pointer">
-                        Documents
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                         <FileUploader
                           hidden
                           accept="*"
@@ -206,27 +206,25 @@ class CreateProblemForm extends Component {
                         />
                       </label>
                     </li>
-                  </ul>
-                </div>
-
-                <div className="privacy flex">
-                  <p className="mr-2 font-bold">
-                    {this.state.checked ? 'Public' : 'Private'}
-                  </p>
-
-                  <Switch
-                    checked={this.state.checked}
-                    className="switch"
-                    onChange={checked => {
-                      let status = undefined;
-                      if(checked) {
-                        status = 0
-                      } else {
-                        status = 1
+                    <li className="mr-2 font-bold">
+                      {this.state.checked ? 'Public' : 'Private'}
+                    </li>
+                    <li>
+                      <Switch
+                      checked={this.state.checked}
+                      className="switch"
+                      onChange={checked => {
+                        let status = undefined;
+                        if(checked) {
+                          status = 0
+                        } else {
+                          status = 1
+                        }
+                        this.setState({ checked: !this.state.checked, status })}
                       }
-                      this.setState({ checked: !this.state.checked, status })}
-                    }
-                  />
+                    />
+                    </li>
+                  </ul>
                 </div>
               </div>
               <button type='submit' className="text-white rounded p-3 m-2 leading-tight bg-teal-400">Submit</button>
