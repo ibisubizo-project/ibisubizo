@@ -348,7 +348,7 @@ class DetailComponent extends Component {
                         </div>
 
                         <div className="comments mt-6 border-grey-lighter">
-                            {this.state.displayedComments.map((comments, index) => (
+                            {this.state.displayedComments.length > 0 && this.state.displayedComments.map((comments, index) => (
                                 <div key={index} className="bg-white p-5 mb-4">
                                     <div className="flex justify-between">
                                         <div className="flex justify-between">
