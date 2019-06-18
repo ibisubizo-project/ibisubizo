@@ -47,11 +47,11 @@ class Jumbotron extends Component {
                                         </div>
                                         <div className="w-full inline-block border-blue-100 bg-white p-2">
                                             <label className="block text-gray-800">Phone Number</label>
-                                            <input autoComplete={`off`} type="text" name="phone" className="block border-none outline-none" placeholder="Enter Phone Number" />
+                                            <input autoComplete={`off`} type="text" name="phone" className="block border-none outline-none" placeholder="0780102799" />
                                         </div>
                                         <div className="w-full inline-block border-blue-100 bg-white p-2 mt-4 mb-8">
                                             <label className="block text-gray-800">Password</label>
-                                            <input autoComplete={`off`} type="password" name="password" className="block border-none outline-none" placeholder="Enter Your Password" />
+                                            <input autoComplete={`off`} type="password" name="password" className="block border-none outline-none" placeholder="Password" />
                                         </div>
 
                                         <div className="flex">
