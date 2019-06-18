@@ -101,8 +101,7 @@ class ListItem extends Component {
       zIndex: '2',
       left: '50%',
       top: 'calc(50% + 22px)',
-      minWidth: '150px',
-      // display: 'none'
+      minWidth: '150px'
   }
 
   render() {
@@ -132,6 +131,8 @@ class ListItem extends Component {
             </p>
             {renderedImage}
           </div>
+          {(this.props.problem && this.props.problem.status == 0) 
+            ? <div className="text-white text-center rounded-full font-bold bg-gray-800 mt-4" style={{width: "90px"}}>Public</div> : <div className="text-white text-center rounded-full font-bold bg-gray-800 mt-4" style={{width: "90px"}}>Private</div> }
           <ListItemToolBar problem={this.props.problem} title={title} personalListings={this.props.personalListings} user_data={JSON.parse(localStorageUserData)} problem_id={_id} comments={this.state.comments} likes={this.state.likes} updateLike={this.updateLike.bind(this)} />
           {localStorageUserData ? <AddCommentToolBar updateComment={this.updateComment.bind(this)}  problem_id={_id} user_data={JSON.parse(localStorageUserData)} /> : '' }
         </div>

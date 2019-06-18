@@ -160,7 +160,6 @@ class DetailComponent extends Component {
         let userId = JSON.parse(loggedInUser)._id;
         if(userId) {
             commentsApi.GetAllCommentByUserOnPost(params.id, userId).then(result => {
-                // this.props.selectedProblemsComments.unshift(result)
                 console.log("All Comments on Post")
                 console.dir(result)
                 this.setState({displayedComments: result})

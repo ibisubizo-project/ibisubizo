@@ -11,6 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Switch from 'react-ios-switch'
 
 class ListItemToolBar extends Component {
     constructor(props) {
@@ -21,7 +22,9 @@ class ListItemToolBar extends Component {
             commentCount: 0,
             openDialog: false,
             text: '',
-            title: ''
+            title: '',
+            checked: false,
+            status: undefined
         }
 
         this.deleteProblem = this.deleteProblem.bind(this);
@@ -41,7 +44,8 @@ class ListItemToolBar extends Component {
     editPost(problemId, userId) {
         let update = {
             text: this.state.text,
-            title: this.state.title
+            title: this.state.title,
+            status: this.state.status
         }
         problemsApi.updateProblem(problemId, userId, update).then(result => {
             window.location.reload();
@@ -50,7 +54,13 @@ class ListItemToolBar extends Component {
 
     componentWillReceiveProps(nextProps) {
         let problem = nextProps.problem;
-        this.setState({title: problem.title, text: problem.text})
+        let checked = undefined
+        if(problem.status === 0) {
+            checked = true
+        } else {
+            checked = false
+        }
+        this.setState({title: problem.title, text: problem.text, status: problem.status, checked: checked})
     }
 
     delete(problem_id){
@@ -83,8 +93,6 @@ class ListItemToolBar extends Component {
         if(this.state.isFetching) {
             return <div></div>
         }
-
-        console.log(this.props);
 
         return (
             <div className="p-0 sm:px-2 py-2">
@@ -143,6 +151,22 @@ class ListItemToolBar extends Component {
                             value={this.state.text}
                             fullWidth
                         />
+                        <div className="flex mt-4">
+                            {this.state.status === 0 ? <p className="mr-4">Public Post</p> : <p className="mr-4">Private Post</p>}
+                            <Switch
+                                checked={this.state.status === 0 ? true : false}
+                                className="switch"
+                                onChange={checked => {
+                                    let status = undefined;
+                                    if(checked) {
+                                    status = 0
+                                    } else {
+                                    status = 1
+                                    }
+                                    this.setState({ checked: checked, status })}
+                                }
+                                />
+                        </div>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.closeDialog} color="primary">
