@@ -35,7 +35,7 @@ class Jumbotron extends Component {
                     <div className="xl:flex -mx-6">
                         <div className="px-6 text-left md:text-center xl:text-left max-w-2xl md:max-w-3xl mx-auto">
                             <p className="mt-6 leading-relaxed sm:text-lg md:text-xl xl:text-lg text-white leading-tight">
-                                <span className="font-medium font-bold">Whatever challenges</span> you are facing in your career, projects, businesses, family, social life etc… <span className="font-bold">submit them</span> to IBISUBIZO and <span className="font-bold">get them</span> fixed by Experts!
+                                <span className="font-medium font-bold text-2xl">Whatever challenges</span> you are facing in your career, projects, businesses, family, social life etc… <span className="font-bold">submit them</span> to IBISUBIZO and <span className="font-bold">get them</span> fixed by Experts!
                             </p>
                         </div>
                         <div className="mt-12 xl:mt-0 px-6 flex-shrink-0 hidden sm:hidden md:block">
