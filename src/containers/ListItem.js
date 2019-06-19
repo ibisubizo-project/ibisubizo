@@ -126,7 +126,7 @@ class ListItem extends Component {
               </div>
             </div>
 
-            <p className="description pb-2" onClick={this.viewProblemDetails.bind(this)}>
+            <p className="description pb-2 cursor-pointer" onClick={this.viewProblemDetails.bind(this)}>
               {text}
             </p>
             {renderedImage}

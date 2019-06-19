@@ -129,6 +129,8 @@ class CreateProblemForm extends Component {
       }
       const hasErrors = (this.state.error) ? 'block border border-red-800 p-2 mb-2' : 'hidden';
       const hasMessage = (this.state.message) ? 'block border bg-teal-600 text-white border-gray-800 font-bold p-2' : 'hidden';
+      let defaultSubmitButtonClass = "text-white rounded p-3 m-2 leading-tight bg-teal-400";
+      const isUploading = (this.state.isUploading) ? `${defaultSubmitButtonClass} opacity-50 cursor-not-allowed` : `${defaultSubmitButtonClass}`;
 
       return (
         <div className="container sm:w-full mx-auto mt-2 overflow-x-hidden p-4">
@@ -227,7 +229,7 @@ class CreateProblemForm extends Component {
                   </ul>
                 </div>
               </div>
-              <button type='submit' className="text-white rounded p-3 m-2 leading-tight bg-teal-400">Submit</button>
+              <button type='submit' className={isUploading}>Submit</button>
             </form>
           </div>
         </div>

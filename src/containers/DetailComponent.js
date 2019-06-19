@@ -226,7 +226,6 @@ class DetailComponent extends Component {
             })
             this.setState({problem: result[0], isLoading: false, likes: result[2]})
         }).catch(error => {
-            console.error(error)
             this.setState({isLoading: false})
         });
     }
@@ -235,8 +234,6 @@ class DetailComponent extends Component {
         let loggedInUser = localStorage.getItem("userData");
         let userId = JSON.parse(loggedInUser)._id;
         userApi.GetUserById(userId).then(result => {
-            console.log("Currently Logged in User: ")
-            console.dir(result);
             this.setState({first_name: result.first_name, last_name: result.last_name});
         })
     }
