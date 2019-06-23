@@ -1,0 +1,10 @@
+version: '2'
+services:
+  frontend-app:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      - VIRTUAL_HOST=ibisubizo.com
+      - LETSENCRYPT_HOST=ibisubizo.com

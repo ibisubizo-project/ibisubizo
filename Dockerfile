@@ -1,6 +1,11 @@
-FROM nginx:1.15.2-alpine
-LABEL author="Ofonime Francis"
-COPY ./build /var/www
-COPY nginx.conf /etc/nginx/nginx.conf
+FROM mhart/alpine-node:12
+
+WORKDIR /app
+COPY package.json /app
+COPY . .
+
+RUN npm install
+RUN npm run build
+
 EXPOSE 80
-ENTRYPOINT ["nginx","-g","daemon off;"]
+CMD ["npm", "run", "start"]
