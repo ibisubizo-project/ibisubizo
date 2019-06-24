@@ -1,17 +1,6 @@
-FROM node:8
-
-ADD yarn.lock /yarn.lock
-ADD package.json /package.json
-
-ENV NODE_PATH=/node_modules
-ENV PATH=$PATH:/node_modules/.bin
-RUN yarn
-RUN yarn build
-
-WORKDIR /app
-ADD . /app
-
+FROM nginx:1.15.2-alpine
+LABEL author="Ofonime Francis"
+COPY ./build /var/www
+COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
-
-ENTRYPOINT ["/bin/bash", "/app/run.sh"]
-CMD ["start"]
+ENTRYPOINT ["nginx","-g","daemon off;"]
