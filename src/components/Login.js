@@ -43,7 +43,7 @@ class Login extends React.Component {
           </Helmet>
           <form
             onChange={this.onFieldChanged.bind(this)} onSubmit={this.onSubmit.bind(this)}
-            className="font-sans text-sm rounded w-full max-w-md mx-auto my-8 px-8 pt-6 pb-8 bg-gray-200"
+            className="font-sans text-sm rounded w-full max-w-md mx-auto my-8 px-8 pt-6 pb-8 bg-white"
             >
               <h1 className="text-2xl pb-3 font-medium mt-4 mb-4">Sign In to Ibisubizo</h1>
               <div className={hasErrors}>

@@ -12,6 +12,7 @@
     "normalizr": "^3.3.0",
     "postcss-cli": "^6.1.2",
     "prop-types": "^15.7.2",
+    "query-string": "^6.8.1",
     "react": "^16.8.6",
     "react-confirm-alert": "^2.4.1",
     "react-dom": "^16.8.6",
