@@ -14,6 +14,7 @@ import TermsAndConditionComponent from '../components/TermsAndConditionComponent
 import PageNotFound from '../components/PageNotFound';
 import ForgetPassword from './ForgetPassword';
 import ConfirmToken from './ConfirmToken';
+import ChangePassword from './ChangePassword';
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -21,14 +22,15 @@ const Root = ({ store }) => (
       <React.Fragment>
         <NavBar />
         <Switch>
-          <Route exact path='/' component={App} />
+        <Route exact path='/' component={App} />
           <Route path='/auth/login' component={Login} />
           <Route path='/auth/register' component={Register} />
+          <Route path="/auth/forget" component={ForgetPassword} />
+          <Route path="/auth/changepassword" component={ChangePassword} />
           <Route path="/auth/confirm/token/:token" component={ConfirmToken} />
           <PrivateRoute path='/problem/:id' component={DetailComponent} />
           <Route path='/about' component={AboutUsComponent} />
           <Route path='/term' component={TermsAndConditionComponent} />
-          <Route path="/auth/forget" component={ForgetPassword} />
           <Route path={'*'} component={PageNotFound} />
         </Switch>
       </React.Fragment>
