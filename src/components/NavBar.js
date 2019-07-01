@@ -64,6 +64,9 @@ class NavBar extends Component {
             <div className="container mx-auto px-4">
                 <div className="sm:flex">
                     <div className="flex -mb-px mr-6">
+                        <Link to="/" className="no-underline text-base  text-white opacity-50 sm:opacity-100 sm:text-white flex items-center py-4 mr-6">Home</Link>
+                    </div>
+                    <div className="flex -mb-px mr-6">
                         <Link to='/about' className="no-underline text-base text-white opacity-50 sm:opacity-100 sm:text-white flex items-center py-4 mr-6 ">About Us</Link>
                     </div>
 
