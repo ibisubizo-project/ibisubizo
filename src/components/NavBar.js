@@ -33,18 +33,22 @@ class NavBar extends Component {
                     <div className="w-2/6 text-right">
                         <div className="text-black nav-content-right hidden sm:hidden md:block lg:block">
                             <ul className="flex">
-                                <li className="mr-3">
+                                <li className="mr-2">
+                                    <Link to='/'>Home</Link>
+                                </li>
+
+                                <li className="mr-2">
                                     <Link to='/about'>About Us</Link>
                                 </li>
-                                <li className="mr-3">
+                                <li className="mr-2">
                                     <Link to='/term'>Terms and Conditions</Link>
                                 </li>
                                 {!this.props.userIsAuthenticated && (
                                   <React.Fragment>
-                                    <li className="mr-3">
+                                    <li className="mr-2">
                                       <Link to='/auth/login' className='no-underline text-base items-center hover:text-gray-700'>Sign In</Link>
                                     </li>
-                                    <li className="mr-3">
+                                    <li className="mr-0">
                                       <Link to='/auth/register' className='text-base items-center bg-white no-underline rounded text-teal-600 pr-4 pl-4 pt-2 pb-2 w-10 border border-teal'>Join</Link>
                                     </li>
                                   </React.Fragment>
