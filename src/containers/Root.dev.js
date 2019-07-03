@@ -16,10 +16,12 @@ import PageNotFound from '../components/PageNotFound';
 import ForgetPassword from './ForgetPassword';
 import ConfirmToken from './ConfirmToken';
 import ChangePassword from './ChangePassword';
+import GA from '../utils/googleAnalytics'
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={history}>
+      { GA.init() && <GA.RouteTracker /> }
       <React.Fragment>
         <NavBar />
         <Switch>
