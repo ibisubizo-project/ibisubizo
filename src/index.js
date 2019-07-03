@@ -19,8 +19,6 @@ if(token) {
   var decoded = jwt_decode(token)
   userApi.GetUserById(decoded.id)
     .then((response) => {
-      console.log("Entry point")
-      console.log(response)
       store.dispatch(actions.fetchingUserSuccess(response))
       return UserProfile.setUserData(response)
     })

@@ -23,7 +23,8 @@ export const login =  (form) => {
 		})
 		.catch((err) => {
 			let error = err
-			return dispatch(actions.authenticationError(error));
+			console.log(error)
+			return dispatch(actions.authenticationError(error.response.data.error));
 		})
 	}
 }
@@ -31,7 +32,6 @@ export const login =  (form) => {
 export function register(credentials) {
 	return dispatch => userApi.Register(credentials)
 		.then((response) => {
-			console.dir(response)
 			dispatch(actions.authenticateUser(response.user))
 			localStorage.setItem("token", response.token)
 			UserProfile.setUserData(response.user)
@@ -40,6 +40,6 @@ export function register(credentials) {
 		})
 		.catch((err) => {
 			let error = err
-			return dispatch(actions.authenticationError(error));
+			return dispatch(actions.authenticationError(error.response.data.error));
 		})
 }

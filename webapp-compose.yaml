@@ -1,0 +1,11 @@
+version: '2'
+services:
+  frontend-app:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      - VIRTUAL_HOST=www.ibisubizo.com, ibisubizo.com
+      - LETSENCRYPT_HOST=www.ibisubizo.com, ibisubizo.com
+      - LETSENCRYPT_EMAIL=ibisubizo.com@gmail.com

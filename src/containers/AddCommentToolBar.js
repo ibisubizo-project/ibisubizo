@@ -10,7 +10,6 @@ class AddCommentToolBar extends Component {
   }
   handleSubmit(event) {
     event.preventDefault()
-    console.log(this.props)
     let problemId = this.props.problem_id
     let userId = this.props.user_data._id
     let comment = {
@@ -26,14 +25,15 @@ class AddCommentToolBar extends Component {
 
   render() {
     return (
-      <div className="px-6 py-4">
+      <div className="px-2 rounded">
         <form className="form" onSubmit={this.handleSubmit.bind(this)}>
           <input
-            className="w-full h-8 p-4"
+            className="w-full h-8 p-4 mb-3"
             type="text"
             name='comment'
             value={this.state.comment}
             onChange={(e) => this.setState({comment: e.target.value})}
+            autoComplete='off'
             placeholder="Add your comment" />
         </form>
       </div>

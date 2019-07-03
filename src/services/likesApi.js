@@ -1,8 +1,7 @@
 import ApiService from "./Api";
 
 
-const BASE_URL = 'http://46.101.146.153:8000/api'
-const client = new ApiService({ baseURL: BASE_URL });
+const client = new ApiService({});
 
 const likesApi = {};
 

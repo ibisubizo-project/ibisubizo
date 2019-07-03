@@ -21,6 +21,8 @@ export default function usersReducer ( state = initialState, action) {
 			return {...state, isAuthenticated: false, authedUser: {}}
         case actionTypes.AUTH_ERROR:
 			return {...state, error: action.payload}
+				case actionTypes.CLEAR_AUTH_ERRORS:
+						return {...state, error: ''}
         case actionTypes.FETCHING_USER:
 			return {...state, isFetching: true}
         case actionTypes.FETCHING_USER_FAILURE:
@@ -48,7 +50,6 @@ export function login (form) {
 			localStorage.setItem('token', response.data.token)
 			UserProfile.setUserData(response.data.user)
 			dispatch(actions.fetchingUserSuccess(response.data.user))
-			//return history.push('/') //GOTO: Homepage
 		})
 		.catch((err) => {
 			let error = err
@@ -64,7 +65,6 @@ export function register(credentials) {
 			localStorage.setItem("token", response.data.token)
 			UserProfile.setUserData(response.data.user)
 			dispatch(actions.fetchingUserSuccess(response.data.user))
-			//return history.push('/')
 		})
 		.catch((err) => {
 			let error = err

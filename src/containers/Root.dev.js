@@ -5,31 +5,39 @@ import DevTools from './DevTools'
 import { Router, Route, Switch } from 'react-router-dom'
 import App from './App'
 import PrivateRoute from './PrivateRoute'
-import NavBar from '../components/Nav';
+import NavBar from '../components/NavBar';
 import Login from '../components/Login'
 import Register from '../components/Register'
 import history from '../../src/history'
 import DetailComponent from './DetailComponent'
 import AboutUsComponent from '../components/AboutUsComponent';
 import TermsAndConditionComponent from '../components/TermsAndConditionComponent';
+import PageNotFound from '../components/PageNotFound';
+import ForgetPassword from './ForgetPassword';
+import ConfirmToken from './ConfirmToken';
+import ChangePassword from './ChangePassword';
+import GA from '../utils/googleAnalytics'
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={history}>
-      <div>
+      { GA.init() && <GA.RouteTracker /> }
+      <React.Fragment>
         <NavBar />
         <Switch>
           <Route exact path='/' component={App} />
-          <Route path='/bye' component={()=> <h1>Bye Bye</h1>} />
           <Route path='/auth/login' component={Login} />
           <Route path='/auth/register' component={Register} />
-          <Route path='/problem/:id' component={DetailComponent} />
+          <Route path="/auth/forget" component={ForgetPassword} />
+          <Route path="/auth/changepassword" component={ChangePassword} />
+          <Route path="/auth/confirm/token/:token" component={ConfirmToken} />
+          <PrivateRoute path='/problem/:id' component={DetailComponent} />
           <Route path='/about' component={AboutUsComponent} />
           <Route path='/term' component={TermsAndConditionComponent} />
-          <Route path={'*'} component={()=> <h1>Page Not Found...</h1>} />
+          <Route path={'*'} component={PageNotFound} />
         </Switch>
-        <DevTools />
-      </div>
+        {/* <DevTools /> */}
+      </React.Fragment>
     </Router>
   </Provider>
 )

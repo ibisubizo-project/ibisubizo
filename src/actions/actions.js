@@ -16,6 +16,7 @@ export const actionTypes = {
     AUTH_USER :  'AUTH_USER',
     UNAUTH_USER :  'UNAUTH_USER',
     AUTH_ERROR :  'AUTH_ERROR',
+    CLEAR_AUTH_ERRORS: 'CLEAR_AUTH_ERRORS',
     FETCHING_USER :  'FETCHING _USER',
     FETCHING_USER_FAILURE :  'FETCHING_USER_FAILURE',
     FETCHING_USER_SUCCESS :  'FETCHING_USER_SUCCESS',
@@ -114,6 +115,10 @@ const actions = {
     authenticationError: (error) => ({
         type: actionTypes.AUTH_ERROR,
         payload: error
+    }),
+    clearAuthenticationError: () => ({
+        type: actionTypes.CLEAR_AUTH_ERRORS,
+        payload: ''
     }),
     //COMMENTS
     addingComment: buildActionCreator(actionTypes.ADDING_COMMENT),

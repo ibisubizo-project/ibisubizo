@@ -1,7 +1,7 @@
 import axios from 'axios';
+import Config from '../utils/config';
 
 // Default API will be your root
-const API_ROOT = process.env.URL || 'http://46.101.146.153:8000/api';
 const TIMEOUT = 20000;
 const HEADERS = {
   'Content-Type': 'application/json',
@@ -9,7 +9,7 @@ const HEADERS = {
 };
 
 class ApiService {
-  constructor({ baseURL = API_ROOT, timeout = TIMEOUT, headers = HEADERS, auth }) {
+  constructor({ baseURL=Config.API_URL, timeout = TIMEOUT, headers = HEADERS, auth }) {
     const client = axios.create({
       baseURL,
       timeout,

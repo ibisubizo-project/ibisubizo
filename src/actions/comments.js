@@ -1,7 +1,4 @@
 import actions from './actions'
-import UserProfile from '../utils/userProfile';
-import userApi from '../services/users';
-import history from '../history'
 import commentApi from '../services/commentApi';
 
 

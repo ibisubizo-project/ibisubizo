@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import SinglePost from './SinglePost';
 import ListItem from './ListItem';
 
 
@@ -11,17 +10,17 @@ class Listing extends Component {
 
     render() {
         const { problems } = this.props;
-        if(problems.length === 0) {
+        if(!problems || problems.length === 0) {
             return (<div>No Post...</div>)
         }
         return (
-            <div>
+            <React.Fragment>
                 {problems.map((problem, index) => {
                     return (
-                        <ListItem key={problem._id} index={index} problem={problem} {...problem} />
+                        <ListItem key={problem._id} personalListings={this.props.personalListings} index={index} problem={problem} {...problem} />
                     )
                 })}
-            </div>
+            </React.Fragment>
         )
     }
 }
